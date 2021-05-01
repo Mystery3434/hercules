@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<body>
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Cancellation Form</legend>
+
+            <p>Please note that you cannot cancel lessons scheduled less than 12 hours from now. Upon submission of your request, the lesson will be cancelled and the fee will be refunded to you within 3 working days. Please avoid cancelling lessons unless absolutely necessary.</p>
+            <div class="form-group pt-3">
+                {{ form.reasons.label(class="form-control-label") }}
+                {% if form.reasons.errors %}
+                   {{ form.reasons(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.reasons.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.reasons(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+
+
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.cancel(class="btn btn-block btn-lg btn-outline-light button-theme") }}
+        </div>
+    </form>
+</div>
+</body>
+{% endblock content %}

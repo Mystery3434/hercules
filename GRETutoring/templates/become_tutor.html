@@ -1,0 +1,125 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<body>
+<h1> Join the Hercules team as a GRE tutor</h1>
+    <div class="row top-panel">
+        <img src="../static/img/tutoring.jpg" class=" col-6 studying-img">
+        <div class = "col-6">
+    <h5>Why join Hercules?</h5>
+    <p>Our tutors are well-paid and are offered flexible timings with the ability to teach from anywhere in the world. Teach whenever you want, and make a difference in the lives of aspiring grad students all over the world. Feel free to teach from your San Francisco bedroom or from a cafe looking over the canals of Venice. You make the rules.</p>
+    <h5>What are we looking for?</h5>
+    <p>Firstly, you need to have a good GRE score. We only recruit tutors who have scored about the 95th percentile in all three sections. Our applications are highly competitive, so the higher your score the better. However, if your score is <i>slightly</i> below 95th percentile, you can still feel free to apply, as we do make the occassional exception, as long as you can make up for it in excellent teaching ability.</p>
+    <p>Secondly, and more importantly, you need to have good tutoring skills. This will be tested in an interview to find out if you are a good fit.</p>
+    </div>
+    </div>
+<div class="content-section mt-4">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Create an Account</legend>
+            <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}
+
+                {% if form.name.errors %}
+                   {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.name(class="form-control form-control-lg ") }}
+                {% endif %}
+
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                   {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.verbal_score.label(class="form-control-label") }}
+
+                {% if form.verbal_score.errors %}
+                   {{ form.verbal_score(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.verbal_score.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.verbal_score(class="form-control form-control-lg ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="form-group">
+                {{ form.quant_score.label(class="form-control-label") }}
+
+                {% if form.quant_score.errors %}
+                   {{ form.quant_score(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.quant_score.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.quant_score(class="form-control form-control-lg ") }}
+                {% endif %}
+
+            </div>
+
+            <div class="form-group">
+                {{ form.awa_score.label(class="form-control-label") }}
+
+                {% if form.awa_score.errors %}
+                   {{ form.awa_score(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.awa_score.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.awa_score(class="form-control form-control-lg ") }}
+                {% endif %}
+
+            </div>
+
+
+            <div class="form-group pt-3">
+                {{ form.video_link.label(class="form-control-label") }}
+                {% if form.video_link.errors %}
+                   {{ form.video_link(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.video_link.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.video_link(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-light button-theme") }}
+        </div>
+    </form>
+</div>
+</body>
+{% endblock content %}
