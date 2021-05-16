@@ -24,6 +24,7 @@ class Tutor(db.Model):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg') #nullable=False, since they have to have at least the default
     password = db.Column(db.String(60), nullable=False)
     events = db.relationship('Event', backref='tutor', lazy=True)
+    free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)
 
     def __repr__(self):
         return f"Tutor('{self.username}', '{self.email}','{self.image_file})"
@@ -36,3 +37,11 @@ class Event(db.Model):
 
     def __repr__(self):
         return f"Post('{self.date_time}', '{self.student_id}', '{self.tutor_id}')"
+
+class FreeSlot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_time = db.Column(db.DateTime, nullable=False)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('tutor.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.date_time}', '{self.tutor_id}')"
