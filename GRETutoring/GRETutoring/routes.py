@@ -1,8 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request
 from GRETutoring import app, db, bcrypt
 from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
-from GRETutoring.models import Student, Tutor, Event
-from flask_login import login_user, current_user, logout_user, login_required
+from GRETutoring.models import User, Event, FreeSlot
+from flask_login import login_user, current_user, logout_user
+from flask_login import login_required
 import secrets
 import os
 from PIL import Image
@@ -102,6 +103,21 @@ sample_schedule = {"Monday": ( "15 March",
 
 
 
+# def login_required(role="ANY"):
+#     def wrapper(fn):
+#         @wraps(fn)
+#         def decorated_view(*args, **kwargs):
+#
+#             if not current_user.is_authenticated():
+#                return app.login_manager.unauthorized()
+#             urole = app.login_manager.reload_user().get_urole()
+#             if ( (urole != role) and (role != "ANY")):
+#                 return app.login_manager.unauthorized()
+#             return fn(*args, **kwargs)
+#         return decorated_view
+#     return wrapper
+
+
 
 @app.route('/')
 @app.route('/home')
@@ -121,7 +137,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Student(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Student')
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}! You are now able to login', 'success')
@@ -136,7 +152,7 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        student = Student.query.filter_by(email=form.email.data).first()
+        student = User.query.filter_by(email=form.email.data).first()
         if student and bcrypt.check_password_hash(student.password, form.password.data):
             login_user(student, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -220,13 +236,47 @@ def message():
 
 @app.route('/become_tutor', methods=['GET', 'POST'])
 def become_tutor():
+    if current_user.is_authenticated:
+        flash(f"You already have an account as a {current_user.role.lower()}.", 'info')
+        return redirect(url_for('home'))
     form = TutorRegistrationForm()
     if form.validate_on_submit():
-        flash(f'Your application has been submitted. If we think you are a good fit, we will contact you for an interview. Thank you for your application!', 'success')
-        return redirect(url_for('home'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            flash('A user with this email already exists. Please login if you already have an account.', 'danger')
+        else:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Tutor')
+            db.session.add(tutor)
+            db.session.commit()
+
+            flash(f'Your application has been submitted. If we think you are a good fit, we will contact you for an interview. Thank you for your application!', 'success')
+            return redirect(url_for('home'))
+
 
 
     return render_template("become_tutor.html", title="Register", form=form)
+
+
+
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('home'))
+#     form = RegistrationForm()
+#     if form.validate_on_submit():
+#         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+#         user = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Student')
+#         db.session.add(user)
+#         db.session.commit()
+#         flash(f'Account created for {form.username.data}! You are now able to login', 'success')
+#         return redirect(url_for('login'))
+#
+#
+#     return render_template("register.html", title="Register", form=form)
+
+
+
 
 
 def save_picture(form_picture):
