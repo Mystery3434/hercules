@@ -28,7 +28,7 @@ class Event(db.Model):
     tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.date_time}', '{self.student_id}', '{self.tutor_id}')"
+        return f"Class('{self.date_time}', '{self.student_id}', '{self.tutor_id}')"
 
 
 class FreeSlot(db.Model):
@@ -37,7 +37,7 @@ class FreeSlot(db.Model):
     tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.date_time}', '{self.tutor_id}')"
+        return f"FreeSlot('{self.date_time}', '{self.tutor_id}')"
 
 # class Student(db.Model, UserMixin):
 #     id = db.Column(db.Integer, primary_key=True)

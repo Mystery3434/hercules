@@ -553,6 +553,24 @@ Main Components
     background: #f7bd7f;
 }
 
+.cd-schedule .single-event[data-event="tutor-free-slot"],
+.cd-schedule [data-event="tutor-free-slot"] .header-bg {
+    background: #b4b8b9;
+}
+
+.cd-schedule .single-event[data-event="tutor-free-slot"]:hover {
+    background: #606161;
+}
+
+.cd-schedule .single-event[data-event="tutor-selected-slot"],
+.cd-schedule [data-event="tutor-selected-slot"] .header-bg {
+    background: #d47508;
+}
+
+.cd-schedule .single-event[data-event="tutor-selected-slot"]:hover {
+    background: #f38302;
+}
+
 .cd-schedule .single-event[data-event="free-slot"],
 .cd-schedule [data-event="free-slot"] .header-bg {
     background: rgb(1, 124, 1);

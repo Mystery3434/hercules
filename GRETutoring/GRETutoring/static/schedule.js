@@ -87,12 +87,22 @@ jQuery(document).ready(function($){
 				event.preventDefault();
 				// console.log(this);
 				// console.log($(this).parent());
+				
 				oldState =  $(this).parent().attr("data-event");	
 				// console.log(oldState);
-				
+				console.log(oldState);
 				current =  $(this).parent();
 				// console.log(current);
-				if( !self.animating ) self.openModal($(this));
+				if (oldState != "tutor-free-slot" && oldState != "tutor-selected-slot"){
+					if( !self.animating ) self.openModal($(this));
+				}
+				else if (oldState == "tutor-free-slot"){
+					$(this).parent().attr("data-event", "tutor-selected-slot");
+				}
+				else if (oldState == "tutor-selected-slot"){
+					$(this).parent().attr("data-event", "tutor-free-slot");
+				}
+				
 				// console.log(state);
 				// $(this).parent().attr("data-event", state);
 				// console.log(state);
@@ -567,5 +577,44 @@ jQuery(document).ready(function($){
 		// 	console.log(typeof(listItems[i].children[0]));
 			
 		// }
+	});
+
+
+	$("#add_free_slots").on('click', function(){
+		const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+		var len;
+		
+		var updatedSchedule = {
+			'week_start': $(".events-group > .top-info > h4").first().text(),
+			'selected': []
+		};
+
+		for (var i = 0; i<7; i++){
+			
+			var listItems = $(".events-group > #" + days[i]).children();
+			
+
+			len = listItems.length;
+			for (var j = 0 ; j < len; j++){
+				if($(listItems[j]).attr('data-event') == "tutor-selected-slot"){
+					var current = {"day": days[i],
+									"start": $(listItems[j]).attr('data-start'),
+									"end": $(listItems[j]).attr('data-end')	};
+					updatedSchedule['selected'].push(current);
+					console.log(updatedSchedule);
+				}
+					
+			}
+		}
+		$.ajax({
+			type: "POST",
+			contentType: "application/json;charset=utf-8",
+			url: "/add_free_slots",
+			traditional: "true",
+			data: JSON.stringify({updatedSchedule}),
+			dataType: "json"
+			});
+	
+		
 	});
 });

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring import app, db, bcrypt
 from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
 from GRETutoring.models import User, Event, FreeSlot
@@ -7,6 +7,8 @@ from flask_login import login_required
 import secrets
 import os
 from PIL import Image
+from datetime import datetime, timedelta
+import calendar
 
 COST_PER_LESSON = 80
 total_cost = 69
@@ -102,6 +104,25 @@ sample_schedule = {"Monday": ( "15 March",
                                    ])}
 
 
+sample_schedule_tutor_free_slots_each_day = [{"data-start": f"{i}:00", "data-end": f"{i+1}:00",
+                                                  "data-content": "", "data-event": "tutor-free-slot",
+                                                  "event-name": ""} for i in range(0, 24)
+                                                 ]
+sample_schedule_tutor_free_slots = {"Monday": ( "15 March",
+                                                sample_schedule_tutor_free_slots_each_day),
+                   "Tuesday": ("16 March", sample_schedule_tutor_free_slots_each_day
+                       ),
+
+                    "Wednesday": ( "17 March",
+                                   sample_schedule_tutor_free_slots_each_day),
+                   "Thursday": ( "18 March",
+                                 sample_schedule_tutor_free_slots_each_day),
+                   "Friday": ( "19 March",
+                               sample_schedule_tutor_free_slots_each_day),
+                   "Saturday": ( "20 March",
+                                 sample_schedule_tutor_free_slots_each_day),
+                   "Sunday":( "21 March",
+                              sample_schedule_tutor_free_slots_each_day)}
 
 # def login_required(role="ANY"):
 #     def wrapper(fn):
@@ -169,9 +190,96 @@ def logout():
     return redirect(url_for('home'))
 
 
+def load_week(schedule, offset):
+    current_day = datetime.today()
+    days_to_subtract = current_day.weekday()
+    current_day += timedelta(offset)
+    start_of_week = current_day - timedelta(days_to_subtract)
+    start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    if current_user.role=="Tutor":
+        all_classes = Event.query.filter(Event.date_time >= start_of_week, Event.date_time < (start_of_week + timedelta(7)), Event.tutor_id==current_user.id).all()
+        all_free_slots = FreeSlot.query.filter(FreeSlot.date_time >= start_of_week, FreeSlot.date_time < (start_of_week + timedelta(7)), FreeSlot.tutor_id==current_user.id).all()
+
+    else:
+        all_classes = []
+        all_free_slots = []
+
+    temp = {"data-start": "14:00", "data-end": "15:15",
+     "data-content": "event-yoga-1",
+     "data-event": "booked-slot", "event-name": "Yoga Level 1"}
+
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    if offset % 7 != 0:
+        abort(403)
+    for day in days_of_week:
+        for event in all_classes:
+            start_time = event.date_time
+        events = schedule[day][1]
+        formatted_date = (current_day - timedelta(days_to_subtract)).strftime("%d %b %Y")
+        schedule[day] = (formatted_date, events)
+        days_to_subtract -= 1
+
+    return schedule
+
+
+
 @app.route('/schedule', methods=["GET", "POST"])
+@login_required
 def schedule():
-    return render_template("schedule.html", title="Schedule", schedule=sample_schedule, selected=False)
+    offset = int(request.args.get('offset')) if request.args.get('offset') else 0
+    schedule = load_week(sample_schedule, offset)
+    return render_template("schedule.html", title="Schedule", schedule=schedule, selected=False, offset=offset)
+
+
+@app.route('/free_slots', methods=["GET", "POST"])
+@login_required
+def free_slots():
+    if current_user.role != "Tutor":
+        abort(403)
+    offset = int(request.args.get('offset')) if request.args.get('offset') else 0
+    schedule = load_week(sample_schedule_tutor_free_slots, offset)
+    return render_template("free_slots.html", title="Free Slots", schedule=schedule, selected=False, offset=offset)
+
+
+def push_free_slots_to_db(schedule):
+    the_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    week_start = datetime.strptime(schedule["updatedSchedule"]["week_start"].strip(), "%d %b %Y")
+
+
+    for slot in schedule["updatedSchedule"]["selected"]:
+        day = slot["day"]
+        start = slot["start"]
+        end = slot["end"]
+        diff = the_days.index(day)
+        class_date = week_start + timedelta(diff)
+        start_hour, start_minute = start.split(":")
+        class_date = class_date.replace(hour=int(start_hour), minute=int(start_minute))
+        class_event = FreeSlot(date_time = class_date, tutor_id = current_user.id )
+        db.session.add(class_event)
+        db.session.commit()
+
+    print("Reached here")
+
+
+
+@app.route('/add_free_slots', methods=["GET", "POST"])
+@login_required
+def add_free_slots():
+    if current_user.role != "Tutor":
+        abort(403)
+
+    offset = int(request.args.get('offset')) if request.args.get('offset') else 0
+
+    if request.method == 'POST':
+        updated_schedule = request.get_json()
+        print(updated_schedule)
+        flash("Your free time slots have been updated.", "success")
+        push_free_slots_to_db(updated_schedule)
+
+
+    return redirect(url_for("schedule", title="Free Slots", schedule=sample_schedule, offset = offset, selected=False))
 
 
 

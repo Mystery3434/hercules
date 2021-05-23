@@ -10,7 +10,7 @@
 <!-- <script src="{{ url_for('static', filename='schedule3_util.js') }}"></script> -->
 
 <body>
-    <h1> Hello, this is the Schedule page.</h1>
+    <h1> Hello, this is the Schedule Free Slots page.</h1>
     <!-- <script>
         
         var schedule = JSON.parse('{{ schedule | tojson | safe}}');
@@ -20,25 +20,13 @@
     <br />
     <p class="codyhouse">link to the site of Codyhouse: <a href="https://codyhouse.co/gem/schedule-template/">https://codyhouse.co/gem/schedule-template/</a></p>
 
-<div class="container center">
-    {% if current_user.role=="Tutor" %}
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-                <a class="btn btn-primary btn-lg button-theme m-4"  href="{{ url_for('free_slots') }}">Click to add your available time slots</a>
-            </div>
-        <div class="col-3"></div>
-
-    </div>
-    {% endif %}
-</div>
 
 
     <div class="row">
         <div class="col-5"></div>
         <div class="col-3">
-            <a href="{{ url_for('schedule', offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
-            <a href="{{ url_for('schedule', offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
+            <a href="{{ url_for('free_slots', offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
+            <a href="{{ url_for('free_slots', offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
         </div>
         <div class="col-4"></div>
 
@@ -357,9 +345,9 @@
     </div>
     <!-- .cd-schedule -->
     
-    <a href = "{{ url_for('booking') }}">
+    <a href = "{{ url_for('add_free_slots') }}">
     <!-- <form  method = "post" action = "{{ url_for('booking') }}"> -->
-        <input class="btn btn-primary button-theme center" id="book_slots" type="button"  value="Book these slots." >
+        <input class="btn btn-primary button-theme center" id="add_free_slots" type="button"  value="Add these slots." >
     </a>
     <!-- </form> -->
 </body>
