@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable=False, default = "Student")
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg') #nullable=False, since they have to have at least the default
     password = db.Column(db.String(60), nullable=False)
+    about = db.Column(db.Text(), nullable=True, default = "Bio")
     student_classes = db.relationship('Event', backref='student', lazy=True, foreign_keys='Event.student_id')
     tutor_classes = db.relationship('Event', backref='tutor', lazy=True, foreign_keys='Event.tutor_id')
     tutor_free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)

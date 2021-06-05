@@ -66,6 +66,8 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email() ])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    about = TextAreaField('Enter a short bio talking about you and your teaching style. Include anything that you think is relevant for your students.',
+                          validators=[Length(max=1500)])
     submit = SubmitField('Update')
 
     def validate_username(self, username):

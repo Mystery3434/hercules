@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
 				console.log(oldState);
 				current =  $(this).parent();
 				// console.log(current);
-				if (oldState != "tutor-free-slot" && oldState != "tutor-selected-slot"){
+				if (oldState != "tutor-free-slot" && oldState != "tutor-selected-slot" && oldState != "tutor-available-slot"){
 					if( !self.animating ) self.openModal($(this));
 				}
 				else if (oldState == "tutor-free-slot"){

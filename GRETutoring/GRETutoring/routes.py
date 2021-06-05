@@ -13,6 +13,10 @@ import calendar
 COST_PER_LESSON = 80
 total_cost = 69
 
+
+sample_tutors = [{"username":"Lmao", "image_file": "default.jpg", "about": "Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium"},
+                 {"username":"water", "image_file":"default.jpg", "about": " Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium"}]
+
 sample_schedule = {"Monday": ( "15 March",
                        [{"data-start":"09:30", "data-end":"10:30", "data-content":"event-abs-circuit", "data-event":"booked-slot", "event-name":"Booked Slot"},
                         {"data-start": "10:30", "data-end": "11:00", "data-content": "event-rowing-workout",
@@ -82,8 +86,7 @@ sample_schedule = {"Monday": ( "15 March",
                                    ]),
                    "Saturday": ( "20 March",
                                    [
-{"data-start": "09:30", "data-end": "10:30", "data-content": "event-abs-circuit",
-                            "data-event": "event-1", "event-name": "Abs Circuit"},
+
 {"data-start": "11:00", "data-end": "12:30",
                                         "data-content": "event-rowing-workout",
                                         "data-event": "event-2", "event-name": "Rowing Workout"},
@@ -205,24 +208,132 @@ def load_week(schedule, offset):
         all_classes = []
         all_free_slots = []
 
-    temp = {"data-start": "14:00", "data-end": "15:15",
-     "data-content": "event-yoga-1",
-     "data-event": "booked-slot", "event-name": "Yoga Level 1"}
+
 
     days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     if offset % 7 != 0:
         abort(403)
+
     for day in days_of_week:
-        for event in all_classes:
-            start_time = event.date_time
         events = schedule[day][1]
         formatted_date = (current_day - timedelta(days_to_subtract)).strftime("%d %b %Y")
-        schedule[day] = (formatted_date, events)
+        schedule[day] = (formatted_date, [])
         days_to_subtract -= 1
+
+    temp = {"data-start": "14:00", "data-end": "15:15",
+            "data-content": "event-yoga-1",
+            "data-event": "booked-slot", "event-name": "Yoga Level 1"}
+
+    for event in all_classes:
+        start_time = event.date_time
+        week_day =  start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, event_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        end_hour_min =  datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "booked-slot", "event-name":"Scheduled Lesson"}
+        event_list.append(event_dict)
+        schedule[start_day] = (formatted_date, event_list)
+
+    for free_slot in all_free_slots:
+        start_time = free_slot.date_time
+        week_day = start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, free_slot_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                      "data-event": "tutor-available-slot", "event-name": "Free Slot"}
+        free_slot_list.append(free_slot_dict)
+        schedule[start_day] = (formatted_date, free_slot_list)
+
+    print(schedule)
 
     return schedule
 
+
+
+
+def load_week_free_slots(schedule, offset):
+    current_day = datetime.today()
+    days_to_subtract = current_day.weekday()
+    current_day += timedelta(offset)
+    start_of_week = current_day - timedelta(days_to_subtract)
+    start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    if current_user.role=="Tutor":
+        all_classes = Event.query.filter(Event.date_time >= start_of_week, Event.date_time < (start_of_week + timedelta(7)), Event.tutor_id==current_user.id).all()
+        all_free_slots = FreeSlot.query.filter(FreeSlot.date_time >= start_of_week, FreeSlot.date_time < (start_of_week + timedelta(7)), FreeSlot.tutor_id==current_user.id).all()
+
+    else:
+        all_classes = []
+        all_free_slots = []
+
+
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    if offset % 7 != 0:
+        abort(403)
+
+    for day in days_of_week:
+        events = schedule[day][1]
+        formatted_date = (current_day - timedelta(days_to_subtract)).strftime("%d %b %Y")
+        schedule[day] = (formatted_date, [])
+        days_to_subtract -= 1
+
+    temp = {"data-start": "14:00", "data-end": "15:15",
+            "data-content": "event-yoga-1",
+            "data-event": "booked-slot", "event-name": "Yoga Level 1"}
+
+
+
+    all_start_times = {day:set() for day in days_of_week}
+
+    for event in all_classes:
+        start_time = event.date_time
+        week_day =  start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, event_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        all_start_times[start_day].add(start_hour_min)
+        end_hour_min =  datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "booked-slot", "event-name":"Scheduled Lesson"}
+        event_list.append(event_dict)
+        schedule[start_day] = (formatted_date, event_list)
+
+    for free_slot in all_free_slots:
+        start_time = free_slot.date_time
+        week_day = start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, free_slot_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        all_start_times[start_day].add(start_hour_min)
+        end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                      "data-event": "tutor-selected-slot", "event-name": "Free Slot"}
+        free_slot_list.append(free_slot_dict)
+        schedule[start_day] = (formatted_date, free_slot_list)
+
+
+    days_to_subtract = current_day.weekday()
+
+    for day in days_of_week:
+        schedule_tutor_free_slots_each_day = [{"data-start": f"{i}:00", "data-end": f"{i+1}:00",
+                                               "data-content": "", "data-event": "tutor-free-slot",
+                                               "event-name": ""} for i in range(0, 24) if  f"{i}:00" not in all_start_times[day] and f"0{i}:00" not in all_start_times[day]]
+        events = schedule[day][1]
+        events = events + schedule_tutor_free_slots_each_day
+        formatted_date = (current_day - timedelta(days_to_subtract)).strftime("%d %b %Y")
+        schedule[day] = (formatted_date, events)
+        days_to_subtract -= 1
+    print(schedule)
+
+    return schedule
 
 
 @app.route('/schedule', methods=["GET", "POST"])
@@ -239,15 +350,16 @@ def free_slots():
     if current_user.role != "Tutor":
         abort(403)
     offset = int(request.args.get('offset')) if request.args.get('offset') else 0
-    schedule = load_week(sample_schedule_tutor_free_slots, offset)
+    schedule = load_week_free_slots(sample_schedule_tutor_free_slots, offset)
     return render_template("free_slots.html", title="Free Slots", schedule=schedule, selected=False, offset=offset)
 
 
 def push_free_slots_to_db(schedule):
     the_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     week_start = datetime.strptime(schedule["updatedSchedule"]["week_start"].strip(), "%d %b %Y")
-
-
+    week_start = week_start.replace(hour=0, minute=0, second=0, microsecond=0)
+    FreeSlot.query.filter(FreeSlot.date_time >= week_start, FreeSlot.date_time < (week_start + timedelta(7)), FreeSlot.tutor_id == current_user.id).delete()
+    db.session.commit()
     for slot in schedule["updatedSchedule"]["selected"]:
         day = slot["day"]
         start = slot["start"]
@@ -256,6 +368,7 @@ def push_free_slots_to_db(schedule):
         class_date = week_start + timedelta(diff)
         start_hour, start_minute = start.split(":")
         class_date = class_date.replace(hour=int(start_hour), minute=int(start_minute))
+
         class_event = FreeSlot(date_time = class_date, tutor_id = current_user.id )
         db.session.add(class_event)
         db.session.commit()
@@ -279,7 +392,7 @@ def add_free_slots():
         push_free_slots_to_db(updated_schedule)
 
 
-    return redirect(url_for("schedule", title="Free Slots", schedule=sample_schedule, offset = offset, selected=False))
+    return redirect(url_for("schedule", title="Free Slots",  offset = offset, selected=False))
 
 
 
@@ -341,6 +454,15 @@ def payment():
 @app.route('/message')
 def message():
     return render_template("message.html")
+
+@app.route('/find_tutor')
+@login_required
+def find_tutor():
+    if current_user.role == "Tutor":
+        abort(403)
+    tutors = User.query.filter_by(role="Tutor").all()
+    print(tutors)
+    return render_template("find_tutor.html", tutors=tutors)
 
 @app.route('/become_tutor', methods=['GET', 'POST'])
 def become_tutor():
@@ -412,12 +534,15 @@ def account():
 
         current_user.username = form.username.data
         current_user.email = form.email.data
+        if form.about.data:
+            current_user.about = form.about.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.about.data = current_user.about
 
     image_file = url_for('static', filename="profile_pics/" + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)

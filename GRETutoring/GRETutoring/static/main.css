@@ -93,6 +93,13 @@ a.article-title:hover {
   margin-right: 16px;
 }
 
+.tutor-list-img {
+height: 90px;
+width: 90px;
+margin-right: 20px;
+margin-bottom: 20px;
+}
+
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;

@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% for tutor in tutors %}
+        <article class="media content-section">
+          <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + tutor.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ tutor.username }}</a>
+                <p class="article-content"> {{tutor.about}} </p>
+
+            </div>
+              <button class="mr-2 btn btn-primary button-theme" href="#">View Schedule and Book Lesson</button>
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}
+
