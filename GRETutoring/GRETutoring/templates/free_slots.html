@@ -345,7 +345,7 @@
     </div>
     <!-- .cd-schedule -->
     
-    <a href = "{{ url_for('add_free_slots') }}">
+    <a href = "{{ url_for('add_free_slots', tutor_username=current_user.username) }}">
     <!-- <form  method = "post" action = "{{ url_for('booking') }}"> -->
         <input class="btn btn-primary button-theme center" id="add_free_slots" type="button"  value="Add these slots." >
     </a>

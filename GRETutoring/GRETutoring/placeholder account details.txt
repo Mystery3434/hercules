@@ -3,3 +3,4 @@ sally@testing.com: sally
 carl@testing.com: carl
 claire@testing.com: claire
 gabriel@testing.com: gabriel
+student@gmail.com: student

@@ -6,12 +6,25 @@ var cost = 0;
 
 const LESSON_COST = 80;
 
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+
 jQuery(document).ready(function($){
 	var transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
 	var transitionsSupported = ( $('.csstransitions').length > 0 );
 	//if browser does not support transitions - use a different event to trigger them
 	if( !transitionsSupported ) transitionEnd = 'noTransition';
-	
+
 	
 	//should add a loding while the events are organized 
 
@@ -236,7 +249,7 @@ jQuery(document).ready(function($){
 		if (event.parent().attr('data-event')=="booked-slot"){
 			this.modalBody.find('.event-info').load('booked_slot', function(data){
 			//once the event content has been loaded
-			
+				
 				self.element.addClass('content-loaded');
 			
 			});
@@ -534,6 +547,8 @@ jQuery(document).ready(function($){
 		const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 		var len;
 		
+		var tutor_username = getQueryVariable('tutor_username')
+		
 		var updatedSchedule = {
 			'week_start': $(".events-group > .top-info > h4").first().text(),
 			'selected': []
@@ -556,12 +571,15 @@ jQuery(document).ready(function($){
 					
 			}
 		}
+
+		var to_pass_to_flask = {'tutor_username':tutor_username, 'updatedSchedule':updatedSchedule};
+
 		$.ajax({
 			type: "POST",
 			contentType: "application/json;charset=utf-8",
 			url: "/booking",
 			traditional: "true",
-			data: JSON.stringify({updatedSchedule}),
+			data: JSON.stringify({to_pass_to_flask}),
 			dataType: "json"
 			});
 	

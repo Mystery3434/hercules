@@ -37,8 +37,8 @@
     <div class="row">
         <div class="col-5"></div>
         <div class="col-3">
-            <a href="{{ url_for('schedule', offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
-            <a href="{{ url_for('schedule', offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
+            <a href="{{ url_for('schedule', tutor_username = tutor_username, offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
+            <a href="{{ url_for('schedule', tutor_username = tutor_username, offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
         </div>
         <div class="col-4"></div>
 
@@ -357,7 +357,7 @@
     </div>
     <!-- .cd-schedule -->
     
-    <a href = "{{ url_for('booking') }}">
+    <a href = "{{ url_for('booking', tutor_username=tutor_username) }}">
     <!-- <form  method = "post" action = "{{ url_for('booking') }}"> -->
         <input class="btn btn-primary button-theme center" id="book_slots" type="button"  value="Book these slots." >
     </a>

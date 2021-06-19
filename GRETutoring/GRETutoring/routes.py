@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, session
 from GRETutoring import app, db, bcrypt
 from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
 from GRETutoring.models import User, Event, FreeSlot
@@ -193,20 +193,30 @@ def logout():
     return redirect(url_for('home'))
 
 
-def load_week(schedule, offset):
+def load_week(schedule, offset, tutor_username):
     current_day = datetime.today()
     days_to_subtract = current_day.weekday()
     current_day += timedelta(offset)
     start_of_week = current_day - timedelta(days_to_subtract)
     start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
 
+    all_busy_slots = []
+
     if current_user.role=="Tutor":
         all_classes = Event.query.filter(Event.date_time >= start_of_week, Event.date_time < (start_of_week + timedelta(7)), Event.tutor_id==current_user.id).all()
         all_free_slots = FreeSlot.query.filter(FreeSlot.date_time >= start_of_week, FreeSlot.date_time < (start_of_week + timedelta(7)), FreeSlot.tutor_id==current_user.id).all()
 
     else:
-        all_classes = []
-        all_free_slots = []
+        tutor = User.query.filter(User.username == tutor_username).first()
+        # print(tutor_username)
+        # print(tutor)
+        if tutor:
+            all_classes = Event.query.filter(Event.date_time >= start_of_week, Event.date_time < (start_of_week + timedelta(7)), Event.tutor_id==tutor.id, Event.student_id==current_user.id).all()
+            all_free_slots = FreeSlot.query.filter(FreeSlot.date_time >= start_of_week, FreeSlot.date_time < (start_of_week + timedelta(7)), FreeSlot.tutor_id==tutor.id).all()
+            all_busy_slots = Event.query.filter(Event.date_time >= start_of_week, Event.date_time < (start_of_week + timedelta(7)), Event.tutor_id==tutor.id, Event.student_id!=current_user.id).all()
+        else:
+            all_classes = []
+            all_free_slots = []
 
 
 
@@ -237,6 +247,18 @@ def load_week(schedule, offset):
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
 
+    for busy_slot in all_busy_slots:
+        start_time = busy_slot.date_time
+        week_day =  start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, busy_slot_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        end_hour_min =  datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        busy_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "busy-slot", "event-name":"Tutor Busy"}
+        busy_slot_list.append(busy_slot_dict)
+        schedule[start_day] = (formatted_date, busy_slot_list)
+
     for free_slot in all_free_slots:
         start_time = free_slot.date_time
         week_day = start_time.weekday()
@@ -245,8 +267,12 @@ def load_week(schedule, offset):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+        if current_user.role=="Tutor":
+            free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
                       "data-event": "tutor-available-slot", "event-name": "Free Slot"}
+        else:
+            free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                              "data-event": "free-slot", "event-name": "Free Slot"}
         free_slot_list.append(free_slot_dict)
         schedule[start_day] = (formatted_date, free_slot_list)
 
@@ -339,9 +365,10 @@ def load_week_free_slots(schedule, offset):
 @app.route('/schedule', methods=["GET", "POST"])
 @login_required
 def schedule():
+    tutor_username = request.args.get('tutor_username')
     offset = int(request.args.get('offset')) if request.args.get('offset') else 0
-    schedule = load_week(sample_schedule, offset)
-    return render_template("schedule.html", title="Schedule", schedule=schedule, selected=False, offset=offset)
+    schedule = load_week(sample_schedule, offset, tutor_username)
+    return render_template("schedule.html", title="Schedule", tutor_username=tutor_username, schedule=schedule, selected=False, offset=offset)
 
 
 @app.route('/free_slots', methods=["GET", "POST"])
@@ -351,7 +378,7 @@ def free_slots():
         abort(403)
     offset = int(request.args.get('offset')) if request.args.get('offset') else 0
     schedule = load_week_free_slots(sample_schedule_tutor_free_slots, offset)
-    return render_template("free_slots.html", title="Free Slots", schedule=schedule, selected=False, offset=offset)
+    return render_template("free_slots.html", title="Free Slots", tutor_username=current_user.username, schedule=schedule, selected=False, offset=offset)
 
 
 def push_free_slots_to_db(schedule):
@@ -376,6 +403,33 @@ def push_free_slots_to_db(schedule):
     print("Reached here")
 
 
+def push_booked_slots_to_db(schedule, tutor_username):
+    print("Entered this function successfully!")
+    the_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    week_start = datetime.strptime(schedule["updatedSchedule"]["week_start"].strip(), "%d %b %Y")
+    week_start = week_start.replace(hour=0, minute=0, second=0, microsecond=0)
+    tutor = User.query.filter(User.username == tutor_username).first()
+
+    db.session.commit()
+    for slot in schedule["updatedSchedule"]["selected"]:
+        day = slot["day"]
+        start = slot["start"]
+        end = slot["end"]
+        diff = the_days.index(day)
+        class_date = week_start + timedelta(diff)
+        start_hour, start_minute = start.split(":")
+        class_date = class_date.replace(hour=int(start_hour), minute=int(start_minute))
+
+        class_event = Event(date_time = class_date, tutor_id = tutor.id, student_id=current_user.id)
+
+        # Delete the free slot before adding the new slot
+        FreeSlot.query.filter(FreeSlot.date_time == class_date, FreeSlot.tutor_id == tutor.id).delete()
+
+        db.session.add(class_event)
+        db.session.commit()
+
+    print("Reached here")
+
 
 @app.route('/add_free_slots', methods=["GET", "POST"])
 @login_required
@@ -392,31 +446,74 @@ def add_free_slots():
         push_free_slots_to_db(updated_schedule)
 
 
-    return redirect(url_for("schedule", title="Free Slots",  offset = offset, selected=False))
+    return redirect(url_for("schedule", title="Free Slots", tutor_username=current_user.username, offset = offset, selected=False))
 
 
-
+updatedSchedule={}
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
-    global total_cost
+    global updated_schedule
+    total_cost = 0 # Temporary
+    #tutor_username = request.args.get('tutor_username')
     form = ScheduleForm()
+    #updated_schedule = request.args.get('updated_schedule') if request.args.get('updated_schedule') else request.get_json()
+
+    if request.method=="POST":
+        if request.get_json():
+            passed_variables = request.get_json()['to_pass_to_flask']
+            tutor_username = passed_variables['tutor_username']
+            updated_schedule = passed_variables['updatedSchedule']
+        else:
+            tutor_username = request.args.get('tutor_username')
+
+        print(updated_schedule, tutor_username)
+
+    else:
+        tutor_username = request.args.get('tutor_username')
+        print(updated_schedule, tutor_username)
+        # return render_template("booking.html", form=form, total_cost=total_cost, updated_schedule=updated_schedule,
+        #                        tutor_username=tutor_username)
+
+
+
     if form.validate_on_submit():
+        updated_schedule = {"updatedSchedule":updated_schedule}
+        push_booked_slots_to_db(updated_schedule, tutor_username)
+        flash("Your session will be booked after payment.", "success")
+        return redirect(url_for('payment', updated_schedule=updated_schedule, tutor_username = tutor_username))
 
-        flash('Please complete the payment', 'success')
-        return redirect(url_for('payment'))
+    return render_template("booking.html", form=form, total_cost=total_cost, updated_schedule=updated_schedule, tutor_username=tutor_username)
 
-    if request.method == 'POST':
-        updated_schedule = request.get_json()
-        number_of_lessons = len(updated_schedule['updatedSchedule']['selected'])
-        total_cost = COST_PER_LESSON * number_of_lessons
-        print(updated_schedule)
-        print(total_cost)
-        return render_template("booking.html", form=form, total_cost=total_cost)
 
-    if request.method == 'GET':
-        return render_template("booking.html", form=form, total_cost=total_cost)
 
-    return render_template("booking.html", form=form, total_cost = total_cost)
+    # if request.method == 'POST':
+    #     updated_schedule = request.get_json()
+    #
+    #     # number_of_lessons = len(updated_schedule['updatedSchedule']['selected'])
+    #     # total_cost = COST_PER_LESSON * number_of_lessons
+    #     print(updated_schedule)
+    #     print(tutor_username)
+    #     if form.validate_on_submit():
+    #     #print(updated_schedule)
+    #     #print(total_cost)
+    #         push_booked_slots_to_db(updated_schedule, tutor_username)
+    #         flash("Your session will be booked after payment.", "success")
+    #         return redirect(url_for('payment', updated_schedule=updated_schedule, tutor_username = tutor_username))
+    #
+    #     #
+    #     # flash("Your session will be booked after payment.", "success")
+    #     # return redirect(url_for('payment', updated_schedule=updated_schedule, tutor_username = tutor_username))
+    #
+    #
+    #
+    #     #return render_template("payment.html", form=form, total_cost=total_cost)
+    #
+    # if request.method == 'GET':
+    #     updated_schedule = request.get_json()
+    #     print(updated_schedule,tutor_username )
+    #     return render_template("booking.html", form=form, total_cost=total_cost)
+    #
+    # return render_template("booking.html", form=form, total_cost = total_cost)
 
 
 @app.route('/cancel_booking', methods=['GET', 'POST'])
@@ -442,13 +539,16 @@ def selected_slot():
 def busy_slot():
     return render_template("busy_slot.html", testing_var=False)
 
-@app.route('/booked_slot')
+@app.route('/booked_slot', methods=['GET', 'POST'])
 def booked_slot():
     return render_template("booked_slot.html", testing_var=False)
 
 
 @app.route('/payment')
 def payment():
+    # tutor_username = request.args.get('tutor_username')
+    # updated_schedule = request.args.get('updated_schedule')
+    # push_booked_slots_to_db(updated_schedule, tutor_username)
     return render_template("payment.html")
 
 @app.route('/message')
@@ -460,8 +560,9 @@ def message():
 def find_tutor():
     if current_user.role == "Tutor":
         abort(403)
-    tutors = User.query.filter_by(role="Tutor").all()
-    print(tutors)
+    page = request.args.get('page', 1, type=int)
+    tutors = User.query.filter_by(role="Tutor").paginate(page=page, per_page=5)
+
     return render_template("find_tutor.html", tutors=tutors)
 
 @app.route('/become_tutor', methods=['GET', 'POST'])
