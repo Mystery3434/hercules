@@ -3,9 +3,79 @@
 {% block content %}
 <body>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='message.css') }}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var recipient = "";
+	var socket = io.connect('http://127.0.0.1:5000');
+
+	socket.on('connect', function() {
+		// socket.send('User has connected!');
+	});
+
+    associated_users = {{ users_json|safe }} ;
+    // console.log(associated_users);
+
+
+	socket.on('message', function(msg) {
+    // console.log("{{ current_user.username }}");
+    var today = new Date();
+    var hour = today.getHours();
+    var minutes = today.getMinutes();
+    var time = ""
+    if (minutes < 10){
+        time = hour + ":0" + minutes;
+       }
+       else{
+       time = hour + ":" + minutes;
+       }
+
+		$("#messages").append('<li class="clearfix"> <div class="message-data"><span class="message-data-time">' + time + '</span></div><div class="message my-message">'
+                        +msg+'</div></li>');
+		console.log('Received message');
+	});
+
+	$('#sendbutton').on('click', function() {
+        // var associated_users = "{{ users_json }}";
+
+        //
+
+        if ($('#myMessage').val().trim() != ''){
+            socket.emit("message", {"text": $('#myMessage').val(), "source_username": "{{ current_user.username }}", "target_username": recipient} );
+		    $('#myMessage').val('');
+		    }
+	});
+
+	$('#myMessage').keypress(function(e){
+        if(e.which == 13){//Enter key pressed
+            $('#sendbutton').click();//Trigger search button click event
+        }
+    });
+    
+    for (var i = 0; i < associated_users.length; i++) {
+     $('#' + associated_users[i].username).on('click', function(){
+        recipient = $(this).attr('id');
+        console.log($(this).attr('id'));
+        // $("#current_user").val(recipient);
+        document.getElementById("current_user").innerHTML = recipient;
+        
+        console.log("Current User", $("#current_user").val());
+        $("#messaging_controls").css("visibility","visible")
+
+        socket.emit('leave', {'source_username': "{{ current_user.username }}"});
+        socket.emit('join', {'source_username': "{{ current_user.username }}", 'target_username': $(this).attr('id')});
+    });
+    }
+
+});
+</script>
+
+
 
     
 <div class="container">
@@ -20,86 +90,88 @@
                     <input type="text" class="form-control" placeholder="Search...">
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0">
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Vincent Porter</div>
-                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
-                        </div>
-                    </li>
-                    <li class="clearfix active">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Aiden Chavez</div>
-                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Mike Thomas</div>
-                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Christian Kelly</div>
-                            <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Monica Ward</div>
-                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Dean Henry</div>
-                            <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>
-                        </div>
-                    </li>
+                    {% for user in users %}
+                        <li class="clearfix" id="{{ user.username }}">
+                            <img src="{{ user.image_file }}" alt="avatar">
+                            <div class="about">
+                                <div class="name mt-2">{{ user.username }}</div>
+
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <!--<li class="clearfix active">-->
+                        <!--<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">-->
+                        <!--<div class="about">-->
+                            <!--<div class="name">Aiden Chavez</div>-->
+                            <!--<div class="status"> <i class="fa fa-circle online"></i> online </div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="clearfix">-->
+                        <!--<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">-->
+                        <!--<div class="about">-->
+                            <!--<div class="name">Mike Thomas</div>-->
+                            <!--<div class="status"> <i class="fa fa-circle online"></i> online </div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="clearfix">-->
+                        <!--<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">-->
+                        <!--<div class="about">-->
+                            <!--<div class="name">Christian Kelly</div>-->
+                            <!--<div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="clearfix">-->
+                        <!--<img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">-->
+                        <!--<div class="about">-->
+                            <!--<div class="name">Monica Ward</div>-->
+                            <!--<div class="status"> <i class="fa fa-circle online"></i> online </div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="clearfix">-->
+                        <!--<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">-->
+                        <!--<div class="about">-->
+                            <!--<div class="name">Dean Henry</div>-->
+                            <!--<div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
             </div>
             <div class="chat">
                 <div class="chat-header clearfix">
                     <div class="row">
                         <div class="col-lg-6">
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info" id="profile_pic">
+                                <!-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"> -->
                             </a>
                             <div class="chat-about">
-                                <h6 class="m-b-0">Aiden Chavez</h6>
-                                <small>Last seen: 2 hours ago</small>
+                                <h6 class="m-b-0" id="current_user"></h6>
+                                <!-- <small>Last seen: 2 hours ago</small> -->
                             </div>
                         </div>
-                        <div class="col-lg-6 hidden-sm text-right">
+                        <!-- <div class="col-lg-6 hidden-sm text-right">
                             <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
                             <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
                             <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
                             <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="chat-history">
-                    <ul class="m-b-0">
-                        <li class="clearfix">
-                            <div class="message-data text-right">
+                    <ul class="m-b-0" id="messages">
+                        <li class="clearfix" style="visibility: hidden;">
+                            <div class="message-data text-right" >
                                 <span class="message-data-time">10:10 AM, Today</span>
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
                             </div>
                             <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
                         </li>
-                        <li class="clearfix">
+                        <li class="clearfix" style="visibility: hidden;">
                             <div class="message-data">
                                 <span class="message-data-time">10:12 AM, Today</span>
                             </div>
                             <div class="message my-message">Are we meeting today?</div>
-                        </li>
-                        <li class="clearfix">
+                        </li> 
+                        <li class="clearfix" style="visibility: hidden;">
                             <div class="message-data">
                                 <span class="message-data-time">10:15 AM, Today</span>
                             </div>
@@ -107,12 +179,12 @@
                         </li>
                     </ul>
                 </div>
-                <div class="chat-message clearfix">
+                <div class="chat-message clearfix" id="messaging_controls" style="visibility: hidden;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            <span class="input-group-text"><i class="fa fa-send" id="sendbutton"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter text here...">
+                        <input type="text" class="form-control" placeholder="Enter text here..." id="myMessage">
                     </div>
                 </div>
             </div>

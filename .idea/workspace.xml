@@ -2,15 +2,139 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f3c4fc4-4216-4033-8b1d-1479a1102a4e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/static/schedule.css" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/static/schedule.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/static/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/static/schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_asyncbackend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_asyncio_backend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_curio_backend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_immutable_attr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_immutable_ctx.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/_trio_backend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/asyncbackend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/asyncquery.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/asyncresolver.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/dnssec.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/dnssec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/e164.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/e164.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/edns.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/edns.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/entropy.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/entropy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/enum.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/exception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/flags.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/flags.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/grange.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/grange.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/immutable.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/inet.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/inet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ipv4.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ipv4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ipv6.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ipv6.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/name.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/name.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/namedict.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/namedict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/node.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/opcode.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/opcode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/query.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/query.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rcode.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rcode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdata.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdata.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdataclass.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdataclass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdatatype.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdatatype.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/AFSDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/AFSDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/AMTRELAY.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/AVC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/AVC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CAA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CDNSKEY.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CDNSKEY.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CDS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CDS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CERT.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CERT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CNAME.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CNAME.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CSYNC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/CSYNC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DLV.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DLV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DNAME.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DNAME.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DNSKEY.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DNSKEY.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/DS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/EUI48.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/EUI48.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/EUI64.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/EUI64.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/GPOS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/GPOS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/HINFO.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/HINFO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/HIP.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/HIP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/ISDN.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/ISDN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/LOC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/LOC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/MX.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/MX.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NINFO.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC3.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC3PARAM.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/NSEC3PARAM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/OPENPGPKEY.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/OPENPGPKEY.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/OPT.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/PTR.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/PTR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RP.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RRSIG.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RRSIG.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RT.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/RT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SMIMEA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SOA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SOA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SPF.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SPF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SSHFP.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/SSHFP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TKEY.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TLSA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TLSA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TSIG.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TXT.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/TXT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/URI.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/URI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/X25.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/X25.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/ANY/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/CH/A.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/CH/A.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/A.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/A.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/AAAA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/AAAA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/APL.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/APL.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/DHCID.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/DHCID.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/HTTPS.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/IPSECKEY.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/IPSECKEY.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/KX.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/KX.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NAPTR.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NAPTR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NSAP.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NSAP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NSAP_PTR.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/NSAP_PTR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/PX.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/PX.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/SRV.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/SRV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/SVCB.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/WKS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/IN/WKS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/dnskeybase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/dnskeybase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/dsbase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/dsbase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/euibase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/euibase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/mxbase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/mxbase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/nsbase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/nsbase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/svcbbase.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/tlsabase.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/txtbase.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/txtbase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rdtypes/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/resolver.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/resolver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/reversename.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/reversename.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rrset.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/rrset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/serial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/set.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/set.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tokenizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/transaction.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tsig.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tsig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tsigkeyring.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/tsigkeyring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ttl.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/ttl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/update.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/version.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/version.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/versioned.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/wire.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/xfr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/zone.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/dns/zone.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dns/zonefile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/INSTALLER" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/METADATA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/RECORD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/WHEEL" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/dnspython-2.1.0.dist-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,14 +145,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="213" column="23" lean-forward="true" selection-start-line="213" selection-start-column="23" selection-end-line="213" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#75#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="100">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -45,8 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>bg-</find>
-      <find>border-bottom</find>
       <find>user</find>
       <find>essa</find>
       <find>login_required</find>
@@ -55,6 +174,28 @@
       <find>please</find>
       <find>url_</find>
       <find>calen</find>
+      <find>abort</find>
+      <find>login_re</find>
+      <find>find</find>
+      <find>redire</find>
+      <find>booked</find>
+      <find>book</find>
+      <find>load_week</find>
+      <find>booked_sl</find>
+      <find>tutor_us</find>
+      <find>schedule</find>
+      <find>busy_slot</find>
+      <find>request.get</find>
+      <find>regis</find>
+      <find>register</find>
+      <find>session</find>
+      <find>scheduled</find>
+      <find>image</find>
+      <find>def acco</find>
+      <find>def mess</find>
+      <find>hand</find>
+      <find>json</find>
+      <find>json.du</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -84,24 +225,27 @@
         <option value="$PROJECT_DIR$/GRETutoring/templates/become_tutor.html" />
         <option value="$PROJECT_DIR$/GRETutoring/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/run.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/become_tutor.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/account.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/find_tutor.html" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/run.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="950" />
     <option name="y" value="-10" />
     <option name="width" value="980" />
-    <option name="height" value="1040" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -248,17 +392,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.14077991" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.16259088" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.3281027" />
       <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="2" weight="0.3281027" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.28388017" />
+      <window_info anchor="bottom" id="Version Control" order="4" weight="0.32952926" />
+      <window_info anchor="bottom" id="Python Console" order="1" weight="0.3281027" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.5206847" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.24973376" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="5" visible="true" weight="0.2810271" />
+      <window_info anchor="bottom" id="Terminal" order="5" visible="true" weight="0.26961485" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
@@ -267,44 +411,14 @@
       <window_info anchor="right" id="Data View" order="0" weight="0.26890308" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="3" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.3281027" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.3281027" />
+      <window_info anchor="bottom" id="Message" order="2" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4820">
-          <caret line="241" selection-start-line="241" selection-end-line="241" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2800">
-          <caret line="140" column="12" selection-start-line="140" selection-start-column="12" selection-end-line="140" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/forms.py" />
-    <entry file="file://$PROJECT_DIR$/GRETutoring/forms.py" />
     <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3160">
@@ -352,22 +466,12 @@
     <entry file="file://$PROJECT_DIR$/GRETutoring/templates/busy_slot.html" />
     <entry file="file://$PROJECT_DIR$/GRETutoring/templates/become_tutor.html" />
     <entry file="file://$PROJECT_DIR$/GRETutoring/forms.py" />
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="303">
+          <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="3" lean-forward="true" selection-end-line="18" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/available_slot.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/register.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -376,31 +480,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/become_tutor.html">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-739">
-          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
+        <state>
+          <caret selection-end-line="18" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -411,54 +494,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/available_slot.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/become_tutor.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6433">
-          <caret line="27" column="96" selection-start-line="27" selection-start-column="96" selection-end-line="27" selection-end-column="96" />
+        <state relative-caret-position="20">
+          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/busy_slot.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/find_tutor.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+        <state relative-caret-position="360">
+          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/selected_slot.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-28" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/booked_slot.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="20" column="6" lean-forward="true" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/booking.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-771" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="349" column="30" lean-forward="true" selection-start-line="349" selection-start-column="30" selection-end-line="349" selection-end-column="30" />
+        <state relative-caret-position="337">
+          <caret line="353" lean-forward="true" selection-start-line="353" selection-end-line="353" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/selected_slot.html">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="39" column="85" selection-start-line="39" selection-start-column="85" selection-end-line="39" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-111">
+          <caret line="23" column="40" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="596" column="45" selection-start-line="596" selection-start-column="45" selection-end-line="596" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="860">
-          <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
+        <state>
+          <caret lean-forward="true" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="35" column="78" selection-start-line="35" selection-start-column="78" selection-end-line="35" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="213" column="23" lean-forward="true" selection-start-line="213" selection-start-column="23" selection-end-line="213" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#75#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="100">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" selection-end-column="35" />
         </state>
       </provider>
     </entry>

@@ -1,4 +1,6 @@
-from GRETutoring import app
+from GRETutoring import app, socketio
+
 
 if __name__=="__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    socketio.run(app, debug=True)

@@ -1,14 +1,16 @@
 from flask import render_template, url_for, flash, redirect, request, abort, session
-from GRETutoring import app, db, bcrypt
+from GRETutoring import app, db, bcrypt, socketio
 from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
 from GRETutoring.models import User, Event, FreeSlot
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
+from flask_socketio import send, join_room, leave_room, rooms
 import secrets
 import os
 from PIL import Image
 from datetime import datetime, timedelta
 import calendar
+import json
 
 COST_PER_LESSON = 80
 total_cost = 69
@@ -551,9 +553,84 @@ def payment():
     # push_booked_slots_to_db(updated_schedule, tutor_username)
     return render_template("payment.html")
 
+user_to_sid = {}
+sid_to_user = {}
+active_rooms = {}
+
+@socketio.on("connect")
+def connect():
+    user_to_sid[current_user.username] = request.sid
+    sid_to_user[request.sid] = current_user.username
+    active_rooms[current_user.username] = []
+    print("Just connected: " , user_to_sid)
+
+@socketio.on("message")
+def handle_message(data):
+    print("Message: " + data["text"])
+    target_username = data["target_username"]
+    source_username = data["source_username"]
+    print(f"Sent from {source_username} to {target_username}")
+    participants = sorted([source_username, target_username])
+    room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
+    # send(data["text"], to=user_to_sid[source_username])
+    # send(data["text"], to=user_to_sid[target_username])
+    send(data["text"], to=room)
+
+
+@socketio.on('join')
+def on_join(data):
+    source_username = data['source_username']
+    target_username = data['target_username']
+    # user_to_sid[current_user.username] = request.sid
+    # sid_to_user[request.sid] = current_user.username
+
+    print(user_to_sid)
+    participants = sorted([source_username, target_username])
+    room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
+    active_rooms[current_user.username].append(room)
+    join_room(room)
+    send(source_username + ' and ' + target_username + ' have entered the room.', to=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    print(active_rooms[current_user.username])
+    source_username = data['source_username']
+    for room in active_rooms[source_username]:
+        leave_room(room)
+
+    # for user, sid in user_to_sid.items():
+    #     if source_username != user:
+    #         target_username = user
+    #         participants = sorted([source_username, target_username])
+    #         room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
+    #         leave_room(room)
+    #         send(source_username + ' has left the room.', to=room)
+
+
+
+
 @app.route('/message')
+@login_required
 def message():
-    return render_template("message.html")
+    associated_classes = current_user.student_classes if current_user.role=="Student" else current_user.tutor_classes
+    if current_user.role=="Student":
+        associated_users = set([event.tutor_id for event in associated_classes])
+    else:
+        associated_users = set([event.student_id for event in associated_classes])
+
+    associated_usernames = []
+    associated_image_files = []
+    user_dict = {}
+    users_list = []
+    for id in associated_users:
+        associated_user = User.query.filter(User.id==id).first()
+        user_dict["username"] = associated_user.username
+        user_dict["image_file"] = url_for('static', filename="profile_pics/" + associated_user.image_file)
+        users_list.append(user_dict)
+        user_dict = {}
+
+
+    return render_template("message.html", users = users_list, users_json=json.dumps(users_list))
 
 @app.route('/find_tutor')
 @login_required
