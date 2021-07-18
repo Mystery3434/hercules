@@ -19,6 +19,8 @@ class User(db.Model, UserMixin):
     tutor_free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)
     sent_messages = db.relationship('Message', backref='sender', lazy=True, foreign_keys='Message.sender_id')
     received_messages = db.relationship('Message', backref='recipient', lazy=True, foreign_keys='Message.recipient_id')
+    reviews_about = db.relationship('Review', backref='tutor', lazy=True, foreign_keys='Review.tutor_id')
+    reviews_written = db.relationship('Review', backref='student', lazy=True, foreign_keys='Review.student_id')
 
     def __repr__(self):
         return f"{self.role}('{self.username}', '{self.email}','{self.image_file})"
@@ -54,6 +56,18 @@ class Message(db.Model):
 
     def asdict(self):
         return {"id":self.id, "message_text":self.message_text, "date_time":self.date_time, "sender_id":self.sender_id, "recipient_id":self.recipient_id}
+
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    review_text = db.Column(db.Text(), nullable=False)
+    review_score = db.Column(db.Float, nullable=True, default=0.0)
+    date_time = db.Column(db.DateTime, nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Review('{self.review_text}', '{self.date_time}', '{self.student_id}', '{self.tutor_id}')"
 
 # class Student(db.Model, UserMixin):
 #     id = db.Column(db.Integer, primary_key=True)
