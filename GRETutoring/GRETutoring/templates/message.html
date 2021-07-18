@@ -11,6 +11,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+
     var recipient = "";
 	var socket = io.connect('http://127.0.0.1:5000');
 
@@ -23,7 +24,10 @@ $(document).ready(function() {
 
 
 	socket.on('message', function(msg) {
+
+    
     // console.log("{{ current_user.username }}");
+    
     var today = new Date();
     var hour = today.getHours();
     var minutes = today.getMinutes();
@@ -34,11 +38,66 @@ $(document).ready(function() {
        else{
        time = hour + ":" + minutes;
        }
+       if (msg["source_username"] == "{{current_user.username}}") {
+                $("#messages").append('<li class="clearfix"> <div class="message-data text-right"><span class="message-data-time">' + time + '</span></div><div class="message my-message float-right">'
+                        +msg["text"] +'</div></li>');
+            }
+            else {
+            $("#messages").append('<li class="clearfix"> <div class="message-data"><span class="message-data-time">' + time + '</span></div><div class="message other-message">'
+                        +msg["text"] +'</div></li>');
+            }
+        if (msg["text"].length < 20){
+            $("#" + msg["target_username"]+"_last_received_message").text(msg["text"]);
+            $("#" + msg["source_username"]+"_last_received_message").text(msg["text"]);
+        }
+        else{
+            $("#" + msg["target_username"]+"_last_received_message").text(msg["text"].slice(0,20) + "...");
+            $("#" + msg["source_username"]+"_last_received_message").text(msg["text"].slice(0,20) + "...");
+        }
+           
 
-		$("#messages").append('<li class="clearfix"> <div class="message-data"><span class="message-data-time">' + time + '</span></div><div class="message my-message">'
-                        +msg+'</div></li>');
+		// $("#messages").append('<li class="clearfix"> <div class="message-data text-right"><span class="message-data-time">' + time + '</span></div><div class="message my-message float-right">'
+        //                 +msg+'</div></li>');
 		console.log('Received message');
+        var objDiv = document.getElementById("chat_history");
+        objDiv.scrollTop = objDiv.scrollHeight;
+        
 	});
+
+    socket.on('new_private_message', function(messages_to_load) {
+        
+        var objDiv = document.getElementById("chat_history");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+        $("#messages").empty();
+        // if (messages_to_load.length==0){
+        //     $(".chat-message").addClass("first-message");
+        // }
+        // else{
+        //     $(".chat-message").removeClass("first-message");
+        // }
+        for (var i=0; i< messages_to_load.length ; i++){
+            
+            if (messages_to_load[i]["sender_username"] == "{{current_user.username}}") {
+                $("#messages").append('<li class="clearfix"> <div class="message-data text-right"><span class="message-data-time">' + messages_to_load[i]["date_time"] + '</span></div><div class="message my-message float-right">'
+                        +messages_to_load[i]["message_text"] +'</div></li>');
+            }
+            else {
+            $("#messages").append('<li class="clearfix"> <div class="message-data"><span class="message-data-time">' + messages_to_load[i]["date_time"] + '</span></div><div class="message other-message">'
+                        +messages_to_load[i]["message_text"] +'</div></li>');
+            }
+        }
+    });
+    
+    // <li class="clearfix" style="visibility: hidden;">
+    //                         <div class="message-data text-right" >
+    //                             <span class="message-data-time">10:10 AM, Today</span>
+    //                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+    //                         </div>
+    //                         <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+    //                     </li>
+
+
 
 	$('#sendbutton').on('click', function() {
         // var associated_users = "{{ users_json }}";
@@ -57,15 +116,23 @@ $(document).ready(function() {
         }
     });
     
+
     for (var i = 0; i < associated_users.length; i++) {
-     $('#' + associated_users[i].username).on('click', function(){
+        var temp_user = associated_users[i].username;
+         $("#" + temp_user).removeClass("active");
+     $('#' + temp_user).on('click', function(){
         recipient = $(this).attr('id');
-        console.log($(this).attr('id'));
+        console.log("CLASS NAME: " + associated_users[0].username);
+        for (var i = 0; i < associated_users.length; i++) {
+            $("#" + associated_users[i].username).removeClass("active");
+        } 
+        $("#" + $(this).attr('id')).addClass("active");
         // $("#current_user").val(recipient);
         document.getElementById("current_user").innerHTML = recipient;
         
         console.log("Current User", $("#current_user").val());
         $("#messaging_controls").css("visibility","visible")
+        
 
         socket.emit('leave', {'source_username': "{{ current_user.username }}"});
         socket.emit('join', {'source_username': "{{ current_user.username }}", 'target_username': $(this).attr('id')});
@@ -91,11 +158,11 @@ $(document).ready(function() {
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                     {% for user in users %}
-                        <li class="clearfix" id="{{ user.username }}">
+                        <li class="clearfix chat-recipients" id="{{ user.username }}">
                             <img src="{{ user.image_file }}" alt="avatar">
                             <div class="about">
-                                <div class="name mt-2">{{ user.username }}</div>
-
+                                <div class="name mt-1">{{ user.username }}</div>
+                                <small id="{{ user.username }}_last_received_message">{{ user.last_received_message }}</small>
                             </div>
                         </li>
                     {% endfor %}
@@ -156,7 +223,7 @@ $(document).ready(function() {
                         </div> -->
                     </div>
                 </div>
-                <div class="chat-history">
+                <div class="chat-history" id="chat_history">
                     <ul class="m-b-0" id="messages">
                         <li class="clearfix" style="visibility: hidden;">
                             <div class="message-data text-right" >

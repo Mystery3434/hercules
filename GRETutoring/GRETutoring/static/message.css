@@ -2,6 +2,12 @@ body{
     background-color: #f4f7f6;
     margin-top:20px;
 }
+
+.chat-recipients:focus {
+    background-color:grey;
+}
+
+
 .card {
     background: #fff;
     transition: .5s;
@@ -89,8 +95,11 @@ body{
 }
 
 .chat .chat-history {
+    height: 30rem;
+    overflow: auto;
     padding: 20px;
     border-bottom: 2px solid #fff
+
 }
 
 .chat .chat-history ul {
@@ -130,7 +139,7 @@ body{
     position: relative
 }
 
-.chat .chat-history .message:after {
+/* .chat .chat-history .message:after {
     bottom: 100%;
     left: 7%;
     border: solid transparent;
@@ -142,13 +151,13 @@ body{
     border-bottom-color: #fff;
     border-width: 10px;
     margin-left: -10px
-}
+} */
 
 .chat .chat-history .my-message {
     background: #efefef
 }
 
-.chat .chat-history .my-message:after {
+/* .chat .chat-history .my-message:after {
     bottom: 100%;
     left: 30px;
     border: solid transparent;
@@ -160,7 +169,7 @@ body{
     border-bottom-color: #efefef;
     border-width: 10px;
     margin-left: -10px
-}
+} */
 
 .chat .chat-history .other-message {
     background: #e8f1f3;
@@ -173,7 +182,11 @@ body{
 }
 
 .chat .chat-message {
-    padding: 20px
+    padding: 20px;
+}
+
+.first-message{
+    margin-top: 50px;
 }
 
 .online,
@@ -203,6 +216,7 @@ body {
 .float-right {
     float: right
 }
+
 
 .clearfix:after {
     visibility: hidden;

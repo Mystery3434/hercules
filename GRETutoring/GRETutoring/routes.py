@@ -1,10 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, abort, session
 from GRETutoring import app, db, bcrypt, socketio
 from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
-from GRETutoring.models import User, Event, FreeSlot
+from GRETutoring.models import User, Event, FreeSlot, Message
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
-from flask_socketio import send, join_room, leave_room, rooms
+from flask_socketio import send, join_room, leave_room, rooms, emit
 import secrets
 import os
 from PIL import Image
@@ -572,9 +572,18 @@ def handle_message(data):
     print(f"Sent from {source_username} to {target_username}")
     participants = sorted([source_username, target_username])
     room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
+
+    sender_id = User.query.filter_by(username=source_username).first().id
+    recipient_id = User.query.filter_by(username=target_username).first().id
+
+    message = Message(message_text=data["text"], date_time = datetime.now(), sender_id=sender_id, recipient_id=recipient_id)
+
+    db.session.add(message)
+    db.session.commit()
+
     # send(data["text"], to=user_to_sid[source_username])
     # send(data["text"], to=user_to_sid[target_username])
-    send(data["text"], to=room)
+    send(data, to=room)
 
 
 @socketio.on('join')
@@ -589,7 +598,29 @@ def on_join(data):
     room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
     active_rooms[current_user.username].append(room)
     join_room(room)
-    send(source_username + ' and ' + target_username + ' have entered the room.', to=room)
+    # emit("message", source_username + ' and ' + target_username + ' have entered the room.', to=room)
+
+    sender_id = User.query.filter_by(username=source_username).first().id
+    recipient_id = User.query.filter_by(username=target_username).first().id
+
+    # Load all the messages that the two users had with each other
+    messages_to_load = Message.query.filter_by(sender_id=sender_id, recipient_id=recipient_id).all()
+    messages_to_load += Message.query.filter_by(sender_id=recipient_id, recipient_id=sender_id).all()
+
+    messages_to_load.sort(key=lambda x:x.date_time)
+    print(messages_to_load)
+
+    messages_to_pass = []
+    for message in messages_to_load:
+        message_to_pass = message.asdict()
+        message_to_pass["sender_username"] = User.query.filter_by(id=message_to_pass["sender_id"]).first().username
+        message_to_pass["recipient_username"] = User.query.filter_by(id=message_to_pass["recipient_id"]).first().username
+        message_to_pass["date_time"] = message_to_pass["date_time"].strftime("%H:%M")
+        messages_to_pass.append(message_to_pass)
+
+    print(messages_to_pass)
+    emit('new_private_message', messages_to_pass, room=room)
+
 
 @socketio.on('leave')
 def on_leave(data):
@@ -626,8 +657,15 @@ def message():
         associated_user = User.query.filter(User.id==id).first()
         user_dict["username"] = associated_user.username
         user_dict["image_file"] = url_for('static', filename="profile_pics/" + associated_user.image_file)
+        received_messages = Message.query.filter_by(sender_id=associated_user.id, recipient_id=current_user.id).all()
+        received_messages += Message.query.filter_by(sender_id=current_user.id, recipient_id=associated_user.id).all()
+        received_messages.sort(key=lambda x:x.date_time)
+        user_dict["last_received_message"] = "" if not received_messages else received_messages[-1].message_text
+        if len(user_dict["last_received_message"]) >= 20:
+            user_dict["last_received_message"] = user_dict["last_received_message"][:20] + "..."
         users_list.append(user_dict)
         user_dict = {}
+
 
 
     return render_template("message.html", users = users_list, users_json=json.dumps(users_list))

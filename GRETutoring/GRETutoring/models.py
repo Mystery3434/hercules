@@ -17,6 +17,8 @@ class User(db.Model, UserMixin):
     student_classes = db.relationship('Event', backref='student', lazy=True, foreign_keys='Event.student_id')
     tutor_classes = db.relationship('Event', backref='tutor', lazy=True, foreign_keys='Event.tutor_id')
     tutor_free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)
+    sent_messages = db.relationship('Message', backref='sender', lazy=True, foreign_keys='Message.sender_id')
+    received_messages = db.relationship('Message', backref='recipient', lazy=True, foreign_keys='Message.recipient_id')
 
     def __repr__(self):
         return f"{self.role}('{self.username}', '{self.email}','{self.image_file})"
@@ -39,6 +41,19 @@ class FreeSlot(db.Model):
 
     def __repr__(self):
         return f"FreeSlot('{self.date_time}', '{self.tutor_id}')"
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message_text = db.Column(db.Text(), nullable=False)
+    date_time = db.Column(db.DateTime, nullable=False)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    def __repr__(self):
+        return f"Message('{self.message_text}', '{self.date_time}', '{self.sender_id}', '{self.recipient_id}')"
+
+    def asdict(self):
+        return {"id":self.id, "message_text":self.message_text, "date_time":self.date_time, "sender_id":self.sender_id, "recipient_id":self.recipient_id}
 
 # class Student(db.Model, UserMixin):
 #     id = db.Column(db.Integer, primary_key=True)
