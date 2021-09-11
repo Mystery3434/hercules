@@ -26,6 +26,10 @@ class RegistrationForm(FlaskForm):
         if student:
             raise ValidationError('There is already an account with that email. Please login instead.')
 
+class ContactUsForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email() ])
+    message = TextAreaField('Message', validators=[DataRequired(), Length(max=200)])
+    submit = SubmitField('Submit')
 
 
 class TutorRegistrationForm(FlaskForm):

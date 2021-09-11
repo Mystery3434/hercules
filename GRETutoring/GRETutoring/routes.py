@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, abort, session
 from GRETutoring import app, db, bcrypt, socketio, mail
-from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
+from GRETutoring.forms import RegistrationForm, ContactUsForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
 from GRETutoring.models import User, Event, FreeSlot, Message, Review
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
@@ -15,7 +15,7 @@ import flask_mail
 
 COST_PER_LESSON = 80
 total_cost = 69
-
+MY_EMAIL = 'wilzie123@gmail.com'
 
 sample_tutors = [{"username":"Lmao", "image_file": "default.jpg", "about": "Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium"},
                  {"username":"water", "image_file":"default.jpg", "about": " Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium Lorem ipsum admen inpenium"}]
@@ -908,3 +908,18 @@ def reset_token(token):
         return redirect(url_for('login'))
 
     return render_template('reset_token.html', title="Reset Password", form=form)
+
+@app.route('/contact_us', methods=['GET', 'POST'])
+def contact_us():
+
+    form = ContactUsForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        message_text = form.message.data
+        msg = flask_mail.Message('Hercules Customer Support', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg.body = message_text + "\nSender: " + email
+        mail.send(msg)
+        flash('Your message has been sent. We will reply to you as soon as we can.', 'success')
+        return redirect(url_for('home'))
+
+    return render_template("contact_us.html", title="Contact Us", form=form)
