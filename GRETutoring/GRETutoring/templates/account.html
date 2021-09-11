@@ -45,6 +45,38 @@
                     {{ form.email(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <div class="form-group">
+                {{ form.skype_id.label(class="form-control-label") }}
+                {% if form.skype_id.errors %}
+                   {{ form.skype_id(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.skype_id.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.skype_id(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.hangouts_id.label(class="form-control-label") }}
+                {% if form.hangouts_id.errors %}
+                   {{ form.hangouts_id(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.hangouts_id.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.hangouts_id(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+
             <div class="form-group">
                 {{ form.picture.label() }}
                 {{ form.picture(class="form-control-file") }}

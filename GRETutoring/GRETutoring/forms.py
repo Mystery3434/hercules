@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, RadioField
 from wtforms.validators import  DataRequired, Length, Email, EqualTo, Optional, NumberRange, URL, ValidationError
 from GRETutoring.models import User
 from flask_login import current_user
@@ -49,6 +49,15 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+class ReviewForm(FlaskForm):
+    score = RadioField('Score', choices=[ (val, desc) for desc, val in [('Perfect', 5.0),('Almost Perfect', 4.5), ('Very Good', 4.0), ('Good', 3.5), ('Satisfactory', 3.0), ('Some improvement required', 2.5),
+        ('Lots of improvement required', 2.0), ('Bad', 1.5), ('Very Bad', 1.0), ('Terrible', 0.5)]],
+                       validators=[DataRequired()], coerce=float
+        )
+    review = TextAreaField(
+        'Review:',
+        validators=[Length(max=1500), DataRequired()], render_kw={"placeholder": "Enter review here"})
+    submit = SubmitField('Submit Review')
 
 class ScheduleForm(FlaskForm):
     quant = BooleanField('Quantitative Reasoning')
@@ -66,6 +75,8 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email() ])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    skype_id = StringField('Skype ID', validators=[Length(min=2, max=50)])
+    hangouts_id = StringField('Hangouts ID', validators=[Length(min=2, max=50)])
     about = TextAreaField('Enter a short bio talking about you and your teaching style. Include anything that you think is relevant for your students.',
                           validators=[Length(max=1500)])
     submit = SubmitField('Update')
@@ -81,3 +92,18 @@ class UpdateAccountForm(FlaskForm):
             student = User.query.filter_by(email=email.data).first()
             if student:
                 raise ValidationError('There is already an account with that email. Please login instead.')
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('There is no account with that email. You must register first.')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')

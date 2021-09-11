@@ -1,6 +1,8 @@
 from datetime import datetime, timezone, timedelta, tzinfo
-from GRETutoring import db, login_manager
+from GRETutoring import db, login_manager, app
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -14,6 +16,8 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg') #nullable=False, since they have to have at least the default
     password = db.Column(db.String(60), nullable=False)
     about = db.Column(db.Text(), nullable=True, default = "Bio")
+    skype_id = db.Column(db.String(120), nullable=True, default="")
+    hangouts_id = db.Column(db.String(120), nullable=True, default="")
     student_classes = db.relationship('Event', backref='student', lazy=True, foreign_keys='Event.student_id')
     tutor_classes = db.relationship('Event', backref='tutor', lazy=True, foreign_keys='Event.tutor_id')
     tutor_free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)
@@ -21,6 +25,21 @@ class User(db.Model, UserMixin):
     received_messages = db.relationship('Message', backref='recipient', lazy=True, foreign_keys='Message.recipient_id')
     reviews_about = db.relationship('Review', backref='tutor', lazy=True, foreign_keys='Review.tutor_id')
     reviews_written = db.relationship('Review', backref='student', lazy=True, foreign_keys='Review.student_id')
+
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id  = s.loads(token)['user_id']
+        except:
+            return None
+
+        return User.query.get(user_id)
 
     def __repr__(self):
         return f"{self.role}('{self.username}', '{self.email}','{self.image_file})"
@@ -68,6 +87,9 @@ class Review(db.Model):
 
     def __repr__(self):
         return f"Review('{self.review_text}', '{self.date_time}', '{self.student_id}', '{self.tutor_id}')"
+
+    def asdict(self):
+        return {"id":self.id, "review_text":self.review_text, "review_score":self.review_score, "date_time":self.date_time, "student_id":self.student_id, "tutor_id":self.tutor_id}
 
 # class Student(db.Model, UserMixin):
 #     id = db.Column(db.Integer, primary_key=True)

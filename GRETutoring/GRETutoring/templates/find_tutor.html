@@ -7,7 +7,7 @@
           <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + tutor.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ tutor.username }}</a>
+              <a class="mr-2" href="{{ url_for('view_profile', username=tutor.username) }}">{{ tutor.username }}</a>
                 <p class="article-content"> {{tutor.about}} </p>
 
             </div>

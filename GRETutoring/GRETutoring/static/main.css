@@ -42,6 +42,11 @@ h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
+.contact-icon{
+  height: 30px;
+  width: 30px;
+  margin-right: 1em;
+}
 .button-theme{
   background-color: #d47508;
 }
@@ -122,7 +127,14 @@ margin-bottom: 20px;
   width: 125px;
   margin-right: 20px;
   margin-bottom: 16px;
-}
+} 
+
+.review-img {
+  height: 70px;
+  width: 70px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+} 
 
 .account-heading {
   font-size: 2.5rem;

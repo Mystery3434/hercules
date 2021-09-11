@@ -246,6 +246,16 @@ jQuery(document).ready(function($){
 			
 			});
 		}
+
+		if (event.parent().attr('data-event')=="past-slot"){
+			this.modalBody.find('.event-info').load('past_slot', function(data){
+			//once the event content has been loaded
+				
+				self.element.addClass('content-loaded');
+			
+			});
+		}
+
 		if (event.parent().attr('data-event')=="booked-slot"){
 			this.modalBody.find('.event-info').load('booked_slot', function(data){
 			//once the event content has been loaded

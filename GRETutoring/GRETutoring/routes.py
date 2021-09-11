@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, abort, session
-from GRETutoring import app, db, bcrypt, socketio
-from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm
-from GRETutoring.models import User, Event, FreeSlot, Message
+from GRETutoring import app, db, bcrypt, socketio, mail
+from GRETutoring.forms import RegistrationForm, LoginForm, ScheduleForm, CancellationForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
+from GRETutoring.models import User, Event, FreeSlot, Message, Review
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
 from flask_socketio import send, join_room, leave_room, rooms, emit
@@ -11,6 +11,7 @@ from PIL import Image
 from datetime import datetime, timedelta
 import calendar
 import json
+import flask_mail
 
 COST_PER_LESSON = 80
 total_cost = 69
@@ -197,6 +198,7 @@ def logout():
 
 def load_week(schedule, offset, tutor_username):
     current_day = datetime.today()
+    current_time = datetime.now()
     days_to_subtract = current_day.weekday()
     current_day += timedelta(offset)
     start_of_week = current_day - timedelta(days_to_subtract)
@@ -245,7 +247,12 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min =  datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "booked-slot", "event-name":"Scheduled Lesson"}
+        print(current_time, start_time)
+        if current_time > start_time:
+            event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "past-slot", "event-name":"Scheduled Lesson"}
+        else:
+            event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                          "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
 
@@ -257,7 +264,13 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min =  datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        busy_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1", "data-event": "busy-slot", "event-name":"Tutor Busy"}
+        if current_time > start_time:
+            busy_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                              "data-event": "past-slot", "event-name": "Tutor Busy"}
+        else:
+            busy_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                              "data-event": "busy-slot", "event-name": "Tutor Busy"}
+
         busy_slot_list.append(busy_slot_dict)
         schedule[start_day] = (formatted_date, busy_slot_list)
 
@@ -269,12 +282,21 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        if current_user.role=="Tutor":
-            free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                      "data-event": "tutor-available-slot", "event-name": "Free Slot"}
+
+        if current_time > start_time:
+            free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min,
+                              "data-content": "event-yoga-1",
+                              "data-event": "past-slot", "event-name": "Free Slot"}
+
         else:
-            free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                              "data-event": "free-slot", "event-name": "Free Slot"}
+            if current_user.role=="Tutor":
+                free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                          "data-event": "tutor-available-slot", "event-name": "Free Slot"}
+            else:
+                free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min,
+                                  "data-content": "event-yoga-1",
+                                  "data-event": "free-slot", "event-name": "Free Slot"}
+
         free_slot_list.append(free_slot_dict)
         schedule[start_day] = (formatted_date, free_slot_list)
 
@@ -541,6 +563,10 @@ def selected_slot():
 def busy_slot():
     return render_template("busy_slot.html", testing_var=False)
 
+@app.route('/past_slot')
+def past_slot():
+    return render_template("past_slot.html", testing_var=False)
+
 @app.route('/booked_slot', methods=['GET', 'POST'])
 def booked_slot():
     return render_template("booked_slot.html", testing_var=False)
@@ -750,6 +776,8 @@ def account():
 
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.skype_id = form.skype_id.data
+        current_user.hangouts_id = form.hangouts_id.data
         if form.about.data:
             current_user.about = form.about.data
         db.session.commit()
@@ -759,6 +787,124 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
         form.about.data = current_user.about
+        form.skype_id.data = current_user.skype_id
+        form.hangouts_id.data  = current_user.hangouts_id
 
     image_file = url_for('static', filename="profile_pics/" + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
+
+@app.route('/view_profile', methods=['GET', 'POST'])
+def view_profile():
+    username = request.args.get('username')
+    is_current_tutor = False
+    already_reviewed = False
+
+    associated_classes = current_user.student_classes if current_user.role == "Student" else []
+    if current_user.role == "Student":
+        associated_users = set([event.tutor_id for event in associated_classes])
+    else:
+        associated_users = set([])
+
+    user = User.query.filter_by(username=username).first()
+
+
+    if user.id in associated_users:
+        is_current_tutor = True
+
+    if not user:
+        abort(403)
+    image_file = url_for('static', filename="profile_pics/" + user.image_file)
+
+    reviews = Review.query.filter_by(tutor_id=user.id).all()
+    review_list = []
+    for review in reversed(reviews):
+        review = review.asdict()
+        review['student_username'] = User.query.filter_by(id=review["student_id"]).first().username
+        if review['student_username'] == current_user.username:
+            already_reviewed = True
+        review['student_image_file'] = User.query.filter_by(id=review["student_id"]).first().image_file
+        review['formatted_date_time'] = datetime.strftime(review["date_time"], "%d %B %Y")
+        #review['review_score'] -= 0.5
+        review['whole_stars'] = int(review['review_score'])
+        review['half_stars'] = 0 if review['review_score'] - review['whole_stars'] == 0 else 1
+        review['grey_stars'] = 5 - int(review['review_score'] + 0.5)
+        review_list.append(review)
+
+    profile_type = user.role
+    return render_template('view_profile.html', title='View Profile', already_reviewed=already_reviewed, image_file=image_file, user=user, reviews=review_list, is_current_tutor=is_current_tutor, profile_type=profile_type)
+
+@app.route('/add_review', methods=['GET', 'POST'])
+@login_required
+def add_review():
+    username = request.args.get('username')
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        abort(403)
+    if current_user.role == "Tutor":
+        abort(403)
+    image_file = url_for('static', filename="profile_pics/" + user.image_file)
+    form = ReviewForm()
+    existing_review = Review.query.filter(Review.student_id == current_user.id, Review.tutor_id==user.id).first()
+    if form.validate_on_submit():
+        if not existing_review:
+            review = Review(review_text=form.review.data, review_score=form.score.data, date_time=datetime.now(), student_id=current_user.id, tutor_id = user.id)
+            db.session.add(review)
+            db.session.commit()
+        else:
+            existing_review.review_text=form.review.data
+            existing_review.review_score = form.score.data
+            existing_review.date_time = datetime.now()
+            db.session.commit()
+
+        flash('Your review has been submitted!', 'success')
+        return redirect(url_for('view_profile', username=username))
+    elif request.method == 'GET':
+
+        if existing_review:
+            form.score.data = existing_review.review_score
+            print(form.score.data)
+            form.review.data = existing_review.review_text
+
+    return render_template('add_review.html', user=user, image_file=image_file, form=form, title='Add Review')
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = flask_mail.Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])
+    msg.body=f'''To reset your password, visit the following link:
+    {url_for('reset_token', token=token, _external=True)}
+    If you did not make this request, then simply ignore this email and no change will be made.
+    '''
+    mail.send(msg)
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('login'))
+
+    return render_template('reset_request.html', title="Reset Password", form=form)
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)
+    if not user:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password=hashed_password
+        db.session.commit()
+        flash('Your password has now been updated! You are now able to login', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('reset_token.html', title="Reset Password", form=form)

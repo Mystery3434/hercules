@@ -6,77 +6,70 @@
     <img class="rounded-circle account-img" src="{{ image_file }}">
     <div class="media-body">
         
-      <h2 class="account-heading">{{ current_user.username }}</h2>
-      <p class="text-secondary">{{ current_user.email }}</p>
+      <h2 class="account-heading">{{ user.username }}</h2>
+      <p class="text">{{ user.about }}</p>
+      {% if is_current_tutor %}
+        {% if user.skype_id != "" %}
+          <div>
+            <img src="{{ url_for('static', filename='img/skype.png')}}" class="contact-icon"><span>Skype ID: {{user.skype_id}}</span>
+          </div>
+        {% endif %}
+        {% if user.hangouts_id != "" %}
+          <div>
+            <img src="{{ url_for('static', filename='img/hangouts.png')}}" class="contact-icon"><span>Hangouts ID: {{user.hangouts_id}}</span>
+          </div>
+        {% endif %}
+      {% endif %}
+
+
+      {% if profile_type=="Tutor" %}
+      <div class="mt-4">
+    <a href="{{ url_for('schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+    {% endif %}
+  </div>
+</div>
     </div>
   </div>
-
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Account Info</legend>
-            <div class="form-group">
-                {{ form.username.label(class="form-control-label") }}
-
-                {% if form.username.errors %}
-                   {{ form.username(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                            <span> {{ error }} </span>
-                        {% endfor %}
-                    </div>
-
-                {% else %}
-                    {{ form.username(class="form-control form-control-lg ") }}
-                {% endif %}
-
-            </div>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors %}
-                   {{ form.email(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                            <span> {{ error }} </span>
-                        {% endfor %}
-                    </div>
-
-                {% else %}
-                    {{ form.email(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            <div class="form-group">
-                {{ form.picture.label() }}
-                {{ form.picture(class="form-control-file") }}
-                {% if form.picture.errors %}
-                    {% for error in form.picture.errors %}
-                        <span> {{ error }} </span><br>
-                        {% endfor %}
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                {% if current_user.role=="Tutor" %}
-                    {{ form.about.label(class="form-control-label")}}
-                    {% if form.about.errors %}
-                   {{ form.about(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.about.errors %}
-                            <span> {{ error }} </span>
-                        {% endfor %}
-                    </div>
-
-                {% else %}
-                    {{ form.about(class="form-control form-control-lg") }}
-                {% endif %}
-                {% endif %}
-            </div>
-
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-light button-theme") }}
-        </div>
-    </form>
-
+  {% if profile_type=="Tutor" %}
+  <div class="content-section">
+    <div class="row">
+      <div class="col-3"><h3 class='m-2'>Reviews</h3></div>
+      <div class="col-7"></div>
+      {% if is_current_tutor %}
+      {% if already_reviewed %}
+      <div class="col-2"><a href="{{ url_for('add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >Edit Review</button></a></div>
+      {% else %}
+      <div class="col-2"><a href="{{ url_for('add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >+ Add a review</button></a></div>
+      {% endif %}
+      {% endif %}
+    </div>
+      
+      
+      <hr>
+      {% if not reviews %}
+      <p>This tutor does not have any reviews yet.</p>
+      {% endif %}
+      {% for review in reviews %}
+      <div class="media mt-4">
+        <img class="rounded-circle review-img" src="{{ url_for('static', filename='profile_pics/' + review.student_image_file) }}">
+        <div class="media-body">
+            <h5>{{ review.student_username }}</h5>
+            {% for i in range(review.whole_stars) %}
+                <span class="star on"></span>
+            {% endfor %}
+            {% for i in range(review.half_stars) %}
+                <span class="star half"></span>
+            {% endfor %}
+            {% for i in range(review.grey_stars) %}
+            <span class="star"></span>
+            {% endfor %}
+           
+      <p class="text">{{ review.review_text }}</p>
+    </div>
+    </div>
+    {% endfor %}
+   
 </div>
+{% endif %}
+
 {% endblock content %}

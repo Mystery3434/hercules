@@ -613,6 +613,16 @@ Main Components
     background:orange;
 }
 
+.cd-schedule .single-event[data-event="past-slot"],
+.cd-schedule [data-event="past-slot"] .header-bg {
+    background: grey;
+}
+.cd-schedule .single-event[data-event="past-slot"]:hover {
+    background:grey;
+}
+
+
+
 .cd-schedule .event-modal {
     position: fixed;
     z-index: 3;

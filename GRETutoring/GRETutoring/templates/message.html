@@ -4,7 +4,8 @@
 <body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='message.css') }}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -129,7 +130,12 @@ $(document).ready(function() {
         $("#" + $(this).attr('id')).addClass("active");
         // $("#current_user").val(recipient);
         document.getElementById("current_user").innerHTML = recipient;
+        console.log("RECIPIENT" + recipient);
         
+        $("#current_user_profile").attr("href", "view_profile?username=" + recipient);
+       
+
+
         console.log("Current User", $("#current_user").val());
         $("#messaging_controls").css("visibility","visible")
         
@@ -158,12 +164,17 @@ $(document).ready(function() {
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                     {% for user in users %}
-                        <li class="clearfix chat-recipients" id="{{ user.username }}">
+                        <li class="clearfix chat-recipients" id="{{ user.username }}" >
                             <img src="{{ user.image_file }}" alt="avatar">
                             <div class="about">
                                 <div class="name mt-1">{{ user.username }}</div>
                                 <small id="{{ user.username }}_last_received_message">{{ user.last_received_message }}</small>
+                               
                             </div>
+                            <!-- <div>
+                                <a href="#"> <button type="button" class="btn btn-primary button-theme btn-sm" style="font-size: 0.6em;">View Profile</button></a>
+                            </div> -->
+                            
                         </li>
                     {% endfor %}
                     <!--<li class="clearfix active">-->
@@ -211,7 +222,9 @@ $(document).ready(function() {
                                 <!-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"> -->
                             </a>
                             <div class="chat-about">
-                                <h6 class="m-b-0" id="current_user"></h6>
+                                <a href="#" id="current_user_profile">
+                                    <h6 class="m-b-0" id="current_user"></h6>
+                                </a>
                                 <!-- <small>Last seen: 2 hours ago</small> -->
                             </div>
                         </div>

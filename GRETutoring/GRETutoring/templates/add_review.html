@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+
+
+
+
+<div class="content-section">
+  <div class="media">
+    <img class="rounded-circle account-img" src="{{ image_file }}">
+    <div class="media-body">
+        
+      <h2 class="account-heading">{{ user.username }}</h2>
+      <p class="text">{{ user.about }}</p>
+    
+    <a href="{{ url_for('schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+</div>
+    </div>
+  </div>
+  <div class="content-section">
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Enter your review</legend>
+        <div class="form-group">
+  
+          <h6>Select the rating that best describes the tutor.</h6>
+          {% if form.score.errors %}
+          {% for subfield in form.score %}
+          
+        <ul class="form-control form-control-lg is-invalid" style="list-style-type:none;">
+            <li>{{ subfield }} {{ subfield.label }}</li>
+            
+        </ul>
+        {% endfor %}
+           <div class="invalid-feedback">
+               {% for error in form.score.errors %}
+                   <span> {{ error }} </span>
+               {% endfor %}
+           </div>
+
+       {% else %}
+        {% for subfield in form.score %}
+          
+        <ul style="list-style-type:none;">
+            <li>{{ subfield }} {{ subfield.label }}</li>
+            
+        </ul>
+        {% endfor %}
+       {% endif %}
+
+        
+      </div>
+        <div class="form-group">
+            <h6>{{ form.review.label(class="form-control-label") }} </h6>
+
+            {% if form.review.errors %}
+               {{ form.review(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.review.errors %}
+                        <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                {{ form.review(class="form-control form-control-lg ") }}
+            {% endif %}
+
+        </div>
+
+    </fieldset>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-outline-light button-theme") }}
+    </div>
+</form>
+</div>
+
+
+{% endblock content %}
