@@ -24,7 +24,7 @@
 
       {% if profile_type=="Tutor" %}
       <div class="mt-4">
-    <a href="{{ url_for('schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+    <a href="{{ url_for('scheduling.schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
     {% endif %}
   </div>
 </div>
@@ -37,9 +37,9 @@
       <div class="col-7"></div>
       {% if is_current_tutor %}
       {% if already_reviewed %}
-      <div class="col-2"><a href="{{ url_for('add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >Edit Review</button></a></div>
+      <div class="col-2"><a href="{{ url_for('users.add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >Edit Review</button></a></div>
       {% else %}
-      <div class="col-2"><a href="{{ url_for('add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >+ Add a review</button></a></div>
+      <div class="col-2"><a href="{{ url_for('users.add_review', username = user.username) }}"><button class="m-2 btn-sm btn-primary button-theme" >+ Add a review</button></a></div>
       {% endif %}
       {% endif %}
     </div>

@@ -10,10 +10,10 @@
                 <p>Here is the link to your class: https://zoom.com/link/to/your/class.</p>
 
 				<a href="#0"><button type="button" class="btn btn-primary return" > Return to calendar </button></a>
-                <a href="{{ url_for('message') }}"><button type="button" class="btn btn-primary" > Message Tutor </button></a>
-				 <a href = "{{ url_for('cancel_booking') }}"><button type="button" class="btn btn-danger" > Cancel Booking </button></a>
-				<!--<a href="{{ url_for('schedule', selected=True) }}"><button type="button" class="btn btn-success"> Book </button></a>-->
-				<!--<a href="{{ url_for('schedule', selected=False, schedule=None) }}"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></a>-->
+                <a href="{{ url_for('messaging.message') }}"><button type="button" class="btn btn-primary" > Message Tutor </button></a>
+				 <a href = "{{ url_for('scheduling.cancel_booking') }}"><button type="button" class="btn btn-danger" > Cancel Booking </button></a>
+				<!--<a href="{{ url_for('scheduling.schedule', selected=True) }}"><button type="button" class="btn btn-success"> Book </button></a>-->
+				<!--<a href="{{ url_for('scheduling.schedule', selected=False, scheduling=None) }}"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></a>-->
 			</div>
 			<div class="col-2"></div>
 		</div>

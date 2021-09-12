@@ -15,7 +15,7 @@
       <h2 class="account-heading">{{ user.username }}</h2>
       <p class="text">{{ user.about }}</p>
     
-    <a href="{{ url_for('schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+    <a href="{{ url_for('scheduling.schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
 </div>
     </div>
   </div>

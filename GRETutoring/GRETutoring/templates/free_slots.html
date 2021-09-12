@@ -25,8 +25,8 @@
     <div class="row">
         <div class="col-5"></div>
         <div class="col-3">
-            <a href="{{ url_for('free_slots', offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
-            <a href="{{ url_for('free_slots', offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
+            <a href="{{ url_for('scheduling.free_slots', offset=offset-7) }}" ><input class="btn btn-primary button-theme" type="button" value="< Prev Week"></a>
+            <a href="{{ url_for('scheduling.free_slots', offset=offset+7) }}" ><input class="btn btn-primary button-theme" type="button" value="Next Week >"></a>
         </div>
         <div class="col-4"></div>
 
@@ -343,10 +343,10 @@
 
         <div class="cover-layer"></div>
     </div>
-    <!-- .cd-schedule -->
+    <!-- .cd-scheduling -->
     
-    <a href = "{{ url_for('add_free_slots', tutor_username=current_user.username) }}">
-    <!-- <form  method = "post" action = "{{ url_for('booking') }}"> -->
+    <a href = "{{ url_for('scheduling.add_free_slots', tutor_username=current_user.username) }}">
+    <!-- <form  method = "post" action = "{{ url_for('scheduling.booking') }}"> -->
         <input class="btn btn-primary button-theme center" id="add_free_slots" type="button"  value="Add these slots." >
     </a>
     <!-- </form> -->

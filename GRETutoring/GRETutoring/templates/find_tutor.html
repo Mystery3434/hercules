@@ -7,20 +7,20 @@
           <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + tutor.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{{ url_for('view_profile', username=tutor.username) }}">{{ tutor.username }}</a>
+              <a class="mr-2" href="{{ url_for('users.view_profile', username=tutor.username) }}">{{ tutor.username }}</a>
                 <p class="article-content"> {{tutor.about}} </p>
 
             </div>
-              <a href="{{ url_for('schedule', tutor_username = tutor.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+              <a href="{{ url_for('scheduling.schedule', tutor_username = tutor.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
           </div>
         </article>
     {% endfor %}
     {% for page_num in tutors.iter_pages(left_edge = 1, right_edge=1, left_current=1, right_current=2) %}
         {% if page_num %}
             {% if tutors.page == page_num %}
-                <a class="btn btn-info mb-4" href="{{ url_for('find_tutor', page=page_num) }}"> {{ page_num }}</a>
+                <a class="btn btn-info mb-4" href="{{ url_for('users.find_tutor', page=page_num) }}"> {{ page_num }}</a>
             {% else %}
-                <a class="btn btn-outline-info mb-4" href="{{ url_for('find_tutor', page=page_num) }}"> {{ page_num }}</a>
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('users.find_tutor', page=page_num) }}"> {{ page_num }}</a>
             {% endif %}
 
         {% else %}
