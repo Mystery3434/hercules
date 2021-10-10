@@ -1,4 +1,5 @@
-import os
+
+from GRETutoring.config import  Config
 from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
@@ -8,33 +9,40 @@ from flask_socketio import SocketIO
 from flask_migrate import Migrate
 from flask_mail import Mail
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'e1cc8053b63ad42898f458e359ce5ccd'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # 3 slashes makes it a relative path from current location
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
-socketio = SocketIO(app)
-migrate=Migrate(app, db)
+socketio = SocketIO()
+migrate=Migrate()
 
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] =  os.environ.get('EMAIL_USERNAME')
-app.config['MAIL_PASSWORD'] =  os.environ.get('EMAIL_PASSWORD')
-mail = Mail(app)
+mail = Mail()
 
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-from GRETutoring.main.routes import main
-from GRETutoring.messaging.routes import messaging
-from GRETutoring.transactions.routes import transactions
-from GRETutoring.scheduling.routes import scheduling
-from GRETutoring.users.routes import users
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    socketio.init_app(app)
+    migrate.init_app(app, db)
+    mail.init_app(app)
 
-app.register_blueprint(main)
-app.register_blueprint(messaging)
-app.register_blueprint(transactions)
-app.register_blueprint(scheduling)
-app.register_blueprint(users)
+    from GRETutoring.main.routes import main
+    from GRETutoring.messaging.routes import messaging
+    from GRETutoring.transactions.routes import transactions
+    from GRETutoring.scheduling.routes import scheduling
+    from GRETutoring.users.routes import users
+    from GRETutoring.errors.handlers import errors
+
+    app.register_blueprint(main)
+    app.register_blueprint(messaging)
+    app.register_blueprint(transactions)
+    app.register_blueprint(scheduling)
+    app.register_blueprint(users)
+    app.register_blueprint(errors)
+
+    return app

@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+ <div class="content-section">
+     <h1>You do not have permission to do that (403)</h1>
+     <p> Please check your account and try again. If you need more help, please <a href="{{ url_for('main.contact_us') }}">contact us.</a></p>
+ </div>
+{% endblock content %}

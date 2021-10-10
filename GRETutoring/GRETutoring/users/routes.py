@@ -2,13 +2,15 @@ from flask import Blueprint
 from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
-from GRETutoring.models import User, Review
+from GRETutoring.models import User, Review, Event
+
 from GRETutoring.users.utils import save_picture, send_reset_email
 
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
 
 from datetime import datetime
+import pytz
 
 
 
@@ -28,14 +30,14 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Student')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Student', time_zone=form.time_zone.data)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}! You are now able to login', 'success')
         return redirect(url_for('users.login'))
 
-
     return render_template("register.html", title="Register", form=form)
+
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
@@ -72,6 +74,7 @@ def account():
         current_user.email = form.email.data
         current_user.skype_id = form.skype_id.data
         current_user.hangouts_id = form.hangouts_id.data
+        current_user.time_zone = form.time_zone.data
         if form.about.data:
             current_user.about = form.about.data
         db.session.commit()
@@ -83,6 +86,7 @@ def account():
         form.about.data = current_user.about
         form.skype_id.data = current_user.skype_id
         form.hangouts_id.data  = current_user.hangouts_id
+        form.time_zone.data = current_user.time_zone
 
     image_file = url_for('static', filename="profile_pics/" + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
@@ -110,7 +114,7 @@ def become_tutor():
             flash('A user with this email already exists. Please login if you already have an account.', 'danger')
         else:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Tutor')
+            tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Tutor', time_zone=form.time_zone.data)
             db.session.add(tutor)
             db.session.commit()
 
@@ -139,13 +143,16 @@ def view_profile():
 
     user = User.query.filter_by(username=username).first()
 
+    if not user:
+        abort(404)
 
     if user.id in associated_users:
         is_current_tutor = True
 
-    if not user:
-        abort(403)
+
     image_file = url_for('static', filename="profile_pics/" + user.image_file)
+
+    tz = pytz.timezone(current_user.time_zone)
 
     reviews = Review.query.filter_by(tutor_id=user.id).all()
     review_list = []
@@ -155,7 +162,7 @@ def view_profile():
         if review['student_username'] == current_user.username:
             already_reviewed = True
         review['student_image_file'] = User.query.filter_by(id=review["student_id"]).first().image_file
-        review['formatted_date_time'] = datetime.strftime(review["date_time"], "%d %B %Y")
+        review['formatted_date_time'] = datetime.strftime(tz.fromutc(review["date_time"]), "%d %B %Y")
         #review['review_score'] -= 0.5
         review['whole_stars'] = int(review['review_score'])
         review['half_stars'] = 0 if review['review_score'] - review['whole_stars'] == 0 else 1
@@ -175,18 +182,24 @@ def add_review():
         abort(403)
     if current_user.role == "Tutor":
         abort(403)
+
+    # Ensure that students who are not tutored by the tutor can't add reviews
+    classes = Event.query.filter_by(student_id=current_user.id, tutor_id=user.id).all()
+    if not classes:
+        abort(403)
+
     image_file = url_for('static', filename="profile_pics/" + user.image_file)
     form = ReviewForm()
     existing_review = Review.query.filter(Review.student_id == current_user.id, Review.tutor_id==user.id).first()
     if form.validate_on_submit():
         if not existing_review:
-            review = Review(review_text=form.review.data, review_score=form.score.data, date_time=datetime.now(), student_id=current_user.id, tutor_id = user.id)
+            review = Review(review_text=form.review.data, review_score=form.score.data, date_time=datetime.utcnow(), student_id=current_user.id, tutor_id = user.id)
             db.session.add(review)
             db.session.commit()
         else:
             existing_review.review_text=form.review.data
             existing_review.review_score = form.score.data
-            existing_review.date_time = datetime.now()
+            existing_review.date_time = datetime.utcnow()
             db.session.commit()
 
         flash('Your review has been submitted!', 'success')

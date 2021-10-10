@@ -7,6 +7,7 @@ from flask_login import current_user
 from flask_login import login_required
 from flask_socketio import send, join_room, leave_room, emit
 from datetime import datetime
+import pytz
 import json
 
 
@@ -38,7 +39,7 @@ def handle_message(data):
     sender_id = User.query.filter_by(username=source_username).first().id
     recipient_id = User.query.filter_by(username=target_username).first().id
 
-    message = Message(message_text=data["text"], date_time = datetime.now(), sender_id=sender_id, recipient_id=recipient_id)
+    message = Message(message_text=data["text"], date_time = datetime.utcnow(), sender_id=sender_id, recipient_id=recipient_id)
 
     db.session.add(message)
     db.session.commit()
@@ -73,11 +74,14 @@ def on_join(data):
     print(messages_to_load)
 
     messages_to_pass = []
+
+    tz = pytz.timezone(current_user.time_zone)
+
     for message in messages_to_load:
         message_to_pass = message.asdict()
         message_to_pass["sender_username"] = User.query.filter_by(id=message_to_pass["sender_id"]).first().username
         message_to_pass["recipient_username"] = User.query.filter_by(id=message_to_pass["recipient_id"]).first().username
-        message_to_pass["date_time"] = message_to_pass["date_time"].strftime("%H:%M")
+        message_to_pass["date_time"] = tz.fromutc(message_to_pass["date_time"]).strftime("%H:%M")
         messages_to_pass.append(message_to_pass)
 
     print(messages_to_pass)

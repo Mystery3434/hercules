@@ -1,5 +1,6 @@
 from datetime import datetime, timezone, timedelta, tzinfo
-from GRETutoring import db, login_manager, app
+from GRETutoring import db, login_manager
+from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
@@ -18,6 +19,7 @@ class User(db.Model, UserMixin):
     about = db.Column(db.Text(), nullable=True, default = "Bio")
     skype_id = db.Column(db.String(120), nullable=True, default="")
     hangouts_id = db.Column(db.String(120), nullable=True, default="")
+    time_zone = db.Column(db.String(120), nullable=True, default="UTC")
     student_classes = db.relationship('Event', backref='student', lazy=True, foreign_keys='Event.student_id')
     tutor_classes = db.relationship('Event', backref='tutor', lazy=True, foreign_keys='Event.tutor_id')
     tutor_free_slots = db.relationship('FreeSlot', backref='tutor', lazy=True)
@@ -28,12 +30,12 @@ class User(db.Model, UserMixin):
 
 
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id  = s.loads(token)['user_id']
         except:
