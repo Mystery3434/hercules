@@ -8,6 +8,9 @@
         
       <h2 class="account-heading">{{ current_user.username }}</h2>
       <p class="text-secondary">{{ current_user.email }}</p>
+      {% if current_user.role=="Student" %}
+      <p class="text-secondary">You have <b>{{ current_user.credits }}</b> credits.</p>
+      {% endif %}
     </div>
   </div>
 

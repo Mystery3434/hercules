@@ -2,48 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f3c4fc4-4216-4033-8b1d-1479a1102a4e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/main/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/main/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/main/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/GRE Tutoring Service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GRE Tutoring Service.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/add_review.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/add_review.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/available_slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/available_slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/booked_slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/booked_slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/busy_slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/busy_slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/find_tutor.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/find_tutor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/account.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/past_slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/past_slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/reset_request.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/reset_request.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/reset_token.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/reset_token.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/selected_slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/selected_slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/view_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/view_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule template/schedule-template-master/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/schedule template/schedule-template-master/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/successful_payment.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/successful_payment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,13 +25,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="routes.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py">
+        <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="183" column="34" lean-forward="true" selection-start-line="183" selection-start-column="34" selection-end-line="183" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="173">
+              <caret line="134" column="28" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -71,27 +38,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>regis</find>
-      <find>register</find>
-      <find>session</find>
-      <find>scheduled</find>
-      <find>image</find>
-      <find>def acco</find>
-      <find>def mess</find>
-      <find>hand</find>
-      <find>json</find>
-      <find>json.du</find>
-      <find>handle</find>
-      <find>emit</find>
-      <find>message_to_</find>
-      <find>sort(</find>
       <find>accoun</find>
       <find>args</find>
       <find>abort</find>
@@ -108,6 +61,20 @@
       <find>scheduling</find>
       <find>paymen</find>
       <find>url_for</find>
+      <find>add_revi</find>
+      <find>now()</find>
+      <find>tz</find>
+      <find>now</find>
+      <find>time</find>
+      <find>date</find>
+      <find>alc</find>
+      <find>sq</find>
+      <find>userna</find>
+      <find>mail_</find>
+      <find>current_app</find>
+      <find>reque</find>
+      <find>request</find>
+      <find>commi</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -119,10 +86,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/GRETutoring/templates/home.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/templates/about.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/static/main.css" />
-        <option value="$PROJECT_DIR$/GRETutoring/templates/register.html" />
         <option value="$PROJECT_DIR$/GRETutoring/templates/login.html" />
         <option value="$PROJECT_DIR$/GRETutoring/templates/available_slot.html" />
         <option value="$PROJECT_DIR$/GRETutoring/templates/selected_slot.html" />
@@ -143,10 +106,7 @@
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/free_slots.html" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/schedule.html" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/layout.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/run.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/browse/__init__.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/browse/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/browse/utils.py" />
@@ -157,25 +117,34 @@
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/messages/routes.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/forms.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/users/forms.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/main/forms.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/utils.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/payment/routes.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/routes.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/main/routes.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py" />
-        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/routes.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/run.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/errors/handlers.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/404.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/403.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/500.html" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/users/forms.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/routes.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/utils.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/models.py" />
         <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/config.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" />
+        <option value="$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="895" />
-    <option name="height" value="1040" />
+    <option name="x" value="950" />
+    <option name="y" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -206,6 +175,20 @@
               <item name="GRE Tutoring Service" type="462c0819:PsiDirectoryNode" />
               <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
               <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GRE Tutoring Service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GRE Tutoring Service" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="messaging" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GRE Tutoring Service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GRE Tutoring Service" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
               <item name="scheduling" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -222,6 +205,19 @@
               <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
               <item name="users" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="GRE Tutoring Service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GRE Tutoring Service" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GRE Tutoring Service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GRE Tutoring Service" type="462c0819:PsiDirectoryNode" />
+              <item name="GRETutoring" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+              <item name="versions" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -231,18 +227,18 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\static\profile_pics" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\users" />
       <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\schedule" />
       <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\payment" />
       <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\messages" />
       <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\main" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\GRE Tutoring Service\GRETutoring\GRETutoring\static\profile_pics" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -329,72 +325,32 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.30931923" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.20224719" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.3281027" />
       <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="3" weight="0.3281027" />
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.32952926" />
-      <window_info anchor="bottom" id="Python Console" order="1" weight="0.3281027" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.43937233" />
+      <window_info anchor="bottom" id="Python Console" order="1" weight="0.23537803" />
+      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.30385163" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.24973376" />
-      <window_info anchor="bottom" id="Terminal" order="5" weight="0.14122681" />
+      <window_info anchor="bottom" id="Terminal" order="5" weight="0.47503567" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="right" id="Data View" order="0" weight="0.26890308" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.3281027" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="18" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="9" column="139" selection-start-line="9" selection-start-column="139" selection-end-line="9" selection-end-column="139" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/available_slot.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/become_tutor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/busy_slot.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/find_tutor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/selected_slot.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-28" />
@@ -469,194 +425,203 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/migrations/versions/6178a238c2a4_added_reviews_db_and_added_score_field.py" />
-    <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/utils.py" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/forms.py" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/routes.py" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        <state relative-caret-position="160">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/utils.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/forms.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/browse/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="37" lean-forward="true" selection-end-line="2" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#84#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="160">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/forms.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/errors/handlers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/403.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/404.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="22" lean-forward="true" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/templates/errors/500.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/migrations/versions/608f30e10b13_added_timezones.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-287" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/utils.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/utils.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/utils.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="847">
+          <caret line="236" column="51" selection-start-line="236" selection-start-column="51" selection-end-line="236" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="129" column="43" selection-start-line="129" selection-start-column="43" selection-end-line="129" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="35" column="31" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="227">
+          <caret line="28" column="33" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/main/utils.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="120" column="41" selection-start-line="120" selection-start-column="34" selection-end-line="120" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/utils.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/forms.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/forms.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="38" selection-start-column="27" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/utils.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+          <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="33" column="34" lean-forward="true" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        <state relative-caret-position="-130">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/routes.py">
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="199" column="45" selection-start-line="199" selection-start-column="45" selection-end-line="199" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/messaging/forms.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="19" column="46" lean-forward="true" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="183" column="34" lean-forward="true" selection-start-line="183" selection-start-column="34" selection-end-line="183" selection-end-column="34" />
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/transactions/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="27" column="47" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/scheduling/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="134" column="28" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="28" />
         </state>
       </provider>
     </entry>

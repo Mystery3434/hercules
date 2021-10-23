@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg') #nullable=False, since they have to have at least the default
     password = db.Column(db.String(60), nullable=False)
     about = db.Column(db.Text(), nullable=True, default = "Bio")
+    credits = db.Column(db.Integer, default=0)
     skype_id = db.Column(db.String(120), nullable=True, default="")
     hangouts_id = db.Column(db.String(120), nullable=True, default="")
     time_zone = db.Column(db.String(120), nullable=True, default="UTC")
