@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from flask import render_template, url_for, flash, redirect
-from GRETutoring import  mail
+from GRETutoring import mail
 from GRETutoring.main.forms import ContactUsForm
 import flask_mail
 

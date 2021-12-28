@@ -11,6 +11,53 @@ def user_time(t, tz):
     return tz.fromutc(t)
 
 
+def load_student_schedule(schedule, offset):
+    tz = pytz.timezone(current_user.time_zone)
+    current_time = datetime.utcnow()
+    current_time = user_time(current_time, tz)
+
+    days_to_subtract = current_time.weekday()
+    current_time += timedelta(offset)
+    start_of_week = current_time - timedelta(days_to_subtract)
+    start_of_week = start_of_week.replace(hour=0, minute=0, second=0, microsecond=0)
+    all_classes = Event.query.filter(Event.date_time >= start_of_week.astimezone(pytz.utc),
+                                     Event.date_time < (start_of_week.astimezone(pytz.utc) + timedelta(7)),
+                                     Event.student_id == current_user.id).all()
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    if offset % 7 != 0:
+        abort(403)
+
+    for day in days_of_week:
+        events = schedule[day][1]
+        formatted_date = (current_time - timedelta(days_to_subtract)).strftime("%d %b %Y")
+        schedule[day] = (formatted_date, [])
+        days_to_subtract -= 1
+
+    temp = {"data-start": "14:00", "data-end": "15:15",
+            "data-content": "event-yoga-1",
+            "data-event": "booked-slot", "event-name": "Yoga Level 1"}
+
+    for event in all_classes:
+
+        start_time = user_time(event.date_time, tz)
+        week_day = start_time.weekday()
+        start_day = days_of_week[week_day]
+        formatted_date, event_list = schedule[start_day]
+        start_hour_min = datetime.strftime(start_time, "%H:%M")
+        end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
+        end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        # print(datetime.utcnow().replace(tzinfo=pytz.utc), start_time.astimezone(pytz.utc))
+        if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
+            event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                          "data-event": "past-slot", "event-name": "Scheduled Lesson"}
+        else:
+            event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
+                          "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
+        event_list.append(event_dict)
+        schedule[start_day] = (formatted_date, event_list)
+    return schedule
+
 def load_week(schedule, offset, tutor_username):
     # current_day = datetime.today()
     tz = pytz.timezone(current_user.time_zone)
@@ -67,6 +114,7 @@ def load_week(schedule, offset, tutor_username):
             "data-event": "booked-slot", "event-name": "Yoga Level 1"}
 
     for event in all_classes:
+
         start_time = user_time(event.date_time, tz)
         week_day = start_time.weekday()
         start_day = days_of_week[week_day]
@@ -74,8 +122,8 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        print(current_time, start_time)
-        if current_time > start_time:
+        #print(datetime.utcnow().replace(tzinfo=pytz.utc), start_time.astimezone(pytz.utc))
+        if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
             event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
                           "data-event": "past-slot", "event-name": "Scheduled Lesson"}
         else:
@@ -92,7 +140,7 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        if current_time > start_time:
+        if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
             busy_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
                               "data-event": "past-slot", "event-name": "Tutor Busy"}
         else:
@@ -103,6 +151,7 @@ def load_week(schedule, offset, tutor_username):
         schedule[start_day] = (formatted_date, busy_slot_list)
 
     for free_slot in all_free_slots:
+
         start_time = user_time(free_slot.date_time, tz)
         week_day = start_time.weekday()
         start_day = days_of_week[week_day]
@@ -110,8 +159,8 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-
-        if current_time.astimezone(pytz.utc) > start_time.astimezone(pytz.utc):
+        #print(current_time, start_time)
+        if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
             free_slot_dict = {"data-start": start_hour_min, "data-end": end_hour_min,
                               "data-content": "event-yoga-1",
                               "data-event": "past-slot", "event-name": "Free Slot"}
@@ -251,8 +300,10 @@ def push_booked_slots_to_db(schedule, tutor_username):
     week_start = datetime.strptime(schedule["updatedSchedule"]["week_start"].strip(), "%d %b %Y")
     week_start = week_start.replace(hour=0, minute=0, second=0, microsecond=0)
     tutor = User.query.filter(User.username == tutor_username).first()
-
+    num_lessons = len(schedule["updatedSchedule"]["selected"])
+    current_user.credits -= num_lessons
     db.session.commit()
+    # db.session.commit()
     for slot in schedule["updatedSchedule"]["selected"]:
         day = slot["day"]
         start = slot["start"]
@@ -272,3 +323,27 @@ def push_booked_slots_to_db(schedule, tutor_username):
         db.session.commit()
 
     print("Reached here")
+
+def get_slot_to_cancel(slot):
+    print("Entered this function (remove booked slots from db) successfully!")
+    print("The current user is a ", current_user.role)
+    tz = pytz.timezone(current_user.time_zone)
+    slot_in_utc = slot.astimezone(pytz.utc)
+    if current_user.role == "Student":
+        db_entry = Event.query.filter(Event.date_time == slot_in_utc,
+                       Event.student_id == current_user.id).first()
+    else:
+        db_entry = Event.query.filter(Event.date_time == slot_in_utc,
+                                      Event.tutor_id == current_user.id).first()
+    print(db_entry)
+    return db_entry
+
+def cancel_slot(slot):
+    free_slot = FreeSlot(date_time=slot.date_time, tutor_id=slot.tutor_id)
+    print("FREE SLOTS: ", free_slot)
+    db.session.delete(slot)
+    db.session.commit()
+    db.session.add(free_slot)
+    db.session.commit()
+
+

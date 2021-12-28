@@ -155,6 +155,40 @@ jQuery(document).ready(function($){
 			
 		});
 
+		// Cancel Lesson
+		this.modal.on('click', '#cancel_booking', function(event){
+			//event.preventDefault();
+			console.log("Cancel Booking button clicked.");
+			// console.log(current.parent().attr("id"));
+			var date_text = current.parent().parent().text();
+			var class_start = current.attr("data-start");
+			// console.log(current.attr("data-end"));
+			var to_pass_to_flask = {'date_text':date_text,
+									'class_start': class_start};
+
+			$.ajax({
+				type: "POST",
+				contentType: "application/json;charset=utf-8",
+				url: "/cancel_booking",
+				traditional: "true",
+				data: JSON.stringify({to_pass_to_flask}),
+				dataType: "json"
+				});
+			
+			// console.log($(this).parent());
+			// state="selected-slot";
+			// state="event-1";
+			// FIND A WAY TO ACCESS THE OLD LI AND CHANGE TO OLD STATE
+			// current.attr("data-event", "selected-slot");
+			// cost += 80;
+			// // displayEvents();
+			// // updatePrice()
+			// // console.log($(this).attr("data-event"));
+			// // $(this).parent().attr("data-event", "selected-slot");
+			// if( !self.animating ) self.closeModal(self.eventsGroup.find('.selected-event'), true);
+			
+		});
+
 		//close modal window
 		this.modal.on('click', '.cancel', function(event){
 			event.preventDefault();
@@ -558,7 +592,10 @@ jQuery(document).ready(function($){
 		var len;
 		
 		var tutor_username = getQueryVariable('tutor_username')
-		
+		// console.log("SOME THING");
+		// console.log(tutor_username);
+		// var cred = getQueryVariable('cred');
+		// console.log(cred);
 		var updatedSchedule = {
 			'week_start': $(".events-group > .top-info > h4").first().text(),
 			'selected': []
@@ -581,7 +618,12 @@ jQuery(document).ready(function($){
 					
 			}
 		}
-
+		
+		// if (updatedSchedule.length > ){
+			
+		// 	alert('Error message:');
+		// }
+		
 		var to_pass_to_flask = {'tutor_username':tutor_username, 'updatedSchedule':updatedSchedule};
 
 		$.ajax({
@@ -606,6 +648,7 @@ jQuery(document).ready(function($){
 			
 		// }
 	});
+
 
 
 	$("#add_free_slots").on('click', function(){

@@ -30,6 +30,7 @@
             {% if current_user.role=="Student" %}
                 <a class="nav-item nav-link" href="{{ url_for('users.find_tutor') }}">Find a Tutor</a>
                 <a class="nav-item nav-link" href="{{ url_for('transactions.buy_credits') }}">Buy Credits</a>
+                <a class="nav-item nav-link" href="{{ url_for('scheduling.student_schedule')}}">Schedule</a>
             {% endif %}
             {% if current_user.role=="Tutor" %}
                 <a class="nav-item nav-link" href="{{ url_for('scheduling.schedule', tutor_username=current_user.username )}}">Schedule</a>

@@ -1,3 +1,4 @@
+<!-- <script src="{{ url_for('static', filename='cancel_booking.js') }}"></script> -->
 <div class="cd-schedule-modal__event-info p-14">
 	<!--<div>Abs Circuit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, unde, nulla. Vel unde deleniti, distinctio inventore quis molestiae perferendis, eum quo harum dolorum reiciendis sunt dicta maiores similique! Officiis repellat iure odio debitis enim eius commodi quae deserunt quam assumenda, ab asperiores reiciendis minima maxime odit laborum, libero veniam non? </div>-->
 	<div class="event-info">
@@ -11,7 +12,7 @@
 
 				<a href="#0"><button type="button" class="btn btn-primary return" > Return to calendar </button></a>
                 <a href="{{ url_for('messaging.message') }}"><button type="button" class="btn btn-primary" > Message Tutor </button></a>
-				 <a href = "{{ url_for('scheduling.cancel_booking') }}"><button type="button" class="btn btn-danger" > Cancel Booking </button></a>
+				 <a href = "{{ url_for('scheduling.cancel_booking') }}"><button type="button" class="btn btn-danger" id="cancel_booking"> Cancel Booking </button></a>
 				<!--<a href="{{ url_for('scheduling.schedule', selected=True) }}"><button type="button" class="btn btn-success"> Book </button></a>-->
 				<!--<a href="{{ url_for('scheduling.schedule', selected=False, scheduling=None) }}"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></a>-->
 			</div>

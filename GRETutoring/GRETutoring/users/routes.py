@@ -12,9 +12,11 @@ from flask_login import login_required
 from datetime import datetime
 import pytz
 
+from GRETutoring import mail
+import flask_mail
 
 
-
+MY_EMAIL = 'wilzie123@gmail.com'
 users = Blueprint('users', __name__)
 
 
@@ -34,7 +36,17 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}! You are now able to login', 'success')
+
+        email = form.email.data
+        message_text = "The user " + form.username.data + " with the email ID " + email + " has created a new account on Hercules."
+        msg = flask_mail.Message('New user registered on Hercules', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg.body = message_text
+        mail.send(msg)
+
         return redirect(url_for('users.login'))
+
+
+
 
     return render_template("register.html", title="Register", form=form)
 
