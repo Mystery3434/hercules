@@ -4,7 +4,7 @@ from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
 from GRETutoring.models import User, Review, Event
 
-from GRETutoring.users.utils import save_picture, send_reset_email
+from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email
 
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
@@ -129,7 +129,8 @@ def become_tutor():
             tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Tutor', time_zone=form.time_zone.data)
             db.session.add(tutor)
             db.session.commit()
-
+            send_tutor_registration_email(form.email.data)
+            send_tutor_registration_admin_email(form)
             flash(f'Your application has been submitted. If we think you are a good fit, we will contact you for an interview. Thank you for your application!', 'success')
             return redirect(url_for('main.home'))
 

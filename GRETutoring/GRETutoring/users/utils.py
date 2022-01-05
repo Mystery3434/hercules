@@ -7,6 +7,8 @@ from PIL import Image
 
 import flask_mail
 
+MY_EMAIL = 'wilzie123@gmail.com'
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -30,3 +32,40 @@ def send_reset_email(user):
     '''
     mail.send(msg)
 
+def send_tutor_registration_email(tutor_email):
+    msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[tutor_email])
+    msg.body=f'''Hello,
+    
+Thank you for registering with Hercules Tutoring! We have received your application and will get in touch with you shortly for an interview if you are a good fit for our position.
+    
+Best regards,
+Hercules Tutoring
+
+    '''
+    mail.send(msg)
+
+
+def send_tutor_registration_admin_email(tutor_form):
+    name = tutor_form.name.data
+    username = tutor_form.username.data
+    email = tutor_form.email.data
+    verbal_score = tutor_form.verbal_score.data
+    quant_score = tutor_form.quant_score.data
+    awa_score = tutor_form.awa_score.data
+    video_link = tutor_form.video_link.data
+    time_zone = tutor_form.time_zone.data
+
+
+    msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+    msg.body = f'''{name} (username : {username}) would like to become a tutor. Their email is {email}. Their scores are:
+    
+    Quant: {quant_score}
+    Verbal: {verbal_score}
+    AWA: {awa_score}
+    
+    Video link for the tutor: {video_link}
+    
+    The tutor's time zone is {time_zone}. 
+
+    '''
+    mail.send(msg)

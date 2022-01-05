@@ -6,6 +6,9 @@ from flask_login import current_user
 from datetime import datetime, timedelta
 import pytz
 
+from GRETutoring import mail
+import flask_mail
+MY_EMAIL = 'wilzie123@gmail.com'
 
 def user_time(t, tz):
     return tz.fromutc(t)
@@ -328,6 +331,7 @@ def get_slot_to_cancel(slot):
     print("Entered this function (remove booked slots from db) successfully!")
     print("The current user is a ", current_user.role)
     tz = pytz.timezone(current_user.time_zone)
+    slot = tz.localize(slot)
     slot_in_utc = slot.astimezone(pytz.utc)
     if current_user.role == "Student":
         db_entry = Event.query.filter(Event.date_time == slot_in_utc,
@@ -335,7 +339,9 @@ def get_slot_to_cancel(slot):
     else:
         db_entry = Event.query.filter(Event.date_time == slot_in_utc,
                                       Event.tutor_id == current_user.id).first()
-    print(db_entry)
+    print("The slot chosen to cancel is (db): ", db_entry)
+    print("The slot chosen to cancel is (raw): ", slot)
+    print("The slot chosen to cancel is (UTC): ", slot_in_utc)
     return db_entry
 
 def cancel_slot(slot):
@@ -343,7 +349,52 @@ def cancel_slot(slot):
     print("FREE SLOTS: ", free_slot)
     db.session.delete(slot)
     db.session.commit()
+    student_id = slot.student_id
+    student = User.query.filter_by(id=student_id).first()
+    student.credits += 1
+    db.session.commit()
     db.session.add(free_slot)
     db.session.commit()
 
 
+def send_scheduling_emails(type, num_lessons, user2_username, form = None):
+    user1_email = current_user.email
+    user2_email = User.query.filter_by(username=user2_username).first().email
+
+    verb = {"booking": "booked",
+            "cancellation": "cancelled"}
+
+    message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lessons with " + user2_username + \
+                         ". Login to your account to view your schedule and to message them."
+    message_to_user2 = current_user.username + " has " + verb[type] + " " + str(num_lessons) + " lessons with you." + \
+                       " Login to your account to view your schedule and to message them."
+    if form:
+        special_requests = form.special_requests.data
+        verbal = form.verbal.data
+        quant = form.quant.data
+        awa = form.awa.data
+        focus = ""
+        if verbal or quant or awa:
+            if verbal:
+                focus += "\nVerbal Reasoning"
+            if quant:
+                focus += "\nQuantitative Reasoning"
+            if awa:
+                focus += "\nAnalytical Writing"
+            message_to_user2 += "\n\nThey would like to focus on: " + focus
+        if special_requests:
+            message_to_user2 += "\n\nTheir special requests for the lesson are:\n " + special_requests
+
+    message_to_admin = current_user.username + " has " + verb[type] + " " + str(
+        num_lessons) + " lessons with " + user2_username + "."
+
+    msg_user1 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user1_email],
+                                     body=message_to_user1)
+    msg_user2 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user2_email],
+                                   body=message_to_user2)
+    msg_admin = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[MY_EMAIL],
+                                   body=message_to_admin)
+    print(msg_user1)
+    mail.send(msg_user1)
+    mail.send(msg_user2)
+    mail.send(msg_admin)

@@ -1,15 +1,18 @@
 from flask import Blueprint
-from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot
+from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails
 
 from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
+
+
+from GRETutoring.models import User
 
 from flask_login import current_user
 from flask_login import login_required
 
 from datetime import datetime
-from GRETutoring import mail
-import flask_mail
+
+MY_EMAIL = 'wilzie123@gmail.com'
 
 scheduling = Blueprint('scheduling', __name__)
 
@@ -198,7 +201,7 @@ def booking():
 
 
 
-        print(updated_schedule, tutor_username)
+
 
     else:
         tutor_username = request.args.get('tutor_username')
@@ -206,7 +209,7 @@ def booking():
         # return render_template("booking.html", form=form, total_cost=total_cost, updated_schedule=updated_schedule,
         #                        tutor_username=tutor_username)
 
-    num_lessons = len(updated_schedule['selected'])
+    num_lessons = len(updated_schedule.get('selected'))
     if num_lessons > current_user.credits:
         flash("You do not have enough credits for your selected booking. 1 credit = 1 hour of class.", 'danger')
         print("num greater")
@@ -219,10 +222,19 @@ def booking():
         print(updated_schedule)
 
         push_booked_slots_to_db(updated_schedule, tutor_username)
-        flash("Your session will be booked after payment.", "success")
-        return redirect(url_for('transactions.payment', updated_schedule=updated_schedule, tutor_username = tutor_username))
+
+        send_scheduling_emails("booking", num_lessons, tutor_username, form)
+
+        #flash("Your session will be booked after payment.", "success")
+        return redirect(url_for('scheduling.successful_booking', updated_schedule=updated_schedule, tutor_username = tutor_username))
 
     return render_template("booking.html", form=form, total_cost=total_cost, updated_schedule=updated_schedule, tutor_username=tutor_username)
+
+
+@scheduling.route('/successful_booking')
+def successful_booking():
+    return render_template("successful_booking.html")
+
 
 
 lesson_to_cancel = None
@@ -238,6 +250,7 @@ def cancel_booking():
             date_text = passed_variables['date_text']
             date_text = date_text.strip().split("\n")
             # print(date_text[0].strip(), date_text[-2].strip()  )
+            print(date_text)
             day = date_text[0].strip()
             start_time = passed_variables['class_start'].strip()
             # print(day)
@@ -251,8 +264,18 @@ def cancel_booking():
 
     if form.validate_on_submit():
         print("The slot to cancel is: ", lesson_to_cancel)
+        if current_user.role=="Student":
+            user2_id = lesson_to_cancel.tutor_id
+        else:
+            user2_id = lesson_to_cancel.student_id
+
+        user2_username = User.query.filter_by(id=user2_id).first().username
         cancel_slot(lesson_to_cancel)
+
         lesson_to_cancel = None
+
+        send_scheduling_emails("cancellation", 1, user2_username)
+
         flash('Cancellation request sent', 'success')
         #remove_booked_slots_from_db(time_to_cancel)
         return redirect(url_for('main.home'))

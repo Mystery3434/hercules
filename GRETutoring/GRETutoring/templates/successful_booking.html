@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<body>
+<h1> Your booking was successful.</h1>
+<p>You can <a href="{{ url_for('scheduling.student_schedule') }}">view your schedule</a> or <a href="{{ url_for('messaging.message') }}">send your tutor a message</a>.</p>
+</body>
+{% endblock content %}
