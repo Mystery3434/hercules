@@ -5,11 +5,10 @@ from GRETutoring import mail
 from GRETutoring.main.forms import ContactUsForm
 import flask_mail
 
+import os
 
 main = Blueprint('main', __name__)
 
-
-MY_EMAIL = 'wilzie123@gmail.com'
 
 @main.route('/')
 @main.route('/home')
@@ -24,7 +23,7 @@ def about():
 
 @main.route('/contact_us', methods=['GET', 'POST'])
 def contact_us():
-
+    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
     form = ContactUsForm()
     if form.validate_on_submit():
         email = form.email.data

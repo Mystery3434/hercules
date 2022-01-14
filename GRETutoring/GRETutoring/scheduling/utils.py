@@ -5,10 +5,11 @@ from flask_login import current_user
 
 from datetime import datetime, timedelta
 import pytz
+from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
 
 from GRETutoring import mail
 import flask_mail
-MY_EMAIL = 'wilzie123@gmail.com'
+import os
 
 def user_time(t, tz):
     return tz.fromutc(t)
@@ -358,17 +359,20 @@ def cancel_slot(slot):
 
 
 def send_scheduling_emails(type, num_lessons, user2_username, form = None):
+    # User 1 is the user who initiated the request. If they are a student, then user 2 is the tutor and vice-versa.
+    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
     user1_email = current_user.email
     user2_email = User.query.filter_by(username=user2_username).first().email
 
     verb = {"booking": "booked",
             "cancellation": "cancelled"}
 
-    message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lessons with " + user2_username + \
-                         ". Login to your account to view your schedule and to message them."
-    message_to_user2 = current_user.username + " has " + verb[type] + " " + str(num_lessons) + " lessons with you." + \
-                       " Login to your account to view your schedule and to message them."
-    if form:
+    message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lesson(s) with " + user2_username + \
+                         ". Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
+    message_to_user2 = current_user.username + " has " + verb[type] + " " + str(num_lessons) + " lesson(s) with you." + \
+                       " Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
+
+    if isinstance(form, ScheduleForm):
         special_requests = form.special_requests.data
         verbal = form.verbal.data
         quant = form.quant.data
@@ -384,6 +388,10 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
             message_to_user2 += "\n\nThey would like to focus on: " + focus
         if special_requests:
             message_to_user2 += "\n\nTheir special requests for the lesson are:\n " + special_requests
+
+    if isinstance(form, CancellationForm):
+        reasons = form.reasons.data
+        message_to_user2 += "\n\nThe reason for the cancellation provided by the user is: \n" + reasons
 
     message_to_admin = current_user.username + " has " + verb[type] + " " + str(
         num_lessons) + " lessons with " + user2_username + "."

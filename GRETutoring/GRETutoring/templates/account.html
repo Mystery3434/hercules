@@ -127,8 +127,14 @@
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-light button-theme") }}
+            
         </div>
+        
+              
     </form>
+    {% if current_user.role=="Tutor" %}
+    <a href="{{ url_for('users.view_profile', username=current_user.username) }}"><button class="btn btn-outline-light button-theme">View my profile</button></a>
+{% endif %}
 
 </div>
 {% endblock content %}

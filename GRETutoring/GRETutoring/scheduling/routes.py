@@ -12,7 +12,6 @@ from flask_login import login_required
 
 from datetime import datetime
 
-MY_EMAIL = 'wilzie123@gmail.com'
 
 scheduling = Blueprint('scheduling', __name__)
 
@@ -274,9 +273,9 @@ def cancel_booking():
 
         lesson_to_cancel = None
 
-        send_scheduling_emails("cancellation", 1, user2_username)
+        send_scheduling_emails("cancellation", 1, user2_username, form)
 
-        flash('Cancellation request sent', 'success')
+        flash('Your lesson has been cancelled.', 'success')
         #remove_booked_slots_from_db(time_to_cancel)
         return redirect(url_for('main.home'))
     return render_template("cancel_booking.html", form=form)
@@ -304,3 +303,8 @@ def past_slot():
 @scheduling.route('/booked_slot', methods=['GET', 'POST'])
 def booked_slot():
     return render_template("booked_slot.html", testing_var=False)
+
+@scheduling.route('/feedback/<lesson_id>')
+@login_required
+def send_feedback():
+    pass

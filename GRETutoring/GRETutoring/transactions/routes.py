@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import render_template, abort, request, current_app, url_for
 from flask_login import login_required, current_user
 from GRETutoring.models import Event, User
+from GRETutoring.transactions.utils import send_credit_purchase_email
 from GRETutoring import db
 import stripe
 
@@ -61,9 +62,11 @@ def stripe_pay():
 def payment():
     return render_template("payment.html")
 
+
 @transactions.route('/successful_payment')
 def successful_payment():
     num_credits = int(request.args.get('num_credits'))
     current_user.credits += num_credits
     db.session.commit()
+    send_credit_purchase_email(current_user, num_credits)
     return render_template("successful_payment.html", num_credits = num_credits)

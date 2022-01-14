@@ -4,7 +4,7 @@ from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
 from GRETutoring.models import User, Review, Event
 
-from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email
+from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email, send_review_notification, send_account_opening_email
 
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
@@ -16,7 +16,6 @@ from GRETutoring import mail
 import flask_mail
 
 
-MY_EMAIL = 'wilzie123@gmail.com'
 users = Blueprint('users', __name__)
 
 
@@ -38,10 +37,11 @@ def register():
         flash(f'Account created for {form.username.data}! You are now able to login', 'success')
 
         email = form.email.data
-        message_text = "The user " + form.username.data + " with the email ID " + email + " has created a new account on Hercules."
-        msg = flask_mail.Message('New user registered on Hercules', sender='noreply@demo.com', recipients=[MY_EMAIL])
-        msg.body = message_text
-        mail.send(msg)
+        send_account_opening_email(user)
+        # message_text = "The user " + form.username.data + " with the email ID " + email + " has created a new account on Hercules."
+        # msg = flask_mail.Message('New user registered on Hercules', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        # msg.body = message_text
+        # mail.send(msg)
 
         return redirect(url_for('users.login'))
 
@@ -209,6 +209,8 @@ def add_review():
             review = Review(review_text=form.review.data, review_score=form.score.data, date_time=datetime.utcnow(), student_id=current_user.id, tutor_id = user.id)
             db.session.add(review)
             db.session.commit()
+            send_review_notification(user)
+
         else:
             existing_review.review_text=form.review.data
             existing_review.review_score = form.score.data

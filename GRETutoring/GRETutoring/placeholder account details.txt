@@ -7,9 +7,13 @@ student@gmail.com: student
 student4@gmail.com : student4
 student5@gmail.com : student5
 student10@gmail.com : student10
+student69@testing.com : student69
+tutor69@testing.com : tutor69
+tutor96@testing.com : tutor96 #0.5 time difference from tutor69
 sasha@testing.com : sasha
 bradley@testing.com: bradley
 chester@testing.com: chester
+student6969@testing.com : student6969
 
 Details:
 

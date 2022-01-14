@@ -7,7 +7,7 @@ from PIL import Image
 
 import flask_mail
 
-MY_EMAIL = 'wilzie123@gmail.com'
+
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -32,6 +32,33 @@ def send_reset_email(user):
     '''
     mail.send(msg)
 
+
+def send_account_opening_email(student):
+    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
+    student_email = student.email
+    student_username = student.username
+    msg_admin = flask_mail.Message('New Student Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+    msg_admin.body= f"A new student {student_username}, with email: {student_email} has registered on Hercules."
+    mail.send(msg_admin)
+    msg_student = flask_mail.Message('Hercules New Account Opening', sender='noreply@demo.com', recipients=[student_email])
+    msg_student.body = f'''Hello,
+
+Thank you for registering with Hercules Tutoring! We are pleased that you have chosen Hercules for your GRE Tutoring lessons.
+
+You can now click on "Find a Tutor" when logged in to your account to browse the list of available tutors. Feel free to book a lesson with any tutor that catches your interest. 
+
+To schedule a lesson, you will need to purchase lesson credits on the "Buy Credits" page. 1 Credit = 1 Hour of lessons. As a new user, you will receive 80% off on your first credit. 
+
+Happy studying!
+
+Best regards,
+Hercules Tutoring
+
+    '''
+    mail.send(msg_student)
+
+
+
 def send_tutor_registration_email(tutor_email):
     msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[tutor_email])
     msg.body=f'''Hello,
@@ -46,6 +73,7 @@ Hercules Tutoring
 
 
 def send_tutor_registration_admin_email(tutor_form):
+    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
     name = tutor_form.name.data
     username = tutor_form.username.data
     email = tutor_form.email.data
@@ -66,6 +94,21 @@ def send_tutor_registration_admin_email(tutor_form):
     Video link for the tutor: {video_link}
     
     The tutor's time zone is {time_zone}. 
+
+    '''
+    mail.send(msg)
+
+
+def send_review_notification(tutor):
+    username = tutor.username
+    email = tutor.email
+
+    msg = flask_mail.Message('New Tutor Review', sender='noreply@demo.com', recipients=[email])
+    msg.body = f'''Hello {username},
+
+You have received a review from a student. To view the review, go to Account -> View my profile.
+
+Happy teaching!
 
     '''
     mail.send(msg)
