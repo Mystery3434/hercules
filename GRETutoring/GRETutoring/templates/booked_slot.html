@@ -11,7 +11,12 @@
                 <p>Here is the link to your class: https://zoom.com/link/to/your/class.</p>
 
 				<a href="#0"><button type="button" class="btn btn-primary return" > Return to calendar </button></a>
+				{% if current_user.role == "Student" %}
                 <a href="{{ url_for('messaging.message') }}"><button type="button" class="btn btn-primary" > Message Tutor </button></a>
+				{% endif %}
+				{% if current_user.role == "Tutor" %}
+                <a href="{{ url_for('messaging.message') }}"><button type="button" class="btn btn-primary" > Message Student </button></a>
+				{% endif %}
 				 <a href = "{{ url_for('scheduling.cancel_booking') }}"><button type="button" class="btn btn-danger" id="cancel_booking"> Cancel Booking </button></a>
 				<!--<a href="{{ url_for('scheduling.schedule', selected=True) }}"><button type="button" class="btn btn-success"> Book </button></a>-->
 				<!--<a href="{{ url_for('scheduling.schedule', selected=False, scheduling=None) }}"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></a>-->

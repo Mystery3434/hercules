@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6">
-                <a class="btn btn-primary btn-lg button-theme m-4"  href="{{ url_for('scheduling.free_slots') }}">Click to add your available time slots</a>
+                <a class="btn btn-primary btn-lg button-theme m-4"  href="{{ url_for('scheduling.free_slots') }}">Click to modify your available time slots</a>
             </div>
         <div class="col-3"></div>
 
@@ -367,11 +367,13 @@
     </div>
     <!-- .cd-scheduling -->
     
+    {% if current_user.role == "Student" %}
     <a href = "{{ url_for('scheduling.booking', tutor_username=tutor_username) }}">
     <!-- <form  method = "post" action = "{{ url_for('scheduling.booking') }}"> -->
         <input class="btn btn-primary button-theme center" id="book_slots" type="button"  value="Book these slots." >
     </a>
     <!-- </form> -->
+    {% endif %}
 </body>
 
 

@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, RadioField
 from wtforms.validators import  DataRequired, Length, Email, EqualTo, NumberRange, URL, ValidationError
+from wtforms.widgets import TextArea
 from GRETutoring.models import User
 from flask_login import current_user
 import pytz
@@ -45,8 +46,9 @@ class TutorRegistrationForm(FlaskForm):
     quant_score = SelectField(u'Quantitative Reasoning Score', coerce=int, choices=[(0, "")] + [(i, i) for i in range(163, 171)], validators=[NumberRange(min=163, max=170, message="Your score must be at least 166 to be considered. We do make some exceptions for scores below that, but it has to be above 163.")])
     awa_score = SelectField(u'Analytical Writing Score', coerce=float, choices=[(0, "")] + [(i, i) for i in [5.0, 5.5, 6.0]], validators=[NumberRange(min=5.0, max=6.0, message="Your score must be at least 5.5 to be considered. We do make some exceptions for scores below that, but it has to be above 5.0.")])
     video_link = StringField('Please submit a short video (under 2 minutes) about why you would like to join Hercules. You can include any details you think are necessary. Please submit the video link here. We recommend using a YouTube link.', validators=[URL(), Length(max=250)])
-    time_zone = SelectField(u'Timezone', coerce=str,
+    time_zone = SelectField(u'Which timezone are you currently located in?', coerce=str,
                             choices=[("", "")] + [(x, x) for x in pytz.common_timezones])
+    misc_info = StringField(u'Is there any additional information that you would like to provide us that could support your application?', validators=[Length(max=250)],  widget=TextArea())
     submit = SubmitField('Submit Tutor Application')
 
 class LoginForm(FlaskForm):

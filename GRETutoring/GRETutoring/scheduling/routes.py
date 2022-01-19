@@ -198,10 +198,6 @@ def booking():
         else:
             tutor_username = request.args.get('tutor_username')
 
-
-
-
-
     else:
         tutor_username = request.args.get('tutor_username')
         #print(updated_schedule, tutor_username)
@@ -212,6 +208,13 @@ def booking():
     if num_lessons > current_user.credits:
         flash("You do not have enough credits for your selected booking. 1 credit = 1 hour of class.", 'danger')
         print("num greater")
+        return redirect(
+                url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
+                        selected=False))
+
+    elif num_lessons == 0:
+        flash("You have not selected any slots to book.", 'danger')
+        print("num zero")
         return redirect(
                 url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
                         selected=False))
@@ -227,7 +230,7 @@ def booking():
         #flash("Your session will be booked after payment.", "success")
         return redirect(url_for('scheduling.successful_booking', updated_schedule=updated_schedule, tutor_username = tutor_username))
 
-    return render_template("booking.html", form=form, total_cost=total_cost, updated_schedule=updated_schedule, tutor_username=tutor_username)
+    return render_template("booking.html", form=form, updated_schedule=updated_schedule, tutor_username=tutor_username)
 
 
 @scheduling.route('/successful_booking')

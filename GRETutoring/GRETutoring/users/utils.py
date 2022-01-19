@@ -82,7 +82,7 @@ def send_tutor_registration_admin_email(tutor_form):
     awa_score = tutor_form.awa_score.data
     video_link = tutor_form.video_link.data
     time_zone = tutor_form.time_zone.data
-
+    misc_info = tutor_form.misc_info.data
 
     msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
     msg.body = f'''{name} (username : {username}) would like to become a tutor. Their email is {email}. Their scores are:
@@ -94,7 +94,10 @@ def send_tutor_registration_admin_email(tutor_form):
     Video link for the tutor: {video_link}
     
     The tutor's time zone is {time_zone}. 
-
+    
+    Addtional info that the tutor has provided: 
+    {misc_info}
+    
     '''
     mail.send(msg)
 

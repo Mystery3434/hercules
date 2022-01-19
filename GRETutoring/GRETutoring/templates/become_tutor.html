@@ -160,6 +160,21 @@
                 {% endif %}
             </div>
             
+            <div class="form-group pt-3">
+                {{ form.misc_info.label(class="form-control-label") }}
+                {% if form.misc_info.errors %}
+                   {{ form.misc_info(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.misc_info.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.misc_info(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
             <div class="form-group">
                 {{ form.time_zone.label(class="form-control-label") }}
 
@@ -176,6 +191,7 @@
                 {% endif %}
 
             </div>
+
 
         </fieldset>
         <div class="form-group">
