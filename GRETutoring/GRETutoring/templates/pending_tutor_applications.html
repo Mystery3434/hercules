@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='approve_tutor.js') }}"></script>
+
+
+{% for tutor in tutors.items %}
+        <article class="media content-section">
+          
+          <div class="media-body">
+            <div class="article-metadata">
+              <b>{{ tutor.username }}</b>
+                <p class="article-content"> {{tutor.email}} </p>
+                <p class="article-content"> Verbal: {{tutor.verbal_score}}, Quant: {{tutor.quant_score}}, AWA: {{tutor.awa_score}} </p>
+                <p class="article-content"> Video: {{tutor.video_link}} </p>
+                <p class="article-content"> Other Info: {{tutor.misc_info}} </p>
+
+            </div>
+              <a href="{{url_for('users.pending_tutor_applications')}}"><button type="button" class="btn btn-primary button-theme" id="approve_{{tutor.id}}">Approve</button></a>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in tutors.iter_pages(left_edge = 1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if tutors.page == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('users.pending_tutor_applications', page=page_num) }}"> {{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('users.pending_tutor_applications', page=page_num) }}"> {{ page_num }}</a>
+            {% endif %}
+
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
+{% endblock content %}
+

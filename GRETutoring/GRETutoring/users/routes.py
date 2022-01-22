@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
-from GRETutoring.models import User, Review, Event
+from GRETutoring.models import User, Review, Event, TutorApplication
 
 from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email, send_review_notification, send_account_opening_email
 
@@ -57,9 +57,11 @@ def login():
         return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        student = User.query.filter_by(email=form.email.data).first()
-        if student and bcrypt.check_password_hash(student.password, form.password.data):
-            login_user(student, remember=form.remember.data)
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.role=="Pending":
+            flash('Login Unsuccessful. Your application is still pending approval.', 'warning')
+        elif user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
@@ -126,8 +128,13 @@ def become_tutor():
             flash('A user with this email already exists. Please login if you already have an account.', 'danger')
         else:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Tutor', time_zone=form.time_zone.data)
+            tutor = User(username=form.username.data, email=form.email.data, password=hashed_password, role='Pending', time_zone=form.time_zone.data)
             db.session.add(tutor)
+            db.session.commit()
+            tutor_application = TutorApplication(tutor_id = tutor.id, username = tutor.username, email = tutor.email, date_time = datetime.utcnow(),
+                                                 verbal_score = form.verbal_score.data, quant_score = form.quant_score.data, awa_score = form.awa_score.data,
+                                                 video_link = form.video_link.data, misc_info = form.misc_info.data, time_zone = form.time_zone.data)
+            db.session.add(tutor_application)
             db.session.commit()
             send_tutor_registration_email(form.email.data)
             send_tutor_registration_admin_email(form)
@@ -139,7 +146,29 @@ def become_tutor():
     return render_template("become_tutor.html", title="Register", form=form)
 
 
-
+@login_required
+@users.route('/pending_tutor_applications', methods=['GET', 'POST'])
+def pending_tutor_applications():
+    if current_user.role != "Admin":
+        abort(403)
+    if request.method=="GET":
+        page = request.args.get('page', 1, type=int)
+        # tutors = User.query.filter_by(role="Tutor").paginate(page=page, per_page=5)
+        pending_tutors = TutorApplication.query.paginate(page=page, per_page=5)
+        return render_template("pending_tutor_applications.html", tutors=pending_tutors)
+    else:
+        if request.get_json():
+            approved_application_id = request.get_json()['approved_application_id']["application_id"]
+            approved_application = TutorApplication.query.filter_by(id=approved_application_id).first()
+            approved_tutor = User.query.filter_by(id=approved_application.tutor_id).first()
+            approved_tutor.role="Tutor"
+            db.session.delete(approved_application)
+            db.session.add(approved_tutor)
+            db.session.commit()
+            flash(f"Successfully approved tutor", "success")
+            # page = request.args.get('page', 1, type=int)
+            # pending_tutors = TutorApplication.query.paginate(page=page, per_page=5)
+        return redirect(url_for("users.pending_tutor_applications"))
 
 
 @users.route('/view_profile', methods=['GET', 'POST'])

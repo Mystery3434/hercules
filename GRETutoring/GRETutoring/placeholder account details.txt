@@ -15,6 +15,13 @@ sasha@testing.com : sasha
 bradley@testing.com: bradley
 chester@testing.com: chester
 student6969@testing.com : student6969
+tutorpending@testing.com : tutorpending
+tutorpending2@testing.com : tutorpending2
+tutorpending3@testing.com : tutorpending3
+tutorpending4@testing.com : tutorpending4
+pendingtutor5@testing.com : pendingtutor5
+pendingtutor6@testing.com : pendingtutor6
+... until pending tutor 12
 
 Details:
 

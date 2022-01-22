@@ -35,6 +35,9 @@
             {% if current_user.role=="Tutor" %}
                 <a class="nav-item nav-link" href="{{ url_for('scheduling.schedule', tutor_username=current_user.username )}}">Schedule</a>
             {% endif %}
+            {% if current_user.role=="Admin" %}
+            <a class="nav-item nav-link" href="{{ url_for('users.pending_tutor_applications') }}">Pending Tutor Applications</a>
+            {% endif %}
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">

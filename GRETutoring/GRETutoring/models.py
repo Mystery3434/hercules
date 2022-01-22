@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email=db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(20), nullable=False, default = "Student")
+    role = db.Column(db.String(20), nullable=False, default = "Student") # Student, Tutor, Pending, and Admin
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg') #nullable=False, since they have to have at least the default
     password = db.Column(db.String(60), nullable=False)
     about = db.Column(db.Text(), nullable=True, default = "Bio")
@@ -65,6 +65,24 @@ class FreeSlot(db.Model):
 
     def __repr__(self):
         return f"FreeSlot('{self.date_time}', '{self.tutor_id}')"
+
+class TutorApplication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    email = db.Column(db.String(40), nullable=False)
+    username = db.Column(db.String(40), nullable=False)
+    date_time = db.Column(db.DateTime, nullable=False)
+
+    verbal_score = db.Column(db.Integer, nullable=False)
+    quant_score = db.Column(db.Integer, nullable=False)
+    awa_score = db.Column(db.Float, nullable=False)
+    video_link = db.Column(db.String(250), nullable=False)
+    time_zone =  db.Column(db.String(40))
+    misc_info = db.Column(db.String(250))
+
+    def __repr__(self):
+        return f"TutorApplication('{self.date_time}', '{self.tutor_id}', '{self.email}')"
 
 
 class Message(db.Model):
