@@ -23,6 +23,7 @@
 
 
       {% if profile_type=="Tutor" %}
+      <p>Number of lessons this tutor has booked: {{num_lessons}}</p>
       <div class="mt-4">
     <a href="{{ url_for('scheduling.schedule', tutor_username = user.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
     {% endif %}

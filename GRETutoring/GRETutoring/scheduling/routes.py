@@ -1,5 +1,5 @@
 from flask import Blueprint
-from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails
+from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails, scheduling_conflict
 
 from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
@@ -218,6 +218,14 @@ def booking():
         return redirect(
                 url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
                         selected=False))
+
+    elif scheduling_conflict(updated_schedule):
+
+        #print("TESTING UPATED SCHEDULE", updated_schedule)
+        flash("You have a time conflict with the selected classes.", 'danger')
+        return redirect(
+            url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
+                    selected=False))
 
     if form.validate_on_submit():
         updated_schedule = {"updatedSchedule":updated_schedule}

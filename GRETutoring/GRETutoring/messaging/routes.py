@@ -33,6 +33,7 @@ def handle_message(data):
     target_username = data["target_username"]
     source_username = data["source_username"]
     print(f"Sent from {source_username} to {target_username}")
+    #print("Full Data: ", data)
     participants = sorted([source_username, target_username])
     room = user_to_sid[participants[0]] + user_to_sid[participants[1]]
 
@@ -82,6 +83,7 @@ def on_join(data):
         message_to_pass["sender_username"] = User.query.filter_by(id=message_to_pass["sender_id"]).first().username
         message_to_pass["recipient_username"] = User.query.filter_by(id=message_to_pass["recipient_id"]).first().username
         message_to_pass["date_time"] = tz.fromutc(message_to_pass["date_time"]).strftime("%H:%M")
+
         messages_to_pass.append(message_to_pass)
 
     print(messages_to_pass)
@@ -123,6 +125,7 @@ def message():
         associated_user = User.query.filter(User.id==id).first()
         user_dict["username"] = associated_user.username
         user_dict["image_file"] = url_for('static', filename="profile_pics/" + associated_user.image_file)
+        user_dict["time_zone"] = associated_user.time_zone
         received_messages = Message.query.filter_by(sender_id=associated_user.id, recipient_id=current_user.id).all()
         received_messages += Message.query.filter_by(sender_id=current_user.id, recipient_id=associated_user.id).all()
         received_messages.sort(key=lambda x:x.date_time)

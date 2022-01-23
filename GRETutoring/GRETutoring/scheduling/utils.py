@@ -406,3 +406,33 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
     mail.send(msg_user1)
     mail.send(msg_user2)
     mail.send(msg_admin)
+
+
+def scheduling_conflict(schedule):
+    days_of_week_dict = {
+        "Monday": 0,
+        "Tuesday" : 1,
+        "Wednesday": 2,
+        "Thursday": 3,
+        "Friday": 4,
+        "Saturday": 5,
+        "Sunday": 6,
+    }
+    week_start = schedule["week_start"].strip()
+    selected_lessons = schedule['selected']
+    tz = pytz.timezone(current_user.time_zone)
+
+    for lesson_time in selected_lessons:
+        days_to_add = days_of_week_dict[lesson_time["day"]]
+        lesson_date_time = datetime.strptime(week_start + " " + lesson_time['start'].strip(), "%d %b %Y %H:%M")
+        lesson_date_time_local = tz.localize(lesson_date_time)
+        lesson_date_time_utc = lesson_date_time_local.astimezone(pytz.utc) + timedelta(days=days_to_add)
+        booked_lessons_within_45_mins = Event.query.filter(Event.student_id==current_user.id,
+                                                           Event.date_time >= lesson_date_time_utc - timedelta( minutes=45),
+                                                           Event.date_time <= lesson_date_time_utc + timedelta( minutes=45)
+                                                              ).all()
+        #print(booked_lessons_within_45_mins, lesson_date_time_utc, Event.query.filter_by(student_id=current_user.id).all()[-1], lesson_date_time_utc - timedelta(minutes=45),lesson_date_time_utc + timedelta(minutes=45) )
+        if booked_lessons_within_45_mins:
+            return True
+
+    return False

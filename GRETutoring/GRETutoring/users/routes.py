@@ -114,6 +114,9 @@ def find_tutor():
     page = request.args.get('page', 1, type=int)
     tutors = User.query.filter_by(role="Tutor").paginate(page=page, per_page=5)
 
+    for tutor in tutors.items:
+        tutor.num_lessons = len(Event.query.filter_by(tutor_id = tutor.id).all())
+
     return render_template("find_tutor.html", tutors=tutors)
 
 @users.route('/become_tutor', methods=['GET', 'POST'])
@@ -212,7 +215,8 @@ def view_profile():
         review_list.append(review)
 
     profile_type = user.role
-    return render_template('view_profile.html', title='View Profile', already_reviewed=already_reviewed, image_file=image_file, user=user, reviews=review_list, is_current_tutor=is_current_tutor, profile_type=profile_type)
+    num_lessons = len(Event.query.filter_by(tutor_id = user.id).all())
+    return render_template('view_profile.html', title='View Profile', already_reviewed=already_reviewed, num_lessons=num_lessons, image_file=image_file, user=user, reviews=review_list, is_current_tutor=is_current_tutor, profile_type=profile_type)
 
 
 @users.route('/add_review', methods=['GET', 'POST'])

@@ -9,6 +9,7 @@
             <div class="article-metadata">
               <a class="mr-2" href="{{ url_for('users.view_profile', username=tutor.username) }}">{{ tutor.username }}</a>
                 <p class="article-content"> {{tutor.about}} </p>
+                <p class="article-content"> Number of lessons scheduled: {{tutor.num_lessons}}</p>
 
             </div>
               <a href="{{ url_for('scheduling.schedule', tutor_username = tutor.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>

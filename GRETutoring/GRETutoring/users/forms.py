@@ -73,8 +73,8 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email() ])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
-    skype_id = StringField('Skype ID', validators=[Length(min=2, max=50)])
-    hangouts_id = StringField('Hangouts ID', validators=[Length(min=2, max=50)])
+    skype_id = StringField('Skype ID', validators=[Length(min=0, max=50)])
+    hangouts_id = StringField('Hangouts ID', validators=[Length(min=0, max=50)])
     about = TextAreaField('Enter a short bio talking about you and your teaching style. Include anything that you think is relevant for your students.',
                           validators=[Length(max=1500)])
     time_zone = SelectField(u'Timezone', coerce=str,
