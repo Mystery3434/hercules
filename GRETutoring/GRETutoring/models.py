@@ -20,6 +20,7 @@ class User(db.Model, UserMixin):
     credits = db.Column(db.Integer, default=0)
     skype_id = db.Column(db.String(120), nullable=True, default="")
     hangouts_id = db.Column(db.String(120), nullable=True, default="")
+    paypal_info = db.Column(db.String(120), nullable=True, default="")
     time_zone = db.Column(db.String(120), nullable=True, default="UTC")
     student_classes = db.relationship('Event', backref='student', lazy=True, foreign_keys='Event.student_id')
     tutor_classes = db.relationship('Event', backref='tutor', lazy=True, foreign_keys='Event.tutor_id')

@@ -89,6 +89,9 @@ def account():
         current_user.skype_id = form.skype_id.data
         current_user.hangouts_id = form.hangouts_id.data
         current_user.time_zone = form.time_zone.data
+        if current_user.role=="Tutor":
+            current_user.paypal_info = form.paypal_info.data
+
         if form.about.data:
             current_user.about = form.about.data
         db.session.commit()
@@ -101,6 +104,9 @@ def account():
         form.skype_id.data = current_user.skype_id
         form.hangouts_id.data  = current_user.hangouts_id
         form.time_zone.data = current_user.time_zone
+        if current_user.role == "Tutor":
+            form.paypal_info.data = current_user.paypal_info
+
 
     image_file = url_for('static', filename="profile_pics/" + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)

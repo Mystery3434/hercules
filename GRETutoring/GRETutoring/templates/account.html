@@ -78,7 +78,22 @@
                     {{ form.hangouts_id(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+            {% if current_user.role=="Tutor" %}
+            <div class="form-group">
+                {{ form.paypal_info.label(class="form-control-label") }}
+                {% if form.paypal_info.errors %}
+                   {{ form.paypal_info(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.paypal_info.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
 
+                {% else %}
+                    {{ form.paypal_info(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
 
             <div class="form-group">
                 {{ form.picture.label() }}

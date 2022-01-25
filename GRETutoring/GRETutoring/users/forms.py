@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, RadioField
-from wtforms.validators import  DataRequired, Length, Email, EqualTo, NumberRange, URL, ValidationError
+from wtforms.validators import  DataRequired, Optional, Length, Email, EqualTo, NumberRange, URL, ValidationError
 from wtforms.widgets import TextArea
 from GRETutoring.models import User
 from flask_login import current_user
@@ -75,6 +75,7 @@ class UpdateAccountForm(FlaskForm):
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     skype_id = StringField('Skype ID', validators=[Length(min=0, max=50)])
     hangouts_id = StringField('Hangouts ID', validators=[Length(min=0, max=50)])
+    paypal_info = StringField('Paypal Email', validators=[Optional(),Email()])
     about = TextAreaField('Enter a short bio talking about you and your teaching style. Include anything that you think is relevant for your students.',
                           validators=[Length(max=1500)])
     time_zone = SelectField(u'Timezone', coerce=str,
