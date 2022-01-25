@@ -22,6 +22,9 @@ tutorpending4@testing.com : tutorpending4
 pendingtutor5@testing.com : pendingtutor5
 pendingtutor6@testing.com : pendingtutor6
 ... until pending tutor 12
+student71@testing.com : student71
+student72@testing.com : student72
+student73@testing.com : student73
 
 Details:
 

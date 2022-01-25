@@ -41,20 +41,11 @@ def send_account_opening_email(student):
     msg_admin.body= f"A new student {student_username}, with email: {student_email} has registered on Hercules."
     mail.send(msg_admin)
     msg_student = flask_mail.Message('Hercules New Account Opening', sender='noreply@demo.com', recipients=[student_email])
-    msg_student.body = f'''Hello,
+    welcome_email_file = os.path.join(current_app.root_path, "static/email_text/welcome_email.txt")
+    with open(welcome_email_file, 'r') as f:
+        welcome_email_text = f.read()
 
-Thank you for registering with Hercules Tutoring! We are pleased that you have chosen Hercules for your GRE Tutoring lessons.
-
-You can now click on "Find a Tutor" when logged in to your account to browse the list of available tutors. Feel free to book a lesson with any tutor that catches your interest. 
-
-To schedule a lesson, you will need to purchase lesson credits on the "Buy Credits" page. 1 Credit = 1 Hour of lessons. As a new user, you will receive 80% off on your first credit. 
-
-Happy studying!
-
-Best regards,
-Hercules Tutoring
-
-    '''
+    msg_student.body = welcome_email_text
     mail.send(msg_student)
 
 
