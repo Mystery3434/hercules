@@ -63,6 +63,14 @@ Hercules Tutoring
     mail.send(msg)
 
 
+def send_tutor_approval_email(tutor_email):
+    msg = flask_mail.Message('Hercules Tutor Approval', sender='noreply@demo.com', recipients=[tutor_email])
+    approval_email_file = os.path.join(current_app.root_path, "static/email_text/tutor_approval.txt")
+    with open(approval_email_file, 'r') as f:
+        approval_email_text = f.read()
+    msg.body = approval_email_text
+    mail.send(msg)
+
 def send_tutor_registration_admin_email(tutor_form):
     MY_EMAIL = os.environ.get('EMAIL_USERNAME')
     name = tutor_form.name.data

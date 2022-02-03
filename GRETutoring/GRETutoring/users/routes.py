@@ -4,7 +4,7 @@ from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
 from GRETutoring.models import User, Review, Event, TutorApplication
 
-from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email, send_review_notification, send_account_opening_email
+from GRETutoring.users.utils import save_picture, send_reset_email, send_tutor_registration_email, send_tutor_registration_admin_email, send_review_notification, send_account_opening_email, send_tutor_approval_email
 
 from flask_login import login_user, current_user, logout_user
 from flask_login import login_required
@@ -174,6 +174,7 @@ def pending_tutor_applications():
             db.session.delete(approved_application)
             db.session.add(approved_tutor)
             db.session.commit()
+            send_tutor_approval_email(approved_tutor.email)
             flash(f"Successfully approved tutor", "success")
             # page = request.args.get('page', 1, type=int)
             # pending_tutors = TutorApplication.query.paginate(page=page, per_page=5)
