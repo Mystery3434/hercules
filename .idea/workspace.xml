@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8f3c4fc4-4216-4033-8b1d-1479a1102a4e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/placeholder account details.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/site.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" beforeDir="false" afterPath="$PROJECT_DIR$/GRETutoring/GRETutoring/templates/message.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,7 +18,7 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5">
+            <state relative-caret-position="20">
               <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
             </state>
           </provider>
@@ -323,7 +319,7 @@
       <window_info anchor="bottom" id="Python Console" order="1" weight="0.30813125" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32239658" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.24973376" />
-      <window_info anchor="bottom" id="Terminal" order="5" weight="0.3580599" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="5" visible="true" weight="0.3580599" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
@@ -332,8 +328,8 @@
       <window_info anchor="right" id="Data View" order="0" weight="0.26890308" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="3" weight="0.3281027" />
       <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.3281027" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -608,7 +604,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GRETutoring/GRETutoring/users/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
+        <state relative-caret-position="20">
           <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
         </state>
       </provider>
