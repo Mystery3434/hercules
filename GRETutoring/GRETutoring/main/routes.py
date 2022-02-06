@@ -6,7 +6,6 @@ from GRETutoring import mail
 from GRETutoring.main.forms import ContactUsForm
 import flask_mail
 
-import os
 
 main = Blueprint('main', __name__)
 

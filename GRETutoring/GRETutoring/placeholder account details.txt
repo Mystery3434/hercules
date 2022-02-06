@@ -11,6 +11,8 @@ student69@testing.com : student69
 tutor69@testing.com : tutor69
 tutor96@testing.com : tutor96 #0.5 time difference from tutor69
 tutor70@teting.com : tutor70
+tutor71@testing.com: tutor71
+
 sasha@testing.com : sasha
 bradley@testing.com: bradley
 chester@testing.com: chester
@@ -26,6 +28,7 @@ pendingtutor6@testing.com : pendingtutor6
 student71@testing.com : student71
 student72@testing.com : student72
 student73@testing.com : student73
+student74@testing.com : student74
 
 Details:
 

@@ -34,19 +34,20 @@ def send_reset_email(user):
 
 
 def send_account_opening_email(student):
-    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
-    student_email = student.email
-    student_username = student.username
-    msg_admin = flask_mail.Message('New Student Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
-    msg_admin.body= f"A new student {student_username}, with email: {student_email} has registered on Hercules."
-    mail.send(msg_admin)
-    msg_student = flask_mail.Message('Hercules New Account Opening', sender='noreply@demo.com', recipients=[student_email])
-    welcome_email_file = os.path.join(current_app.root_path, "static/email_text/welcome_email.txt")
-    with open(welcome_email_file, 'r') as f:
-        welcome_email_text = f.read()
+    with current_app.app_context():
+        MY_EMAIL = current_app.config['MAIL_USERNAME']
+        student_email = student.email
+        student_username = student.username
+        msg_admin = flask_mail.Message('New Student Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg_admin.body= f"A new student {student_username}, with email: {student_email} has registered on Hercules."
+        mail.send(msg_admin)
+        msg_student = flask_mail.Message('Hercules New Account Opening', sender='noreply@demo.com', recipients=[student_email])
+        welcome_email_file = os.path.join(current_app.root_path, "static/email_text/welcome_email.txt")
+        with open(welcome_email_file, 'r') as f:
+            welcome_email_text = f.read()
 
-    msg_student.body = welcome_email_text
-    mail.send(msg_student)
+        msg_student.body = welcome_email_text
+        mail.send(msg_student)
 
 
 
@@ -72,33 +73,34 @@ def send_tutor_approval_email(tutor_email):
     mail.send(msg)
 
 def send_tutor_registration_admin_email(tutor_form):
-    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
-    name = tutor_form.name.data
-    username = tutor_form.username.data
-    email = tutor_form.email.data
-    verbal_score = tutor_form.verbal_score.data
-    quant_score = tutor_form.quant_score.data
-    awa_score = tutor_form.awa_score.data
-    video_link = tutor_form.video_link.data
-    time_zone = tutor_form.time_zone.data
-    misc_info = tutor_form.misc_info.data
+    with current_app.app_context():
+        MY_EMAIL = current_app.config['MAIL_USERNAME']
+        name = tutor_form.name.data
+        username = tutor_form.username.data
+        email = tutor_form.email.data
+        verbal_score = tutor_form.verbal_score.data
+        quant_score = tutor_form.quant_score.data
+        awa_score = tutor_form.awa_score.data
+        video_link = tutor_form.video_link.data
+        time_zone = tutor_form.time_zone.data
+        misc_info = tutor_form.misc_info.data
 
-    msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
-    msg.body = f'''{name} (username : {username}) would like to become a tutor. Their email is {email}. Their scores are:
-    
-    Quant: {quant_score}
-    Verbal: {verbal_score}
-    AWA: {awa_score}
-    
-    Video link for the tutor: {video_link}
-    
-    The tutor's time zone is {time_zone}. 
-    
-    Addtional info that the tutor has provided: 
-    {misc_info}
-    
-    '''
-    mail.send(msg)
+        msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg.body = f'''{name} (username : {username}) would like to become a tutor. Their email is {email}. Their scores are:
+        
+        Quant: {quant_score}
+        Verbal: {verbal_score}
+        AWA: {awa_score}
+        
+        Video link for the tutor: {video_link}
+        
+        The tutor's time zone is {time_zone}. 
+        
+        Addtional info that the tutor has provided: 
+        {misc_info}
+        
+        '''
+        mail.send(msg)
 
 
 def send_review_notification(tutor):

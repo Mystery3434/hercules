@@ -1,4 +1,5 @@
-from flask import abort
+from flask import abort, url_for
+from flask import current_app as app
 from GRETutoring import db
 from GRETutoring.models import User, Event, FreeSlot
 from flask_login import current_user
@@ -10,6 +11,7 @@ from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
 from GRETutoring import mail
 import flask_mail
 import os
+import json
 
 def user_time(t, tz):
     return tz.fromutc(t)
@@ -360,52 +362,55 @@ def cancel_slot(slot):
 
 def send_scheduling_emails(type, num_lessons, user2_username, form = None):
     # User 1 is the user who initiated the request. If they are a student, then user 2 is the tutor and vice-versa.
-    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
-    user1_email = current_user.email
-    user2_email = User.query.filter_by(username=user2_username).first().email
+    with app.app_context():
+        MY_EMAIL = app.config['MAIL_USERNAME']
 
-    verb = {"booking": "booked",
-            "cancellation": "cancelled"}
 
-    message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lesson(s) with " + user2_username + \
-                         ". Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
-    message_to_user2 = current_user.username + " has " + verb[type] + " " + str(num_lessons) + " lesson(s) with you." + \
-                       " Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
+        user1_email = current_user.email
+        user2_email = User.query.filter_by(username=user2_username).first().email
 
-    if isinstance(form, ScheduleForm):
-        special_requests = form.special_requests.data
-        verbal = form.verbal.data
-        quant = form.quant.data
-        awa = form.awa.data
-        focus = ""
-        if verbal or quant or awa:
-            if verbal:
-                focus += "\nVerbal Reasoning"
-            if quant:
-                focus += "\nQuantitative Reasoning"
-            if awa:
-                focus += "\nAnalytical Writing"
-            message_to_user2 += "\n\nThey would like to focus on: " + focus
-        if special_requests:
-            message_to_user2 += "\n\nTheir special requests for the lesson are:\n " + special_requests
+        verb = {"booking": "booked",
+                "cancellation": "cancelled"}
 
-    if isinstance(form, CancellationForm):
-        reasons = form.reasons.data
-        message_to_user2 += "\n\nThe reason for the cancellation provided by the user is: \n" + reasons
+        message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lesson(s) with " + user2_username + \
+                             ". Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
+        message_to_user2 = current_user.username + " has " + verb[type] + " " + str(num_lessons) + " lesson(s) with you." + \
+                           " Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
 
-    message_to_admin = current_user.username + " has " + verb[type] + " " + str(
-        num_lessons) + " lessons with " + user2_username + "."
+        if isinstance(form, ScheduleForm):
+            special_requests = form.special_requests.data
+            verbal = form.verbal.data
+            quant = form.quant.data
+            awa = form.awa.data
+            focus = ""
+            if verbal or quant or awa:
+                if verbal:
+                    focus += "\nVerbal Reasoning"
+                if quant:
+                    focus += "\nQuantitative Reasoning"
+                if awa:
+                    focus += "\nAnalytical Writing"
+                message_to_user2 += "\n\nThey would like to focus on: " + focus
+            if special_requests:
+                message_to_user2 += "\n\nTheir special requests for the lesson are:\n " + special_requests
 
-    msg_user1 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user1_email],
-                                     body=message_to_user1)
-    msg_user2 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user2_email],
-                                   body=message_to_user2)
-    msg_admin = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[MY_EMAIL],
-                                   body=message_to_admin)
-    print(msg_user1)
-    mail.send(msg_user1)
-    mail.send(msg_user2)
-    mail.send(msg_admin)
+        if isinstance(form, CancellationForm):
+            reasons = form.reasons.data
+            message_to_user2 += "\n\nThe reason for the cancellation provided by the user is: \n" + reasons
+
+        message_to_admin = current_user.username + " has " + verb[type] + " " + str(
+            num_lessons) + " lessons with " + user2_username + "."
+
+        msg_user1 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user1_email],
+                                         body=message_to_user1)
+        msg_user2 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user2_email],
+                                       body=message_to_user2)
+        msg_admin = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[MY_EMAIL],
+                                       body=message_to_admin)
+        print(msg_user1)
+        mail.send(msg_user1)
+        mail.send(msg_user2)
+        mail.send(msg_admin)
 
 
 def scheduling_conflict(schedule):
