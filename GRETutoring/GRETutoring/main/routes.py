@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 from flask import render_template, url_for, flash, redirect
+from flask import current_app as app
 from GRETutoring import mail
 from GRETutoring.main.forms import ContactUsForm
 import flask_mail
@@ -23,7 +24,9 @@ def about():
 
 @main.route('/contact_us', methods=['GET', 'POST'])
 def contact_us():
-    MY_EMAIL = os.environ.get('EMAIL_USERNAME')
+    with app.app_context():
+        MY_EMAIL = app.config['MAIL_USERNAME']
+
     form = ContactUsForm()
     if form.validate_on_submit():
         email = form.email.data
