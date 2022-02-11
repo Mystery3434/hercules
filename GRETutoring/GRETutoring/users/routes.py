@@ -263,7 +263,7 @@ def add_review():
 
         if existing_review:
             form.score.data = existing_review.review_score
-            print(form.score.data)
+            # print(form.score.data)
             form.review.data = existing_review.review_text
 
     return render_template('add_review.html', user=user, image_file=image_file, form=form, title='Add Review')

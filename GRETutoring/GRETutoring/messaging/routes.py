@@ -72,7 +72,7 @@ def on_join(data):
     messages_to_load += Message.query.filter_by(sender_id=recipient_id, recipient_id=sender_id).all()
 
     messages_to_load.sort(key=lambda x:x.date_time)
-    print(messages_to_load)
+    #print(messages_to_load)
 
     messages_to_pass = []
 
@@ -86,7 +86,7 @@ def on_join(data):
 
         messages_to_pass.append(message_to_pass)
 
-    print(messages_to_pass)
+    #print(messages_to_pass)
     emit('new_private_message', messages_to_pass, room=room)
 
 

@@ -184,7 +184,7 @@ def load_week(schedule, offset, tutor_username):
         free_slot_list.append(free_slot_dict)
         schedule[start_day] = (formatted_date, free_slot_list)
 
-    print(schedule)
+    #print(schedule)
 
     return schedule
 
@@ -268,7 +268,7 @@ def load_week_free_slots(schedule, offset):
         formatted_date = (current_day - timedelta(days_to_subtract)).strftime("%d %b %Y")
         schedule[day] = (formatted_date, events)
         days_to_subtract -= 1
-    print(schedule)
+    # print(schedule)
 
     return schedule
 
@@ -292,16 +292,16 @@ def push_free_slots_to_db(schedule):
         class_date = class_date.replace(hour=int(start_hour), minute=int(start_minute))
         class_date = tz.localize(class_date)
         class_event = FreeSlot(date_time=class_date.astimezone(pytz.utc), tutor_id=current_user.id)
-        print("FREE SLOTS: ", class_event)
+        # print("FREE SLOTS: ", class_event)
         db.session.add(class_event)
         db.session.commit()
 
-    print("Reached here")
+    # print("Reached here")
 
 
 def push_booked_slots_to_db(schedule, tutor_username):
     tz = pytz.timezone(current_user.time_zone)
-    print("Entered this function successfully!")
+    # print("Entered this function successfully!")
     the_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     week_start = datetime.strptime(schedule["updatedSchedule"]["week_start"].strip(), "%d %b %Y")
     week_start = week_start.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -320,7 +320,7 @@ def push_booked_slots_to_db(schedule, tutor_username):
         class_date = class_date.replace(hour=int(start_hour), minute=int(start_minute))
         class_date = tz.localize(class_date)
         class_event = Event(date_time=class_date.astimezone(pytz.utc), tutor_id=tutor.id, student_id=current_user.id)
-        print("BOOKED SLOTS: ", class_event)
+        # print("BOOKED SLOTS: ", class_event)
         # Delete the free slot before adding the new slot
         FreeSlot.query.filter(FreeSlot.date_time == class_date.astimezone(pytz.utc),
                               FreeSlot.tutor_id == tutor.id).delete()
@@ -328,11 +328,11 @@ def push_booked_slots_to_db(schedule, tutor_username):
         db.session.add(class_event)
         db.session.commit()
 
-    print("Reached here")
+    # print("Reached here")
 
 def get_slot_to_cancel(slot):
-    print("Entered this function (remove booked slots from db) successfully!")
-    print("The current user is a ", current_user.role)
+    # print("Entered this function (remove booked slots from db) successfully!")
+    # print("The current user is a ", current_user.role)
     tz = pytz.timezone(current_user.time_zone)
     slot = tz.localize(slot)
     slot_in_utc = slot.astimezone(pytz.utc)
@@ -342,14 +342,14 @@ def get_slot_to_cancel(slot):
     else:
         db_entry = Event.query.filter(Event.date_time == slot_in_utc,
                                       Event.tutor_id == current_user.id).first()
-    print("The slot chosen to cancel is (db): ", db_entry)
-    print("The slot chosen to cancel is (raw): ", slot)
-    print("The slot chosen to cancel is (UTC): ", slot_in_utc)
+    # print("The slot chosen to cancel is (db): ", db_entry)
+    # print("The slot chosen to cancel is (raw): ", slot)
+   #  print("The slot chosen to cancel is (UTC): ", slot_in_utc)
     return db_entry
 
 def cancel_slot(slot):
     free_slot = FreeSlot(date_time=slot.date_time, tutor_id=slot.tutor_id)
-    print("FREE SLOTS: ", free_slot)
+    # print("FREE SLOTS: ", free_slot)
     db.session.delete(slot)
     db.session.commit()
     student_id = slot.student_id
@@ -407,7 +407,7 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
                                        body=message_to_user2)
         msg_admin = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[MY_EMAIL],
                                        body=message_to_admin)
-        print(msg_user1)
+        # print(msg_user1)
         mail.send(msg_user1)
         mail.send(msg_user2)
         mail.send(msg_admin)

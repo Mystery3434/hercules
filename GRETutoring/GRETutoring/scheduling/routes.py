@@ -171,7 +171,7 @@ def add_free_slots():
 
     if request.method == 'POST':
         updated_schedule = request.get_json()
-        print(updated_schedule)
+        # print(updated_schedule)
         flash("Your free time slots have been updated.", "success")
         push_free_slots_to_db(updated_schedule)
 
@@ -207,14 +207,14 @@ def booking():
     num_lessons = len(updated_schedule.get('selected'))
     if num_lessons > current_user.credits:
         flash("You do not have enough credits for your selected booking. 1 credit = 1 hour of class.", 'danger')
-        print("num greater")
+        # print("num greater")
         return redirect(
                 url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
                         selected=False))
 
     elif num_lessons == 0:
         flash("You have not selected any slots to book.", 'danger')
-        print("num zero")
+        # print("num zero")
         return redirect(
                 url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
                         selected=False))
@@ -229,7 +229,7 @@ def booking():
 
     if form.validate_on_submit():
         updated_schedule = {"updatedSchedule":updated_schedule}
-        print(updated_schedule)
+        # print(updated_schedule)
 
         push_booked_slots_to_db(updated_schedule, tutor_username)
 
@@ -260,13 +260,13 @@ def cancel_booking():
             date_text = passed_variables['date_text']
             date_text = date_text.strip().split("\n")
             # print(date_text[0].strip(), date_text[-2].strip()  )
-            print(date_text)
+            # print(date_text)
             day = date_text[0].strip()
             start_time = passed_variables['class_start'].strip()
             # print(day)
             # print(start_time)
             time_to_cancel = datetime.strptime(day + " " + start_time, '%d %b %Y %H:%M')
-            print(time_to_cancel)
+            # print(time_to_cancel)
             lesson_to_cancel = get_slot_to_cancel(time_to_cancel)
 
 
