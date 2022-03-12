@@ -13,6 +13,7 @@
 
             </div>
               <a href="{{ url_for('scheduling.schedule', tutor_username = tutor.username) }}"> <button class="mr-2 btn btn-primary button-theme" >View Schedule and Book Lesson</button></a>
+              <a href="{{ url_for('users.view_profile', username=tutor.username) }}"><button class="mr-2 btn btn-primary button-theme" >View Profile and Reviews</button></a>
           </div>
         </article>
     {% endfor %}

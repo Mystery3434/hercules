@@ -113,9 +113,8 @@ def account():
 
 
 @users.route('/find_tutor')
-@login_required
 def find_tutor():
-    if current_user.role == "Tutor":
+    if current_user.is_authenticated and current_user.role == "Tutor":
         abort(403)
     page = request.args.get('page', 1, type=int)
     tutors = User.query.filter_by(role="Tutor").paginate(page=page, per_page=5)
@@ -155,8 +154,9 @@ def become_tutor():
     return render_template("become_tutor.html", title="Register", form=form)
 
 
-@login_required
+
 @users.route('/pending_tutor_applications', methods=['GET', 'POST'])
+@login_required
 def pending_tutor_applications():
     if current_user.role != "Admin":
         abort(403)
@@ -181,7 +181,9 @@ def pending_tutor_applications():
         return redirect(url_for("users.pending_tutor_applications"))
 
 
+
 @users.route('/view_profile', methods=['GET', 'POST'])
+@login_required
 def view_profile():
     username = request.args.get('username')
     is_current_tutor = False
