@@ -1,4 +1,4 @@
-from flask import abort, url_for
+from flask import abort, url_for, flash
 from flask import current_app as app
 from GRETutoring import db
 from GRETutoring.models import User, Event, FreeSlot
@@ -18,6 +18,9 @@ def user_time(t, tz):
 
 
 def load_student_schedule(schedule, offset):
+    if offset % 7 != 0:
+        abort(403)
+
     tz = pytz.timezone(current_user.time_zone)
     current_time = datetime.utcnow()
     current_time = user_time(current_time, tz)
@@ -31,8 +34,7 @@ def load_student_schedule(schedule, offset):
                                      Event.student_id == current_user.id).all()
     days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-    if offset % 7 != 0:
-        abort(403)
+
 
     for day in days_of_week:
         events = schedule[day][1]
@@ -66,6 +68,12 @@ def load_student_schedule(schedule, offset):
 
 def load_week(schedule, offset, tutor_username):
     # current_day = datetime.today()
+    if offset % 7 != 0:
+        abort(403)
+
+    if offset > 28 or offset < -28:
+        abort(403)
+
     tz = pytz.timezone(current_user.time_zone)
     current_time = datetime.utcnow()
     current_time = user_time(current_time, tz)
@@ -106,8 +114,7 @@ def load_week(schedule, offset, tutor_username):
 
     days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-    if offset % 7 != 0:
-        abort(403)
+
 
     for day in days_of_week:
         events = schedule[day][1]
