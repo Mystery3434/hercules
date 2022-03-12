@@ -1,0 +1,139 @@
+{
+    "data":[
+        {
+            "tutor": "Sally",
+            "student": "student_sally",
+            "slots": {
+                "Monday":[
+                    9,10,11,13,14,15,16
+                ],
+                "Tuesday":[
+                    9,13,14,15
+                ],
+                "Wednesday":[
+                    9,10,11,13,14,15,16
+                ],
+                "Thursday":[
+                    9,10,11
+                ],
+                "Friday":[
+                    9,10,15,16
+                ],
+                "Saturday":[
+                    
+                ],
+                "Sunday":[
+                   
+                ]
+            }
+        },
+        {
+            "tutor": "Claire",
+            "student": "student_claire",
+            "slots": {
+                "Monday":[
+                    
+                ],
+                "Tuesday":[
+                    
+                ],
+                "Wednesday":[
+                    
+                ],
+                "Thursday":[
+                    
+                ],
+                "Friday":[
+                    
+                ],
+                "Saturday":[
+                    9,10,11,13,14,15,16, 17, 18
+                ],
+                "Sunday":[
+                    9,10,11,13,14,15,16, 17, 18
+                ]
+            }
+        },
+        {
+            "tutor": "Carl",
+            "student": "student_carl",
+            "slots": {
+                "Monday":[
+                    
+                ],
+                "Tuesday":[
+                    
+                ],
+                "Wednesday":[
+                    
+                ],
+                "Thursday":[
+                    
+                ],
+                "Friday":[
+                    
+                ],
+                "Saturday":[
+                    9,10,16, 17, 18
+                ],
+                "Sunday":[
+                    9,10,11,16, 17, 18
+                ]
+            }
+        },
+        {
+            "tutor": "Gabriel",
+            "student": "student_gabriel",
+            "slots": {
+                "Monday":[
+                    9,10,11,13,14,15,16
+                ],
+                "Tuesday":[
+                    9,13,14,15, 17, 19
+                ],
+                "Wednesday":[
+                   
+                ],
+                "Thursday":[
+                    9,10,11
+                ],
+                "Friday":[
+                    9,10,15,16
+                ],
+                "Saturday":[
+                    12, 13
+                ],
+                "Sunday":[
+                   13
+                ]
+            }
+        },
+        {
+            "tutor": "Mario",
+            "student": "student_mario",
+            "slots": {
+                "Monday":[
+                    9,10
+                ],
+                "Tuesday":[
+                    9,10
+                ],
+                "Wednesday":[
+                    9,10
+                ],
+                "Thursday":[
+                    9,10,11
+                ],
+                "Friday":[
+                    9,10,15,16
+                ],
+                "Saturday":[
+                    
+                ],
+                "Sunday":[
+                   
+                ]
+            }
+        }
+    ]
+}
