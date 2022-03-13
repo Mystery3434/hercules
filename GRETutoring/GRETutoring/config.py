@@ -14,7 +14,7 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = config.get('EMAIL_USERNAME')
-    MAIL_PASSWORD = config.get('EMAIL_PASSWORD')
+    MAIL_PASSWORD = config.get('SECURE_EMAIL_PASSWORD')
     STRIPE_PUBLIC_KEY = config.get('STRIPE_PUBLIC_KEY')
     STRIPE_SECRET_KEY = config.get('STRIPE_SECRET_KEY')
 
