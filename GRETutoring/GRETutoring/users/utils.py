@@ -46,7 +46,7 @@ def send_account_opening_email(student):
         with open(welcome_email_file, 'r') as f:
             welcome_email_text = f.read()
 
-        msg_student.body = welcome_email_text
+        msg_student.html = welcome_email_text
         mail.send(msg_student)
 
 
