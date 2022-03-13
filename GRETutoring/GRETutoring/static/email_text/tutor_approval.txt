@@ -1,27 +1,30 @@
-Hello,
+Hello,<br><br>
 
-We are pleased to inform you that your application to become a tutor at Hercules was successful! You can now start tutoring on the website.
+We are pleased to inform you that your application to become a tutor at Hercules was successful! You can now start tutoring on the website. Please follow the steps below to begin your tutoring journey.<br><br>
 
-Firstly, you will need to fill in a short bio to tell students more about you and your tutoring style. You can do this on the "Account" page.
+<b>1. Bio: </b>Fill in a short bio to tell students more about you and your tutoring style. You can do this on the "Account" page.<br><br>
 
-After this, you can enter your Skype ID and Hangouts ID on the "Account" page. Note that these will be publicly visible for students. Lessons with students will be conducted over video chat on the platform of your choice.
+<b>2. Contact Info: </b>Enter your Skype ID and Hangouts ID on the "Account" page. Note that these will be visible for students. Lessons with students will be conducted over video chat on the platform of your choice.<br><br>
 
-Next, you'll need to update the time slots when you are available for lessons. After this, you will be notified when a student books a lesson with you. You will be able to contact them on the "Messages" page.
+<b>3. Scheduling: </b>Mark the time slots when you are available for lessons on the "Schedule" page. You will then be notified when a student books a lesson with you.<br><br>
 
-The payment for your lessons will be done on a weekly basis. The payment structure is as follows:
+<b>4. Messaging: </b>You can message your students on the "Messages" page.<br><br>
 
-1. For the first 10 lessons, you get paid $40 per lesson.
-2. For the next 20 lessons, you get paid $50 per lesson.
-3. For the next 30 lessons, you get paid $60 per lesson.
-4. After this, you will get paid $70 per lesson.
+<b>5. Payment: </b>The payment for your lessons will be done on a weekly basis. The payment structure is as follows:<br>
 
-Having more lessons not only pays you more, but also boosts your tutor ranking, leading more students towards your profile. 
+a. For the first 10 lessons, you get paid $40 per lesson.<br>
+b. For the next 20 lessons, you get paid $50 per lesson.<br>
+c. For the next 30 lessons, you get paid $60 per lesson.<br>
+d. After this, you will get paid $70 per lesson.<br><br>
 
-Please enter your Paypal email on the "Account" page in order to ensure that the payment reaches you. This information is private and will not be visible to other users.
+<b>6. Payment procedure: </b>The payments will be processed by Paypal. Enter your Paypal email on the "Account" page in order to ensure that the payment reaches you. This information is private and will not be visible to other users.<br><br>
 
-Happy tutoring!
+<b>7. Tutor Ranking: </b>Having more lessons not only pays you more, but also boosts your tutor ranking, leading more students towards your profile. <br><br>
 
-Best regards,
-Hercules Tutoring
 
-Note: Please do not request or accept payment outside of Hercules Tutoring. Any violation of this rule will result in your profile being removed from the platform. This precaution is to ensure student stay safe from scams.
+Happy tutoring!<br><br>
+
+Best regards,<br>
+Hercules Tutoring<br><br>
+
+<b>Note:</b> Please do not request or accept payment outside of Hercules Tutoring. Any violation of this rule will result in your profile being removed from the platform. This precaution is to ensure student stay safe from scams.
