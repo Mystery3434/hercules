@@ -1,5 +1,7 @@
 from flask import Blueprint
 from flask import render_template, url_for, flash, redirect, request, abort
+from flask_sqlalchemy import Pagination
+
 from GRETutoring import db, bcrypt
 from GRETutoring.users.forms import RegistrationForm, LoginForm, TutorRegistrationForm, UpdateAccountForm, ReviewForm, RequestResetForm, ResetPasswordForm
 from GRETutoring.models import User, Review, Event, TutorApplication
@@ -116,13 +118,22 @@ def account():
 def find_tutor():
     if current_user.is_authenticated and current_user.role == "Tutor":
         abort(403)
-    page = request.args.get('page', 1, type=int)
-    tutors = User.query.filter_by(role="Tutor").paginate(page=page, per_page=5)
 
-    for tutor in tutors.items:
+    page = request.args.get('page', 1, type=int)
+    tutors = User.query.filter_by(role="Tutor").all()
+
+    for tutor in tutors:
         tutor.num_lessons = len(Event.query.filter_by(tutor_id = tutor.id).all())
 
-    return render_template("find_tutor.html", tutors=tutors)
+    tutors = sorted(tutors, key=lambda x:x.num_lessons, reverse=True)
+
+    # Performing manual pagination because we are performing additional filtering after querying.
+    start = (page - 1) * 5
+    end = start + 5
+    tutors_to_show = tutors[start:end]
+
+    tutors_pagination = Pagination(query=None, page=page, per_page=5, total=len(tutors), items=tutors_to_show)
+    return render_template("find_tutor.html", tutors=tutors_pagination)
 
 @users.route('/become_tutor', methods=['GET', 'POST'])
 def become_tutor():
