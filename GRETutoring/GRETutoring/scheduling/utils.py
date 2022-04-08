@@ -6,7 +6,7 @@ from flask_login import current_user
 
 from datetime import datetime, timedelta
 import pytz
-from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
+from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm, RescheduleForm
 
 from GRETutoring import mail
 import flask_mail
@@ -449,7 +449,8 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
         user2_email = User.query.filter_by(username=user2_username).first().email
 
         verb = {"booking": "booked",
-                "cancellation": "cancelled"}
+                "cancellation": "cancelled",
+                "reschedule" : "rescheduled"}
 
         message_to_user1 = "You have successfully " + verb[type] + " " + str(num_lessons) + " lesson(s) with " + user2_username + \
                              ". Login to your account to view your schedule and to message them.\n\nIf you have any issues or would like to provide feedback on the class, please use the 'Contact Us' page on our website."
@@ -473,7 +474,7 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
             if special_requests:
                 message_to_user2 += "\n\nTheir special requests for the lesson are:\n " + special_requests
 
-        if isinstance(form, CancellationForm):
+        if isinstance(form, CancellationForm) or isinstance(form, RescheduleForm):
             reasons = form.reasons.data
             message_to_user2 += "\n\nThe reason for the cancellation provided by the user is: \n" + reasons
 

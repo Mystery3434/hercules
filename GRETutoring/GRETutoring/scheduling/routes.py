@@ -407,7 +407,8 @@ def confirm_reschedule():
         add_slot(lesson_to_add, reschedule=True)
         lesson_to_remove = None
 
-        #send_scheduling_emails("cancellation", 1, user2_username, form)
+
+        send_scheduling_emails("reschedule", 1, user2_username, form)
 
         flash('Your lesson has been rescheduled.', 'success')
         #remove_booked_slots_from_db(time_to_cancel)
