@@ -13,6 +13,33 @@ import flask_mail
 import os
 import json
 
+
+class RescheduleRequests:
+    def __init__(self):
+        self.data = {}
+
+    def __repr__(self):
+        return str(self.data)
+
+    def add_request(self, user, slot, schedule, tutor):
+        self.data[user] = (slot, schedule, tutor)
+
+    def complete_request(self, user):
+        del self.data[user]
+
+    def check_user_present(self, user):
+        return user in self.data
+
+    def get_tutor(self, user):
+        return self.data[user][2]
+
+    def get_schedule(self, user):
+        return self.data[user][1]
+
+    def get_slot(self, user):
+        return self.data[user][0]
+
+
 def user_time(t, tz):
     return tz.fromutc(t)
 
@@ -354,17 +381,62 @@ def get_slot_to_cancel(slot):
    #  print("The slot chosen to cancel is (UTC): ", slot_in_utc)
     return db_entry
 
-def cancel_slot(slot):
+def get_slot_to_add(slot, tutor_id):
+    tz = pytz.timezone(current_user.time_zone)
+    slot = tz.localize(slot)
+    slot_in_utc = slot.astimezone(pytz.utc)
+
+    class_event = Event(date_time=slot_in_utc, tutor_id=tutor_id, student_id=current_user.id)
+    # print("BOOKED SLOTS: ", class_event)
+    # Delete the free slot before adding the new slot
+    return class_event
+
+def create_slot(slot, tutor_id, student_id):
+    tz = pytz.timezone(current_user.time_zone)
+    slot = tz.localize(slot)
+    slot_in_utc = slot.astimezone(pytz.utc)
+
+    class_event = Event(date_time=slot_in_utc, tutor_id=tutor_id, student_id=student_id)
+    # print("BOOKED SLOTS: ", class_event)
+    # Delete the free slot before adding the new slot
+    return class_event
+
+
+def cancel_slot(slot, reschedule=False):
     free_slot = FreeSlot(date_time=slot.date_time, tutor_id=slot.tutor_id)
     # print("FREE SLOTS: ", free_slot)
     db.session.delete(slot)
     db.session.commit()
     student_id = slot.student_id
     student = User.query.filter_by(id=student_id).first()
-    student.credits += 1
+    if not reschedule:
+        student.credits += 1
     db.session.commit()
     db.session.add(free_slot)
     db.session.commit()
+
+def add_slot(slot, reschedule=True):
+    free_slot = FreeSlot.query.filter_by(date_time=slot.date_time, tutor_id=slot.tutor_id).first()
+    # print("FREE SLOTS: ", free_slot)
+    db.session.delete(free_slot)
+    db.session.commit()
+    student_id = slot.student_id
+    student = User.query.filter_by(id=student_id).first()
+    if not reschedule:
+        student.credits += 1
+        db.session.commit()
+
+    db.session.add(slot)
+    db.session.commit()
+
+def check_reschedule_request_safety(reschedule_request):
+    if current_user.role=="Student":
+        if reschedule_request.get("slot").student_id != current_user.id:
+            # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+            abort(500)
+    elif current_user.role=="Tutor":
+        if reschedule_request.get("slot").tutor_id != current_user.id:
+            abort(500)
 
 
 def send_scheduling_emails(type, num_lessons, user2_username, form = None):
@@ -448,3 +520,5 @@ def scheduling_conflict(schedule):
             return True
 
     return False
+
+get_slot_to_reschedule = get_slot_to_cancel

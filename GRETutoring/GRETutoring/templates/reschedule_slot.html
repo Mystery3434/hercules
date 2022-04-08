@@ -1,0 +1,23 @@
+<div class="cd-schedule-modal__event-info p-14">
+	<!--<div>Abs Circuit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, unde, nulla. Vel unde deleniti, distinctio inventore quis molestiae perferendis, eum quo harum dolorum reiciendis sunt dicta maiores similique! Officiis repellat iure odio debitis enim eius commodi quae deserunt quam assumenda, ab asperiores reiciendis minima maxime odit laborum, libero veniam non? </div>-->
+	<div class="event-info">
+
+		<div class="row">
+
+			<div class="col-10">
+				{% if current_user.role=="Student" %}
+				<h4>The tutor is available during this slot. </h4>
+				{% endif %}
+				<h4> Would you like to reschedule to this slot?</h4>
+				{% if current_user.role=="Tutor" %}
+				<h4>Please make sure your student is available at this time and has agreed to the reschedule. </h4>
+				{% endif %}
+				<a href = "{{ url_for('scheduling.confirm_reschedule') }}"><button type="button" class="btn btn-success" id="reschedule_page_reschedule_modal_button"> Reschedule to this slot </button></a>
+				<a href="#0"><button type="button" class="btn btn-danger cancel" > Cancel </button></a>
+				<!--<a href="{{ url_for('scheduling.schedule', selected=True) }}"><button type="button" class="btn btn-success"> Book </button></a>-->
+				<!--<a href="{{ url_for('scheduling.schedule', selected=False, scheduling=None) }}"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></a>-->
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
+</div>

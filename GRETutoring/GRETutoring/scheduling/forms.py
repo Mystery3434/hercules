@@ -13,3 +13,6 @@ class CancellationForm(FlaskForm):
     reasons = TextAreaField('Reason(s) for cancellation: ', validators = [DataRequired(), Length(max=200)])
     cancel = SubmitField('Cancel')
 
+class RescheduleForm(FlaskForm):
+    reasons = TextAreaField('Reason(s) for rescheduling: ', validators = [DataRequired(), Length(max=200)])
+    reschedule = SubmitField('Reschedule')

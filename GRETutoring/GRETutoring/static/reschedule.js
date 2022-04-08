@@ -106,14 +106,8 @@ jQuery(document).ready(function($){
 				console.log(oldState);
 				current =  $(this).parent();
 				// console.log(current);
-				if (oldState != "tutor-free-slot" && oldState != "tutor-selected-slot" && oldState != "tutor-available-slot"){
+				if ( oldState != "tutor-selected-slot"){
 					if( !self.animating ) self.openModal($(this));
-				}
-				else if (oldState == "tutor-free-slot"){
-					$(this).parent().attr("data-event", "tutor-selected-slot");
-				}
-				else if (oldState == "tutor-selected-slot"){
-					$(this).parent().attr("data-event", "tutor-free-slot");
 				}
 				
 				// console.log(state);
@@ -190,7 +184,7 @@ jQuery(document).ready(function($){
 		});
 
 	
-		// Reschedule Lesson
+		// Reschedule Lesson on schedule page
 		this.modal.on('click', '#reschedule_booking_button', function(event){
 			//event.preventDefault();
 			console.log("Reschedule Booking button clicked.");
@@ -213,6 +207,29 @@ jQuery(document).ready(function($){
 			
 		});
 
+
+		// Reschedule Lesson on the re-schedule page
+		this.modal.on('click', '#reschedule_page_reschedule_modal_button', function(event){
+			//event.preventDefault();
+			console.log("Reschedule Booking button clicked.");
+			// console.log(current.parent().attr("id"));
+			var date_text = current.parent().parent().text();
+			var class_start = current.attr("data-start");
+			// console.log(current.attr("data-end"));
+			var to_pass_to_flask = {'date_text':date_text,
+									'class_start': class_start};
+
+			$.ajax({
+				type: "POST",
+				contentType: "application/json;charset=utf-8",
+				url: "/confirm_reschedule",
+				traditional: "true",
+				data: JSON.stringify({to_pass_to_flask}),
+				dataType: "json"
+				});
+			
+			
+		});
 
 		//close modal window
 		this.modal.on('click', '.cancel', function(event){
@@ -281,14 +298,24 @@ jQuery(document).ready(function($){
 		// 	self.element.addClass('content-loaded');
 			
 		// });
-		if (event.parent().attr('data-event')=="free-slot"){
-			this.modalBody.find('.event-info').load('available_slot', function(data){
+		if (event.parent().attr('data-event')=="free-slot") {
+			console.log("Clicked successfully!");
+			this.modalBody.find('.event-info').load('reschedule_slot', function(data){
 			//once the event content has been loaded
 			
 				self.element.addClass('content-loaded');
 			
 			});
 		}
+		if (event.parent().attr('data-event')=="tutor-available-slot") {
+			this.modalBody.find('.event-info').load('reschedule_slot', function(data){
+			//once the event content has been loaded
+			
+				self.element.addClass('content-loaded');
+			
+			});
+		}
+		
 		if (event.parent().attr('data-event')=="selected-slot"){
 			this.modalBody.find('.event-info').load('selected_slot', function(data){
 			//once the event content has been loaded

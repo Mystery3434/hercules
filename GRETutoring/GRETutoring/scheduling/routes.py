@@ -1,8 +1,8 @@
 from flask import Blueprint
-from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails, scheduling_conflict
+from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails, scheduling_conflict, RescheduleRequests, user_time, get_slot_to_reschedule, get_slot_to_add, add_slot, check_reschedule_request_safety, create_slot
 
 from flask import render_template, url_for, flash, redirect, request, abort
-from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm
+from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm, RescheduleForm
 
 
 from GRETutoring.models import User
@@ -11,6 +11,7 @@ from flask_login import current_user
 from flask_login import login_required
 
 from datetime import datetime
+import pytz
 
 
 scheduling = Blueprint('scheduling', __name__)
@@ -292,12 +293,138 @@ def cancel_booking():
     return render_template("cancel_booking.html", form=form)
 
 
+reschedule_request = {}
+@scheduling.route('/reschedule', methods=['GET', 'POST'])
+def reschedule():
+    global reschedule_request
+
+    flash("Click on a new timeslot.", "info")
+    if request.method=="POST":
+
+        print(request.get_json())
+        passed_variables = request.get_json()['to_pass_to_flask']
+        date_text = passed_variables['date_text']
+        date_text = date_text.strip().split("\n")
+        day = date_text[0].strip()
+        start_time = passed_variables['class_start'].strip()
+        time_to_reschedule = datetime.strptime(day + " " + start_time, '%d %b %Y %H:%M')
+
+        lesson_to_reschedule = get_slot_to_reschedule(time_to_reschedule)
+        print(lesson_to_reschedule)
+        tutor_id = lesson_to_reschedule.tutor_id
+        tutor = User.query.filter_by(id=tutor_id).first()
+        tutor_username = tutor.username
+        student_id = lesson_to_reschedule.student_id
+
+        #tutor_username = request.args.get('tutor_username')
+        offset = int(request.args.get('offset')) if request.args.get('offset') else 0
+        schedule = load_week(sample_schedule, offset, tutor_username)
+
+        reschedule_request["user"] = current_user
+        reschedule_request["slot"] = lesson_to_reschedule
+        reschedule_request["tutor_id"] = tutor_id
+        reschedule_request["tutor_username"] = tutor_username
+        reschedule_request["student_id"] = student_id
+
+
+        return render_template("reschedule.html", title="Reschedule", tutor_username=tutor_username,
+                               schedule=schedule,
+                               selected=False, offset=offset, lesson_to_reschedule=lesson_to_reschedule)
+
+
+    tutor_username = reschedule_request.get("tutor_username")
+    lesson_to_reschedule = reschedule_request.get("slot")
+
+    # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+    check_reschedule_request_safety(reschedule_request)
+
+    #reschedule_requests.complete_request(current_user)
+
+    offset = int(request.args.get('offset')) if request.args.get('offset') else 0
+    schedule = load_week(sample_schedule, offset, tutor_username)
+
+    return render_template("reschedule.html", title="Reschedule", tutor_username=tutor_username,
+                           schedule=schedule,
+                           selected=False, offset=offset, lesson_to_reschedule=lesson_to_reschedule)
+
+lesson_to_add = None
+@scheduling.route('/confirm_reschedule', methods=['GET', 'POST'])
+def confirm_reschedule():
+    print(reschedule_request.get("user"), current_user)
+    print(reschedule_request.get("slot").student_id, current_user.id)
+
+    # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+    check_reschedule_request_safety(reschedule_request)
+
+    form = RescheduleForm()
+    global lesson_to_add
+
+    if request.method=="POST":
+        if request.get_json():
+            # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+            check_reschedule_request_safety(reschedule_request)
+
+            passed_variables = request.get_json()['to_pass_to_flask']
+            date_text = passed_variables['date_text']
+            date_text = date_text.strip().split("\n")
+            #print(date_text[0].strip(), date_text[-2].strip()  )
+            # print(date_text)
+            day = date_text[0].strip()
+            start_time = passed_variables['class_start'].strip()
+            #print(day)
+            #print(start_time)
+            time_to_add = datetime.strptime(day + " " + start_time, '%d %b %Y %H:%M')
+            # print(time_to_cancel)
+            if current_user.role=="Student":
+                lesson_to_add = create_slot(time_to_add, tutor_id=reschedule_request.get("slot").tutor_id, student_id=current_user.id)
+            else:
+                lesson_to_add = create_slot(time_to_add, tutor_id=current_user.id, student_id = reschedule_request.get("slot").student_id
+                                            )
+            #print(lesson_to_reschedule)
+
+        #return render_template("cancel_booking.html", form=form)
+
+            #print(lesson_to_add_user_time)
+    lesson_to_remove = reschedule_request.get("slot")
+    lesson_to_remove_user_time = user_time(lesson_to_remove.date_time,
+                                           pytz.timezone(current_user.time_zone))
+    # print(lesson_to_remove_user_time)
+
+    lesson_to_add_user_time = lesson_to_add.date_time.astimezone(pytz.timezone(current_user.time_zone))
+    #print(datetime.strftime(lesson_to_add_user_time, "%d %B at %H:%M"))
+    if form.validate_on_submit():
+        # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+        check_reschedule_request_safety(reschedule_request)
+
+        #print("The slot to cancel is: ", lesson_to_reschedule)
+        if current_user.role=="Student":
+            user2_id = lesson_to_remove.tutor_id
+        else:
+            user2_id = lesson_to_remove.student_id
+
+        user2_username = User.query.filter_by(id=user2_id).first().username
+        cancel_slot(lesson_to_remove, reschedule=True)
+        add_slot(lesson_to_add, reschedule=True)
+        lesson_to_remove = None
+
+        #send_scheduling_emails("cancellation", 1, user2_username, form)
+
+        flash('Your lesson has been rescheduled.', 'success')
+        #remove_booked_slots_from_db(time_to_cancel)
+        return redirect(url_for('main.home'))
+    return render_template("confirm_reschedule.html", form=form, reschedule_slot=reschedule_request.get("slot"), lesson_to_remove_user_time=datetime.strftime(lesson_to_remove_user_time, "%d %B at %H:%M"), lesson_to_add_user_time=datetime.strftime(lesson_to_add_user_time, "%d %B at %H:%M"))
 
 
 @scheduling.route('/available_slot')
 def available_slot():
     return render_template("available_slot.html", testing_var=False)
 
+@scheduling.route('/reschedule_slot')
+def reschedule_slot():
+    if reschedule_request.get("user") != current_user:
+        # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
+        abort(500)
+    return render_template("reschedule_slot.html")
 
 @scheduling.route('/selected_slot')
 def selected_slot():

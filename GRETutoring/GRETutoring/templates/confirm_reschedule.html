@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}Booking Rescheduling{% endblock %}
+
+{% block content %}
+<body>
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Rescheduling Form</legend>
+
+            <p>Upon submission of your request, the lesson will be rescheduled.  </p>
+            <p>You are rescheduling the class from: <br> 
+                {{lesson_to_remove_user_time}}
+                <br> to: <br> 
+                 {{lesson_to_add_user_time}}</p>
+            <div class="form-group pt-3">
+                {{ form.reasons.label(class="form-control-label") }}
+                {% if form.reasons.errors %}
+                   {{ form.reasons(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.reasons.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.reasons(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+
+
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.reschedule(class="btn btn-block btn-lg btn-outline-light button-theme") }}
+        </div>
+    </form>
+</div>
+</body>
+{% endblock content %}
