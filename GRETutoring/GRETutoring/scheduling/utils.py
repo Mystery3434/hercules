@@ -43,6 +43,14 @@ class RescheduleRequests:
 def user_time(t, tz):
     return tz.fromutc(t)
 
+def sort_schedule(schedule):
+    # To sort the schedule object so that it loads chronologically in mobile view.
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    for day in days_of_week:
+        schedule[day] = (schedule[day][0], sorted(schedule[day][1], key=lambda x:x.get("data-start")))
+
+    return schedule
+
 
 def load_student_schedule(schedule, offset):
     if offset % 7 != 0:
@@ -91,6 +99,8 @@ def load_student_schedule(schedule, offset):
                           "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
+
+    schedule = sort_schedule(schedule)
     return schedule
 
 def load_week(schedule, offset, tutor_username):
@@ -218,7 +228,7 @@ def load_week(schedule, offset, tutor_username):
         free_slot_list.append(free_slot_dict)
         schedule[start_day] = (formatted_date, free_slot_list)
 
-    #print(schedule)
+    schedule = sort_schedule(schedule)
 
     return schedule
 
