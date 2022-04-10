@@ -1,5 +1,5 @@
 from flask import Blueprint
-from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails, scheduling_conflict, RescheduleRequests, user_time, get_slot_to_reschedule, get_slot_to_add, add_slot, check_reschedule_request_safety, create_slot
+from GRETutoring.scheduling.utils import load_week, load_week_free_slots, push_free_slots_to_db, push_booked_slots_to_db, load_student_schedule, get_slot_to_cancel, cancel_slot, send_scheduling_emails, scheduling_conflict, RescheduleRequests, user_time, get_slot_to_reschedule, get_slot_to_add, add_slot, check_reschedule_request_safety, create_slot, check_cancel_request_safety, check_booking_request_safety
 
 from flask import render_template, url_for, flash, redirect, request, abort
 from GRETutoring.scheduling.forms import ScheduleForm, CancellationForm, RescheduleForm
@@ -189,11 +189,13 @@ def booking():
     form = ScheduleForm()
     #updated_schedule = request.args.get('updated_schedule') if request.args.get('updated_schedule') else request.get_json()
 
+
     if request.method=="POST":
         if request.get_json():
             passed_variables = request.get_json()['to_pass_to_flask']
             tutor_username = passed_variables['tutor_username']
             updated_schedule = passed_variables['updatedSchedule']
+            updated_schedule["student_id"] = current_user.id
 
                 #return render_template(url_for('scheduling.schedule'), title="Schedule", tutor_username=tutor_username, schedule=schedule, selected=False, offset=0)
         else:
@@ -228,7 +230,11 @@ def booking():
             url_for("scheduling.schedule", title="Schedule", tutor_username=tutor_username, offset=0,
                     selected=False))
 
+
+
     if form.validate_on_submit():
+        check_booking_request_safety(updated_schedule)
+
         updated_schedule = {"updatedSchedule":updated_schedule}
         # print(updated_schedule)
 
@@ -281,6 +287,9 @@ def cancel_booking():
             user2_id = lesson_to_cancel.student_id
 
         user2_username = User.query.filter_by(id=user2_id).first().username
+
+        check_cancel_request_safety(lesson_to_cancel, user2_id) #Because we are using a global variable, we don't want the wrong person to cancel the lesson.
+
         cancel_slot(lesson_to_cancel)
 
         lesson_to_cancel = None
@@ -346,6 +355,7 @@ def reschedule():
     return render_template("reschedule.html", title="Reschedule", tutor_username=tutor_username,
                            schedule=schedule,
                            selected=False, offset=offset, lesson_to_reschedule=lesson_to_reschedule)
+
 
 lesson_to_add = None
 @scheduling.route('/confirm_reschedule', methods=['GET', 'POST'])

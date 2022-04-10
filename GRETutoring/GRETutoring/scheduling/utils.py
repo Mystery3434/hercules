@@ -438,6 +438,18 @@ def check_reschedule_request_safety(reschedule_request):
         if reschedule_request.get("slot").tutor_id != current_user.id:
             abort(500)
 
+def check_cancel_request_safety(lesson_to_cancel, user2_id):
+    if current_user.role=="Student":
+        if lesson_to_cancel.student_id != current_user.id or lesson_to_cancel.tutor_id != user2_id:
+            # doing this because cancel request is a global variable and we don't want another user to cancel the lesson.
+            abort(500)
+    elif current_user.role=="Tutor":
+        if lesson_to_cancel.tutor_id != current_user.id or lesson_to_cancel.student_id != user2_id:
+            abort(500)
+
+def check_booking_request_safety(updated_schedule):
+    if updated_schedule.get("student_id") != current_user.id:
+        abort(500) #because of a global variable
 
 def send_scheduling_emails(type, num_lessons, user2_username, form = None):
     # User 1 is the user who initiated the request. If they are a student, then user 2 is the tutor and vice-versa.
