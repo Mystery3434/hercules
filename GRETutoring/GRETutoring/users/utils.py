@@ -7,7 +7,10 @@ from PIL import Image
 
 import flask_mail
 
-
+def get_email():
+    with current_app.app_context():
+        MY_EMAIL = current_app.config['MAIL_USERNAME']
+    return MY_EMAIL
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -25,7 +28,8 @@ def save_picture(form_picture):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = flask_mail.Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])
+    MY_EMAIL = get_email()
+    msg = flask_mail.Message('Password Reset Request', sender=MY_EMAIL, recipients=[user.email])
     msg.body=f'''To reset your password, visit the following link:
     {url_for('users.reset_token', token=token, _external=True)}
     If you did not make this request, then simply ignore this email and no change will be made.
@@ -38,10 +42,10 @@ def send_account_opening_email(student):
         MY_EMAIL = current_app.config['MAIL_USERNAME']
         student_email = student.email
         student_username = student.username
-        msg_admin = flask_mail.Message('New Student Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg_admin = flask_mail.Message('New Student Registration', sender=MY_EMAIL, recipients=[MY_EMAIL])
         msg_admin.body= f"A new student {student_username}, with email: {student_email} has registered on Hercules."
         mail.send(msg_admin)
-        msg_student = flask_mail.Message('Hercules New Account Opening', sender='noreply@demo.com', recipients=[student_email])
+        msg_student = flask_mail.Message('Hercules New Account Opening', sender=MY_EMAIL, recipients=[student_email])
         welcome_email_file = os.path.join(current_app.root_path, "static/email_text/welcome_email.txt")
         with open(welcome_email_file, 'r') as f:
             welcome_email_text = f.read()
@@ -52,7 +56,8 @@ def send_account_opening_email(student):
 
 
 def send_tutor_registration_email(tutor_email):
-    msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[tutor_email])
+    MY_EMAIL = get_email()
+    msg = flask_mail.Message('New Tutor Registration', sender=MY_EMAIL, recipients=[tutor_email])
     msg.body=f'''Hello,
     
 Thank you for registering with Hercules Tutoring! We have received your application and will get in touch with you shortly for an interview if you are a good fit for our position.
@@ -65,7 +70,8 @@ Hercules Tutoring
 
 
 def send_tutor_approval_email(tutor_email):
-    msg = flask_mail.Message('Hercules Tutor Approval', sender='noreply@demo.com', recipients=[tutor_email])
+    MY_EMAIL = get_email()
+    msg = flask_mail.Message('Hercules Tutor Approval', sender=MY_EMAIL, recipients=[tutor_email])
     approval_email_file = os.path.join(current_app.root_path, "static/email_text/tutor_approval.txt")
     with open(approval_email_file, 'r') as f:
         approval_email_text = f.read()
@@ -85,7 +91,7 @@ def send_tutor_registration_admin_email(tutor_form):
         time_zone = tutor_form.time_zone.data
         misc_info = tutor_form.misc_info.data
 
-        msg = flask_mail.Message('New Tutor Registration', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg = flask_mail.Message('New Tutor Registration', sender=MY_EMAIL, recipients=[MY_EMAIL])
         msg.body = f'''{name} (username : {username}) would like to become a tutor. Their email is {email}. Their scores are:
         
         Quant: {quant_score}
@@ -106,8 +112,8 @@ def send_tutor_registration_admin_email(tutor_form):
 def send_review_notification(tutor):
     username = tutor.username
     email = tutor.email
-
-    msg = flask_mail.Message('New Tutor Review', sender='noreply@demo.com', recipients=[email])
+    MY_EMAIL = get_email()
+    msg = flask_mail.Message('New Tutor Review', sender=MY_EMAIL, recipients=[email])
     msg.body = f'''Hello {username},
 
 You have received a review from a student. To view the review, go to Account -> View my profile.

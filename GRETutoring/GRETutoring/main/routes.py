@@ -30,7 +30,7 @@ def contact_us():
     if form.validate_on_submit():
         email = form.email.data
         message_text = form.message.data
-        msg = flask_mail.Message('Hercules Customer Support', sender='noreply@demo.com', recipients=[MY_EMAIL])
+        msg = flask_mail.Message('Hercules Customer Support', sender=MY_EMAIL, recipients=[MY_EMAIL])
         msg.body = message_text + "\nSender: " + email
         mail.send(msg)
         flash('Your message has been sent. We will reply to you as soon as we can.', 'success')

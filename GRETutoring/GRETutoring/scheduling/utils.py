@@ -503,11 +503,11 @@ def send_scheduling_emails(type, num_lessons, user2_username, form = None):
         message_to_admin = current_user.username + " has " + verb[type] + " " + str(
             num_lessons) + " lessons with " + user2_username + "."
 
-        msg_user1 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user1_email],
+        msg_user1 = flask_mail.Message('Hercules lesson ' + type, sender=MY_EMAIL, recipients=[user1_email],
                                          body=message_to_user1)
-        msg_user2 = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[user2_email],
+        msg_user2 = flask_mail.Message('Hercules lesson ' + type, sender=MY_EMAIL, recipients=[user2_email],
                                        body=message_to_user2)
-        msg_admin = flask_mail.Message('Hercules lesson ' + type, sender='noreply@demo.com', recipients=[MY_EMAIL],
+        msg_admin = flask_mail.Message('Hercules lesson ' + type, sender=MY_EMAIL, recipients=[MY_EMAIL],
                                        body=message_to_admin)
         # print(msg_user1)
         mail.send(msg_user1)

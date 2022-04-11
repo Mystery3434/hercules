@@ -12,7 +12,7 @@ def send_credit_purchase_email(student, num_credits):
         message_to_admin = student_username + " has purchased " + str(
             num_credits) + " credits."
 
-        msg_admin = flask_mail.Message('Hercules credit purchase ' , sender='noreply@demo.com', recipients=[MY_EMAIL],
+        msg_admin = flask_mail.Message('Hercules credit purchase ' , sender=MY_EMAIL, recipients=[MY_EMAIL],
                                        body=message_to_admin)
         mail.send(msg_admin)
 
@@ -23,6 +23,6 @@ def send_credit_purchase_email(student, num_credits):
     Happy studying!
     Hercules Tutoring
     '''
-        msg_student = flask_mail.Message("Hercules Credit Purchase", sender='noreply@demo.com', recipients=[student_email], body=message_to_student)
+        msg_student = flask_mail.Message("Hercules Credit Purchase", sender=MY_EMAIL, recipients=[student_email], body=message_to_student)
         mail.send(msg_student)
 
