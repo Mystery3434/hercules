@@ -35,13 +35,25 @@ def stripe_pay():
         discounted_credits = 0
     items = []
     if discount_class:
-        items.append({'price': 'price_1Jl84OIGcrQ8gAqRRF66tpPF',
+        items.append({'price': 'price_1KoSAaIGcrQ8gAqR2eQjSpQW',
             'quantity': discounted_credits})
 
-    items.append({
-            'price': 'price_1JkLeHIGcrQ8gAqR7zeofeNi',
-            'quantity': num_credits,
-        })
+    if num_credits != 0:
+        items.append({
+                'price': 'price_1KoSEcIGcrQ8gAqRKu9nAe68',
+                'quantity': num_credits,
+            })
+
+    # The following are the prices and product codes for the development/test version of Stripe:
+    # # if discount_class:
+    #     items.append({'price': 'price_1Jl84OIGcrQ8gAqRRF66tpPF',
+    #         'quantity': discounted_credits})
+    #
+    # items.append({
+    #         'price': 'price_1JkLeHIGcrQ8gAqR7zeofeNi',
+    #         'quantity': num_credits,
+    #     })
+    print(items)
     total_credits = num_credits + discounted_credits
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
