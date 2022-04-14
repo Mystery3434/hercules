@@ -12,10 +12,10 @@ We are pleased to inform you that your application to become a tutor at Hercules
 
 <b>5. Payment: </b>The payment for your lessons will be done on a weekly basis. The payment structure is as follows:<br>
 
-a. For the first 10 lessons, you get paid $40 per lesson.<br>
-b. For the next 20 lessons, you get paid $50 per lesson.<br>
-c. For the next 30 lessons, you get paid $60 per lesson.<br>
-d. After this, you will get paid $70 per lesson.<br><br>
+a. For the first 10 lessons, you get paid $20 per lesson.<br>
+b. For the next 20 lessons, you get paid $25 per lesson.<br>
+c. For the next 30 lessons, you get paid $30 per lesson.<br>
+d. After this, you will get paid $35 per lesson.<br><br>
 
 <b>6. Payment procedure: </b>The payments will be processed by Paypal. Enter your Paypal email on the "Account" page in order to ensure that the payment reaches you. This information is private and will not be visible to other users.<br><br>
 
