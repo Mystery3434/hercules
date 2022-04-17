@@ -6,10 +6,14 @@
 		<div class="row">
 
 			<div class="col-10">
-
-				<h4>You have booked this slot. </h4>
-                <p class="mb-2">Please contact your tutor for the details about meeting for the class.</p>
-
+				{% if current_user.role == "Student" %}
+                <h4>You have booked this slot. </h4>
+				<p class="mb-2">Please contact your tutor for the details about meeting for the class.</p>
+				{% endif %}
+				{% if current_user.role == "Tutor" %}
+				<p class="mb-2">Please contact your student for the details about meeting for the class.</p>
+				{% endif %}
+               
 				<a href="#0"><button type="button" class="btn btn-primary return" > Return to calendar </button></a>
 				{% if current_user.role == "Student" %}
                 <a href="{{ url_for('messaging.message') }}"><button type="button" class="btn btn-primary" > Message Tutor </button></a>
