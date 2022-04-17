@@ -280,7 +280,7 @@ def cancel_booking():
         #return render_template("cancel_booking.html", form=form)
 
     if form.validate_on_submit():
-        print("The slot to cancel is: ", lesson_to_cancel)
+
         if current_user.role=="Student":
             user2_id = lesson_to_cancel.tutor_id
         else:
@@ -310,7 +310,7 @@ def reschedule():
     flash("Click on a new timeslot.", "info")
     if request.method=="POST":
 
-        print(request.get_json())
+
         passed_variables = request.get_json()['to_pass_to_flask']
         date_text = passed_variables['date_text']
         date_text = date_text.strip().split("\n")
@@ -319,7 +319,7 @@ def reschedule():
         time_to_reschedule = datetime.strptime(day + " " + start_time, '%d %b %Y %H:%M')
 
         lesson_to_reschedule = get_slot_to_reschedule(time_to_reschedule)
-        print(lesson_to_reschedule)
+
         tutor_id = lesson_to_reschedule.tutor_id
         tutor = User.query.filter_by(id=tutor_id).first()
         tutor_username = tutor.username
@@ -360,8 +360,6 @@ def reschedule():
 lesson_to_add = None
 @scheduling.route('/confirm_reschedule', methods=['GET', 'POST'])
 def confirm_reschedule():
-    print(reschedule_request.get("user"), current_user)
-    print(reschedule_request.get("slot").student_id, current_user.id)
 
     # doing this because reschedule request is a global variable and we don't want another user to reschedule the lesson.
     check_reschedule_request_safety(reschedule_request)
