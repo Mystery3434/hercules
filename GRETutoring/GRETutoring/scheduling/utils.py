@@ -51,6 +51,10 @@ def sort_schedule(schedule):
 
     return schedule
 
+def get_event_usernames(event):
+    event_student_username = User.query.filter_by(id=event.student_id).first().username
+    event_tutor_username = User.query.filter_by(id=event.tutor_id).first().username
+    return event_student_username, event_tutor_username
 
 def load_student_schedule(schedule, offset):
     if offset % 7 != 0:
@@ -90,13 +94,17 @@ def load_student_schedule(schedule, offset):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+
+        event_student_username, event_tutor_username = get_event_usernames(event)
         # print(datetime.utcnow().replace(tzinfo=pytz.utc), start_time.astimezone(pytz.utc))
         if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
             event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                          "data-event": "past-slot", "event-name": "Scheduled Lesson"}
+                          "data-event": "past-slot", "event-name": "Scheduled Lesson with " + event_tutor_username ,
+                          "student_username": event_student_username, "tutor_username": event_tutor_username}
         else:
             event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                          "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
+                          "data-event": "booked-slot", "event-name": "Scheduled Lesson with "  + event_tutor_username,
+                          "student_username": event_student_username, "tutor_username": event_tutor_username}
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
 
@@ -172,13 +180,15 @@ def load_week(schedule, offset, tutor_username):
         start_hour_min = datetime.strftime(start_time, "%H:%M")
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
-        #print(datetime.utcnow().replace(tzinfo=pytz.utc), start_time.astimezone(pytz.utc))
+        event_student_username, event_tutor_username = get_event_usernames(event)
         if datetime.utcnow().replace(tzinfo=pytz.utc) > start_time.astimezone(pytz.utc):
             event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                          "data-event": "past-slot", "event-name": "Scheduled Lesson"}
+                          "data-event": "past-slot", "event-name": "Scheduled Lesson with " + event_student_username,
+                          "student_username": event_student_username, "tutor_username": event_tutor_username}
         else:
             event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                          "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
+                          "data-event": "booked-slot", "event-name": "Scheduled Lesson with " + event_student_username ,
+                          "student_username": event_student_username, "tutor_username": event_tutor_username}
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
 
@@ -280,8 +290,10 @@ def load_week_free_slots(schedule, offset):
         all_start_times[start_day].add(start_hour_min)
         end_hour_min = datetime.strftime(start_time + timedelta(hours=1), "%H:%M")
         end_hour_min = "24:00" if end_hour_min == "00:00" else end_hour_min
+        event_student_username, event_tutor_username = get_event_usernames(event)
         event_dict = {"data-start": start_hour_min, "data-end": end_hour_min, "data-content": "event-yoga-1",
-                      "data-event": "booked-slot", "event-name": "Scheduled Lesson"}
+                      "data-event": "booked-slot", "event-name": "Scheduled Lesson with " + event_student_username ,
+                          "student_username": event_student_username, "tutor_username": event_tutor_username}
         event_list.append(event_dict)
         schedule[start_day] = (formatted_date, event_list)
 
