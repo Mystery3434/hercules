@@ -314,9 +314,19 @@ def load_week_free_slots(schedule, offset):
     days_to_subtract = current_day.weekday()
 
     for day in days_of_week:
-        schedule_tutor_free_slots_each_day = [{"data-start": f"{i}:00", "data-end": f"{i+1}:00",
+        schedule_tutor_free_slots_each_day = [{"data-start": f"0{i}:00", "data-end": f"0{i+1}:00",
                                                "data-content": "", "data-event": "tutor-free-slot",
-                                               "event-name": ""} for i in range(0, 24) if
+                                               "event-name": ""} for i in range(0, 9) if
+                                              f"{i}:00" not in all_start_times[day] and f"0{i}:00" not in
+                                              all_start_times[day]] + \
+                                             [{"data-start": f"0{i}:00", "data-end": f"{i+1}:00",
+                                               "data-content": "", "data-event": "tutor-free-slot",
+                                               "event-name": ""} for i in range(9,10) if
+                                              f"{i}:00" not in all_start_times[day] and f"0{i}:00" not in
+                                              all_start_times[day]] + \
+                                             [{"data-start": f"{i}:00", "data-end": f"{i+1}:00",
+                                               "data-content": "", "data-event": "tutor-free-slot",
+                                               "event-name": ""} for i in range(10, 24) if
                                               f"{i}:00" not in all_start_times[day] and f"0{i}:00" not in
                                               all_start_times[day]]
         events = schedule[day][1]
@@ -325,7 +335,8 @@ def load_week_free_slots(schedule, offset):
         schedule[day] = (formatted_date, events)
         days_to_subtract -= 1
     # print(schedule)
-
+    schedule = sort_schedule(schedule)
+    print(schedule)
     return schedule
 
 
