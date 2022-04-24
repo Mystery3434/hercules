@@ -154,7 +154,8 @@ body{
 } */
 
 .chat .chat-history .my-message {
-    background: #efefef
+    background: #efefef;
+    text-align: right;
 }
 
 /* .chat .chat-history .my-message:after {
@@ -173,13 +174,15 @@ body{
 
 .chat .chat-history .other-message {
     background: #e8f1f3;
-    text-align: right
+    text-align: left;
 }
 
 .chat .chat-history .other-message:after {
     border-bottom-color: #e8f1f3;
     left: 93%
 }
+
+
 
 .chat .chat-message {
     padding: 20px;
